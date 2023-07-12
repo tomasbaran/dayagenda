@@ -113,10 +113,10 @@ class TasksScreenManager {
       newTask.title = newTitle;
     }
     if (newStartTime != null) {
-      newTask.startTime = newStartTime;
+      newTask.startTime = DateTime(newDate.year, newDate.month, newDate.day, newStartTime.hour, newStartTime.minute);
     }
     if (newEndTime != null) {
-      newTask.endTime = newEndTime;
+      newTask.endTime = DateTime(newDate.year, newDate.month, newDate.day, newEndTime.hour, newEndTime.minute);
     }
     log('\x1B[32m[$newDate]widgetManager.updateTask: ${newTask.title}, ${newTask.startTime}, ${newTask.endTime}  \x1B[0m');
 
