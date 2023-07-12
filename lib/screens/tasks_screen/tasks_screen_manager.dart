@@ -75,25 +75,33 @@ class TasksScreenManager {
     }
   }
 
-  removeTaskFromList({
+  removeSelectedTaskByDate({
     required DateTime date,
-    required MyTask task,
   }) async {
-    final dateListSnapshot = await TaskService().getDateListSnapshot(date);
+    // delete task locally and save it tmp as updatedLocalDateList
+    MyList updatedLocalDateList = await removeSelectedTaskLocallyByDate(date);
+    // delete task in the db
+    await TaskService().updateDateListInDatabase(updatedLocalDateList);
+  }
 
-    MyList dateList = TaskService().convertFirebaseSnapshotToMyList(
+  removeSelectedTaskLocallyByDate(DateTime date) async {
+    final dateListSnapshot = await TaskService().getDateListSnapshot(date);
+    MyList tmpDateList = TaskService().convertFirebaseSnapshotToMyList(
       firebaseSnapshot: dateListSnapshot,
       myListTitle: DateTimeService().niceDateTimeString(date),
       listDate: date,
     );
-    log('old dateList: ${dateList.tasks}');
+    log('old dateList: ${tmpDateList.tasks}');
+    // delete from tasks list (uncompleted)
+    if (_selectedTask?.completed == null || !_selectedTask!.completed) {
+      tmpDateList.tasks.removeAt(selectedTask.key!);
+      // delete from completedTasks list (completed)
+    } else {
+      tmpDateList.completedTasks.removeAt(selectedTask.key!);
+    }
 
-    // delete task locally
-    dateList.tasks.removeAt(task.key!);
-    log('new dateList: ${dateList.tasks}');
-
-    // delete task in the db
-    await TaskService().updateDateListInDatabase(dateList);
+    log('new dateList: ${tmpDateList.tasks}');
+    return tmpDateList;
   }
 
   updateTask({
@@ -131,7 +139,9 @@ class TasksScreenManager {
       // DIFF DAY
       log('DIFF DAY');
       // delete the original task from the original date in the db
-      removeTaskFromList(date: originalDate, task: originalTask);
+      print('selectedDate: $selectedDate; originalDate: $originalDate');
+      print('selectedTask: $selectedTask; originalTask: $originalTask');
+      removeSelectedTaskByDate(date: originalDate);
       // add new task the selectedList locally
       selectedList.value.tasks.add(newTask);
     }

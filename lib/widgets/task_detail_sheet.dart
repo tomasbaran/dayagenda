@@ -9,6 +9,7 @@ import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/services/date_time_service.dart';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 
 enum SheetType {
   newTask,
@@ -180,11 +181,97 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
             ],
           ),
+          GestureDetector(
+            onTap: () {
+              showPlatformAlertDialog(
+                context: context,
+                title: 'Delete Task',
+                message: 'Are you sure you want to delete this task?',
+                onConfirm: () {
+                  widgetManager.removeSelectedTaskByDate(date: originalDate);
+                  Navigator.pop(context); // Close the dialog
+                  Navigator.pop(context); // Pop the previous screen
+                },
+              );
+            },
+            child: CupertinoListSection.insetGrouped(
+              children: [
+                CupertinoListTile.notched(
+                  title: Center(
+                    child: Text(
+                      'Delete Task',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           const Expanded(
             child: SizedBox(),
           ),
         ],
       ),
+    );
+  }
+}
+
+void showPlatformAlertDialog({
+  required BuildContext context,
+  required String title,
+  required String message,
+  required VoidCallback onConfirm,
+}) {
+  if (defaultTargetPlatform == TargetPlatform.iOS) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            CupertinoDialogAction(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+            ),
+            CupertinoDialogAction(
+              child: Text('Delete'),
+              onPressed: onConfirm,
+              isDestructiveAction: true,
+            ),
+          ],
+        );
+      },
+    );
+  } else {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Delete',
+                style: TextStyle(backgroundColor: Colors.red),
+              ),
+              onPressed: onConfirm,
+            ),
+          ],
+        );
+      },
     );
   }
 }
