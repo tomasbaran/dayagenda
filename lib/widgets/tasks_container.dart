@@ -31,6 +31,9 @@ class TasksContainer extends StatelessWidget {
           return ValueListenableBuilder<MyList>(
               valueListenable: widgetManager.selectedList,
               builder: (_, pageList, __) {
+                // BUG#9: starts here, for some reasons tasksCount != e.g. 3 when pageList.tasks.length=3 after toggling a task as completed
+                // it most probably could be easily fixed by removing the next line and just calling 'pageList.tasks.length' instead
+                // but I don't like this approach, there has to be a better way
                 int tasksCount = pageList.tasks.length;
                 int listWidgetsCount = tasksCount + 1; // +1 is the new last item: Column of FillInHeight + COMPLETED:
                 log('update List!!: ${pageList.title}; ${widgetManager.selectedList.value.tasks} ');
@@ -45,6 +48,7 @@ class TasksContainer extends StatelessWidget {
                           key: const Key('last'),
                         );
                       } else {
+                        // BUG#9: reversedIndex is one number higher from what it should be
                         return TaskCard(
                           key: Key(reversedIndex.toString()),
                           task: pageList.tasks[reversedIndex],
