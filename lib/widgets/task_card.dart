@@ -28,8 +28,8 @@ class TaskCard extends StatelessWidget {
         log('open edit sheet [${task.title}]');
         showCupertinoModalBottomSheet(
           context: context,
-          builder: (context) => Scaffold(
-            body: TaskDetailSheet(),
+          builder: (context) => const Scaffold(
+            body: TaskDetailSheet.updateTask(),
           ),
         );
       },

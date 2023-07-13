@@ -4,7 +4,6 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/models/my_task.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -12,7 +11,15 @@ import 'package:today/utils/date_time_utils.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/dialog_utlis.dart';
 
+enum TaskDetailSheetType {
+  newTask,
+  updateTask,
+}
+
 class TaskDetailSheet extends StatefulWidget {
+  final TaskDetailSheetType sheetType;
+  const TaskDetailSheet.newTask({super.key}) : sheetType = TaskDetailSheetType.newTask;
+  const TaskDetailSheet.updateTask({super.key}) : sheetType = TaskDetailSheetType.updateTask;
   @override
   State<TaskDetailSheet> createState() => _TaskDetailSheetState();
 }
@@ -50,7 +57,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           color: kThemeColor4,
         ),
         title: Text(
-          widgetManager.selectedTask == null ? 'Add New Task' : 'Edit Task',
+          widget.sheetType == TaskDetailSheetType.newTask ? 'Add New Task' : 'Edit Task',
           style: addNewTaskSheetTitleTextStyle,
         ),
         actions: [
@@ -58,7 +65,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             visible: widgetManager.selectedTask == null ? true : !widgetManager.selectedTask!.completed,
             child: TextButton(
               child: Text(
-                widgetManager.selectedTask == null ? 'Add' : 'Update',
+                widget.sheetType == TaskDetailSheetType.newTask ? 'Add' : 'Update',
                 style: addNewTaskSheetButtonsTextStyle,
               ),
               onPressed: () {
