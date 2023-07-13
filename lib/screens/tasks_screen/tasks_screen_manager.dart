@@ -18,7 +18,7 @@ enum NavBarSelection {
 class TasksScreenManager {
   final selectedList = ValueNotifier<MyList>(MyList());
   MyTask? _selectedTask;
-  get selectedTask => _selectedTask;
+  MyTask? get selectedTask => _selectedTask;
   set selectTask(MyTask task) => _selectedTask = task;
   unselectTask() {
     _selectedTask = null;
@@ -94,10 +94,10 @@ class TasksScreenManager {
     log('old dateList: ${tmpDateList.tasks}');
     // delete from tasks list (uncompleted)
     if (_selectedTask?.completed == null || !_selectedTask!.completed) {
-      tmpDateList.tasks.removeAt(selectedTask.key!);
+      tmpDateList.tasks.removeAt(selectedTask!.key!);
       // delete from completedTasks list (completed)
     } else {
-      tmpDateList.completedTasks.removeAt(selectedTask.key!);
+      tmpDateList.completedTasks.removeAt(selectedTask!.key!);
     }
 
     log('new dateList: ${tmpDateList.tasks}');
