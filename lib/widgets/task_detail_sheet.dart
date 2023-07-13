@@ -69,11 +69,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               onPressed: () {
                 widget.sheetType == TaskDetailSheetType.newTask
-                    ? widgetManager.addTaskToDateList(
-                        title: widgetManager.selectedTask?.title,
-                        startTime: widgetManager.selectedTask?.startTime,
-                        endTime: widgetManager.selectedTask?.endTime,
-                      )
+                    ? widgetManager.addTaskToDateList(widgetManager.selectedTask!)
                     : widgetManager.updateTask(
                         originalDate: originalDate,
                         newTitle: widgetManager.selectedTask?.title,
@@ -120,7 +116,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         context: context,
                         defaultTime: widgetManager.selectedTask?.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => widgetManager.selectedTask?.startTime = newTime);
+                          setState(() => widgetManager.selectedTask?.updateStartTime(newTime.hour, newTime.minute));
                         },
                       ),
               ),
@@ -136,7 +132,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => widgetManager.selectedTask?.endTime = newTime);
+                          setState(() => widgetManager.selectedTask?.updateEndTime(newTime.hour, newTime.minute));
                         },
                         defaultTime: widgetManager.selectedTask?.endTime ?? widgetManager.selectedTask?.startTime,
                       ),

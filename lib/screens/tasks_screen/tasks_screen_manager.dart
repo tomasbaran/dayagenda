@@ -151,24 +151,8 @@ class TasksScreenManager {
     TaskService().updateDateListInDatabase(selectedList.value);
   }
 
-  addTaskToDateList({
-    required String? title,
-    DateTime? startTime,
-    DateTime? endTime,
-  }) {
-    // use selectedDate's date and startTime's time
-    startTime = DateTimeUtils.mixDateAndTime(_selectedDate, startTime);
-    // use selectedDate's date and endTime's time
-    endTime = DateTimeUtils.mixDateAndTime(_selectedDate, endTime);
-    // Don't add an empty titled task
-    if (title != null) {
-      MyTask newTask = MyTask(
-        title: title,
-        startTime: startTime,
-        endTime: endTime,
-      );
-      TaskService().addTaskToDateList(newTask, _selectedDate);
-    }
+  addTaskToDateList(MyTask newTask) {
+    TaskService().addTaskToDateList(newTask, _selectedDate);
   }
 
   toggleTaskCompleted(MyTask task) {

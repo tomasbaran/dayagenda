@@ -55,13 +55,9 @@ class DateTimeUtils {
         milliseconds: dateTime.millisecond,
       ));
 
-  static DateTime? mixDateAndTime(DateTime useDate, DateTime? useTime) {
+  static DateTime mixDateAndTime({required DateTime date, required int hours, required int minutes}) {
     // Reset hours,minutes,seconds to 00:00:00
-    DateTime resetTime = resetTimeToZero(useDate);
-    if (useTime == null) {
-      return null;
-    } else {
-      return resetTime.add(Duration(hours: useTime.hour, minutes: useTime.minute));
-    }
+    DateTime resetTime = resetTimeToZero(date);
+    return resetTime.add(Duration(hours: hours, minutes: minutes));
   }
 }
