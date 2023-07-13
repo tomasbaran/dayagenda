@@ -8,7 +8,9 @@ class TaskTimeTile extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.value,
+    this.disabled = false,
   });
+  final bool disabled;
   final String title;
   final IconData icon;
   final String? value;
@@ -24,21 +26,21 @@ class TaskTimeTile extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: kThemeColor9,
+              color: disabled ? kThemeColor3 : kThemeColor9,
             ),
             const SizedBox(
               width: 8,
             ),
             Text(
               title,
-              style: addNewTaskSheetFieldTitleTextStyle,
+              style: addNewTaskSheetFieldTitleTextStyle.copyWith(color: disabled ? kThemeColor3 : null),
             ),
           ],
         ),
       ),
       title: Text(
         value ?? 'not assigned',
-        style: addNewTaskSheetFieldHintTitleTextStyle.copyWith(color: value != null ? kThemeColor10 : null),
+        style: addNewTaskSheetFieldHintTitleTextStyle.copyWith(color: (value == null || disabled) ? null : kThemeColor10),
       ),
     );
   }

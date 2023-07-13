@@ -63,26 +63,29 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           style: addNewTaskSheetTitleTextStyle,
         ),
         actions: [
-          TextButton(
-            child: Text(
-              widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
-              style: addNewTaskSheetButtonsTextStyle,
+          Visibility(
+            visible: !widgetManager.selectedTask!.completed,
+            child: TextButton(
+              child: Text(
+                widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
+                style: addNewTaskSheetButtonsTextStyle,
+              ),
+              onPressed: () {
+                widget.sheetType == SheetType.newTask
+                    ? widgetManager.addTaskToDateList(
+                        title: taskTitle,
+                        startTime: startTime,
+                        endTime: endTime,
+                      )
+                    : widgetManager.updateTask(
+                        originalDate: originalDate,
+                        newTitle: taskTitle,
+                        newStartTime: startTime,
+                        newEndTime: endTime,
+                      );
+                Navigator.pop(context);
+              },
             ),
-            onPressed: () {
-              widget.sheetType == SheetType.newTask
-                  ? widgetManager.addTaskToDateList(
-                      title: taskTitle,
-                      startTime: startTime,
-                      endTime: endTime,
-                    )
-                  : widgetManager.updateTask(
-                      originalDate: originalDate,
-                      newTitle: taskTitle,
-                      newStartTime: startTime,
-                      newEndTime: endTime,
-                    );
-              Navigator.pop(context);
-            },
           ),
         ],
       ),
@@ -109,71 +112,80 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
+                  disabled: widgetManager.selectedTask!.completed,
                   title: 'Starts',
                   icon: Icons.access_time,
                   value: startTime == null ? null : DateTimeUtils.formatTime(startTime!),
                 ),
-                onTap: () => DialogUtils.showCupertinoTimePicker(
-                  context: context,
-                  defaultTime: startTime,
-                  onDateTimeChanged: (DateTime newTime) {
-                    setState(() => startTime = newTime);
-                  },
-                ),
+                onTap: () => widgetManager.selectedTask!.completed
+                    ? null
+                    : DialogUtils.showCupertinoTimePicker(
+                        context: context,
+                        defaultTime: startTime,
+                        onDateTimeChanged: (DateTime newTime) {
+                          setState(() => startTime = newTime);
+                        },
+                      ),
               ),
               GestureDetector(
                 child: TaskTimeTile(
+                  disabled: widgetManager.selectedTask!.completed,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
                   value: endTime == null ? null : DateTimeUtils.formatTime(endTime!),
                 ),
-                onTap: () => DialogUtils.showCupertinoTimePicker(
-                  context: context,
-                  onDateTimeChanged: (DateTime newTime) {
-                    setState(() => endTime = newTime);
-                  },
-                  defaultTime: endTime ?? startTime,
-                ),
+                onTap: () => widgetManager.selectedTask!.completed
+                    ? null
+                    : DialogUtils.showCupertinoTimePicker(
+                        context: context,
+                        onDateTimeChanged: (DateTime newTime) {
+                          setState(() => endTime = newTime);
+                        },
+                        defaultTime: endTime ?? startTime,
+                      ),
               ),
               GestureDetector(
                 child: ValueListenableBuilder(
                     valueListenable: widgetManager.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
+                        disabled: widgetManager.selectedTask!.completed,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
                         value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? widgetManager.selectedDate),
                       );
                     }),
                 onTap: () async {
-                  final calendarValues = await showCalendarDatePicker2Dialog(
-                    borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
-                    dialogBackgroundColor: kThemeColor11,
-                    dialogSize: const Size(340, 340),
-                    context: context,
-                    config: CalendarDatePicker2WithActionButtonsConfig(
-                      okButton: Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: Text('OK',
-                            style: TextStyle(
-                              color: kBackgroundColor,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                            )),
-                      ),
-                      buttonPadding: EdgeInsets.all(16),
-                      cancelButtonTextStyle: TextStyle(fontWeight: FontWeight.w500, color: kThemeColor9),
-                      firstDayOfWeek: 1,
-                      dayTextStyle: TextStyle(color: kThemeColor2),
-                      disableModePicker: true,
-                      controlsTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
-                      weekdayLabelTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
-                      selectedDayTextStyle: TextStyle(color: kThemeColor11, fontWeight: FontWeight.w700),
-                      nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
-                      lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
-                    ),
-                    value: [widgetManager.selectedDate],
-                  );
+                  final calendarValues = widgetManager.selectedTask!.completed
+                      ? null
+                      : await showCalendarDatePicker2Dialog(
+                          borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
+                          dialogBackgroundColor: kThemeColor11,
+                          dialogSize: const Size(340, 340),
+                          context: context,
+                          config: CalendarDatePicker2WithActionButtonsConfig(
+                            okButton: Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Text('OK',
+                                  style: TextStyle(
+                                    color: kBackgroundColor,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14,
+                                  )),
+                            ),
+                            buttonPadding: EdgeInsets.all(16),
+                            cancelButtonTextStyle: TextStyle(fontWeight: FontWeight.w500, color: kThemeColor9),
+                            firstDayOfWeek: 1,
+                            dayTextStyle: TextStyle(color: kThemeColor2),
+                            disableModePicker: true,
+                            controlsTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
+                            weekdayLabelTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
+                            selectedDayTextStyle: TextStyle(color: kThemeColor11, fontWeight: FontWeight.w700),
+                            nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
+                            lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
+                          ),
+                          value: [widgetManager.selectedDate],
+                        );
                   if (calendarValues != null) {
                     widgetManager.updateSelectedDate(calendarValues.first!);
                   }
