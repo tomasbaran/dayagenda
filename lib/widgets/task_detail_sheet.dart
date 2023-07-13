@@ -64,7 +64,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         ),
         actions: [
           Visibility(
-            visible: !widgetManager.selectedTask!.completed,
+            visible: widgetManager.selectedTask == null ? true : !widgetManager.selectedTask!.completed,
             child: TextButton(
               child: Text(
                 widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
@@ -112,7 +112,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
                   title: 'Starts',
                   icon: Icons.access_time,
                   value: startTime == null ? null : DateTimeUtils.formatTime(startTime!),
@@ -129,7 +129,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
                   value: endTime == null ? null : DateTimeUtils.formatTime(endTime!),
@@ -149,7 +149,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     valueListenable: widgetManager.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
-                        disabled: widgetManager.selectedTask!.completed,
+                        disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
                         value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? widgetManager.selectedDate),
