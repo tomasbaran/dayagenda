@@ -46,13 +46,14 @@ class TaskService {
     if (_uid == null) {
       throw ('Error #6[updating task]: User not signed in.');
     } else {
-      Map<String, dynamic> formattedUpdatedList = formatMyListToFirebaseList(updatedList);
       final listDocRef = _db.collection('users').doc(_uid).collection('date_lists').doc(updatedList.id);
+      Map<String, dynamic> formattedUpdatedList = formatMyListToFirebaseList(updatedList);
 
       listDocRef.set(formattedUpdatedList).onError((error, stackTrace) {
         log('\x1B[31mError #6[updating task]: $error\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('Error #6[updating task]: $error');
       });
+      log('3. updatedList:');
     }
   }
 

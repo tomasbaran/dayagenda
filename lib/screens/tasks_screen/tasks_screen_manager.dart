@@ -177,14 +177,19 @@ class TasksScreenManager {
 
       task.toggleCompleted();
       selectedList.value.completedTasks.add(task);
+      print('Task removed from tasks: ${selectedList.value.tasks}');
+      print('Task added to completedTasks: ${selectedList.value.completedTasks}');
     } else {
       selectedList.value.completedTasks.remove(task);
 
       task.toggleCompleted();
       selectedList.value.tasks.add(task);
+      print('Task removed from completedTasks: ${selectedList.value.completedTasks}');
+      print('Task added to tasks: ${selectedList.value.tasks}');
     }
 
     TaskService().updateDateListInDatabase(selectedList.value);
+    log('4. \x1B[32mupdateDateListInDatabase: ${selectedList.value.tasks}\x1B[0m');
   }
 
   reorderList(int oldIndex, int newIndex) {
@@ -213,6 +218,7 @@ class TasksScreenManager {
           myListTitle: DateTimeUtils.niceDateTimeString(_selectedDate),
           listDate: _selectedDate,
         );
+        log('!?! got new data; selectedList.value: ${selectedList.value} ');
       } catch (e) {
         throw 'Error #12: $e';
       }
