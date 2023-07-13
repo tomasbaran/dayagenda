@@ -86,8 +86,8 @@ class NavBar extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           onTap: () => showCupertinoModalBottomSheet(
             context: context,
-            builder: (context) => const Scaffold(
-              body: TaskDetailSheet.newTask(),
+            builder: (context) => Scaffold(
+              body: TaskDetailSheet(),
             ),
           ),
           child: Padding(

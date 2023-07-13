@@ -4,6 +4,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:today/models/my_task.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -11,17 +12,7 @@ import 'package:today/utils/date_time_utils.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/dialog_utlis.dart';
 
-enum SheetType {
-  newTask,
-  updateTask,
-}
-
 class TaskDetailSheet extends StatefulWidget {
-  final SheetType sheetType;
-  // Named constructor
-  const TaskDetailSheet.newTask({super.key}) : sheetType = SheetType.newTask;
-  const TaskDetailSheet.updateTask({super.key}) : sheetType = SheetType.updateTask;
-
   @override
   State<TaskDetailSheet> createState() => _TaskDetailSheetState();
 }
@@ -59,7 +50,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           color: kThemeColor4,
         ),
         title: Text(
-          widget.sheetType == SheetType.newTask ? 'Add New Task' : 'Edit Task',
+          widgetManager.selectedTask == null ? 'Add New Task' : 'Edit Task',
           style: addNewTaskSheetTitleTextStyle,
         ),
         actions: [
@@ -67,11 +58,11 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             visible: widgetManager.selectedTask == null ? true : !widgetManager.selectedTask!.completed,
             child: TextButton(
               child: Text(
-                widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
+                widgetManager.selectedTask == null ? 'Add' : 'Update',
                 style: addNewTaskSheetButtonsTextStyle,
               ),
               onPressed: () {
-                widget.sheetType == SheetType.newTask
+                widgetManager.selectedTask == null
                     ? widgetManager.addTaskToDateList(
                         title: taskTitle,
                         startTime: startTime,
