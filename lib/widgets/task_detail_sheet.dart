@@ -4,6 +4,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:today/models/my_task.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -26,17 +27,15 @@ class TaskDetailSheet extends StatefulWidget {
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
   final widgetManager = getIt<TasksScreenManager>();
-  String? taskTitle;
-  DateTime? startTime;
-  DateTime? endTime;
   late DateTime originalDate;
 
   @override
   void initState() {
+    if (widget.sheetType == TaskDetailSheetType.newTask) {
+      widgetManager.selectTask = MyTask(title: '');
+    }
+
     originalDate = widgetManager.selectedDate;
-    taskTitle = widgetManager.selectedTask?.title;
-    startTime = widgetManager.selectedTask?.startTime;
-    endTime = widgetManager.selectedTask?.endTime;
     super.initState();
   }
 
@@ -69,17 +68,17 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 style: addNewTaskSheetButtonsTextStyle,
               ),
               onPressed: () {
-                widgetManager.selectedTask == null
+                widget.sheetType == TaskDetailSheetType.newTask
                     ? widgetManager.addTaskToDateList(
-                        title: taskTitle,
-                        startTime: startTime,
-                        endTime: endTime,
+                        title: widgetManager.selectedTask?.title,
+                        startTime: widgetManager.selectedTask?.startTime,
+                        endTime: widgetManager.selectedTask?.endTime,
                       )
                     : widgetManager.updateTask(
                         originalDate: originalDate,
-                        newTitle: taskTitle,
-                        newStartTime: startTime,
-                        newEndTime: endTime,
+                        newTitle: widgetManager.selectedTask?.title,
+                        newStartTime: widgetManager.selectedTask?.startTime,
+                        newEndTime: widgetManager.selectedTask?.endTime,
                       );
                 Navigator.pop(context);
               },
@@ -94,10 +93,10 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               CupertinoListTile.notched(
                 backgroundColor: kBackgroundColor,
                 title: TextField(
-                  controller: TextEditingController.fromValue(TextEditingValue(text: taskTitle ?? '')),
+                  controller: TextEditingController.fromValue(TextEditingValue(text: widgetManager.selectedTask?.title ?? '')),
                   style: addNewTaskSheetTaskTitleTextStyle,
                   maxLines: 2,
-                  onChanged: (text) => taskTitle = text,
+                  onChanged: (text) => widgetManager.selectedTask?.title = text,
                   autofocus: true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: const InputDecoration(hintText: 'Write Task Title', border: InputBorder.none),
@@ -113,15 +112,15 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
                   title: 'Starts',
                   icon: Icons.access_time,
-                  value: startTime == null ? null : DateTimeUtils.formatTime(startTime!),
+                  value: widgetManager.selectedTask?.startTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime!),
                 ),
                 onTap: () => widgetManager.selectedTask!.completed
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
-                        defaultTime: startTime,
+                        defaultTime: widgetManager.selectedTask?.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => startTime = newTime);
+                          setState(() => widgetManager.selectedTask?.startTime = newTime);
                         },
                       ),
               ),
@@ -130,16 +129,16 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
-                  value: endTime == null ? null : DateTimeUtils.formatTime(endTime!),
+                  value: widgetManager.selectedTask?.endTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime!),
                 ),
                 onTap: () => widgetManager.selectedTask!.completed
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => endTime = newTime);
+                          setState(() => widgetManager.selectedTask?.endTime = newTime);
                         },
-                        defaultTime: endTime ?? startTime,
+                        defaultTime: widgetManager.selectedTask?.endTime ?? widgetManager.selectedTask?.startTime,
                       ),
               ),
               GestureDetector(
