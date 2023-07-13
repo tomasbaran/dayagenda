@@ -6,7 +6,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
-import 'package:today/services/date_time_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 

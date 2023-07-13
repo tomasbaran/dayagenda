@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/services/auth.dart';
+import 'package:today/services/auth_service.dart';
 import 'package:logger/logger.dart';
 
 class TaskService {
   final _db = FirebaseFirestore.instance;
-  final String? _uid = Auth().uid;
+  final String? _uid = AuthService().uid;
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getDateListSnapshot(DateTime date) {
     String listDateId = '${date.year}-${date.month}-${date.day}_$_uid';

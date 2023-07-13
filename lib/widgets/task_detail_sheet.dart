@@ -7,9 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
+import 'package:today/utils/date_time_utils.dart';
 import 'package:today/widgets/task_time_tile.dart';
-import 'package:today/services/date_time_service.dart';
-import 'package:flutter/foundation.dart' show defaultTargetPlatform;
+import 'package:today/utils/dialog_utlis.dart';
 
 enum SheetType {
   newTask,
@@ -111,9 +111,9 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 child: TaskTimeTile(
                   title: 'Starts',
                   icon: Icons.access_time,
-                  value: startTime == null ? null : DateTimeService().formatTime(startTime!),
+                  value: startTime == null ? null : DateTimeUtils.formatTime(startTime!),
                 ),
-                onTap: () => DateTimeService().showCupertinoTimePicker(
+                onTap: () => DialogUtils.showCupertinoTimePicker(
                   context: context,
                   defaultTime: startTime,
                   onDateTimeChanged: (DateTime newTime) {
@@ -125,9 +125,9 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 child: TaskTimeTile(
                   title: 'Ends',
                   icon: Icons.access_time_filled,
-                  value: endTime == null ? null : DateTimeService().formatTime(endTime!),
+                  value: endTime == null ? null : DateTimeUtils.formatTime(endTime!),
                 ),
-                onTap: () => DateTimeService().showCupertinoTimePicker(
+                onTap: () => DialogUtils.showCupertinoTimePicker(
                   context: context,
                   onDateTimeChanged: (DateTime newTime) {
                     setState(() => endTime = newTime);
@@ -183,7 +183,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           ),
           GestureDetector(
             onTap: () {
-              showPlatformAlertDialog(
+              DialogUtils.showPlatformAlertDialog(
                 context: context,
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',
@@ -212,66 +212,6 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           ),
         ],
       ),
-    );
-  }
-}
-
-void showPlatformAlertDialog({
-  required BuildContext context,
-  required String title,
-  required String message,
-  required VoidCallback onConfirm,
-}) {
-  if (defaultTargetPlatform == TargetPlatform.iOS) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            CupertinoDialogAction(
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              ),
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-            ),
-            CupertinoDialogAction(
-              child: Text('Delete'),
-              onPressed: onConfirm,
-              isDestructiveAction: true,
-            ),
-          ],
-        );
-      },
-    );
-  } else {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-            ),
-            TextButton(
-              child: Text(
-                'Delete',
-                style: TextStyle(backgroundColor: Colors.red),
-              ),
-              onPressed: onConfirm,
-            ),
-          ],
-        );
-      },
     );
   }
 }

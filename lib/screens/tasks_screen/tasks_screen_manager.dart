@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/models/my_list.dart';
-import 'package:today/services/date_time_service.dart';
 import 'package:today/services/task_service.dart';
 import 'package:today/style/style_constants.dart';
+import 'package:today/utils/date_time_utils.dart';
 
 enum NavBarSelection {
   unselected,
@@ -43,7 +43,7 @@ class TasksScreenManager {
   }
 
   checkIfSelectedDateIsToday() {
-    DateTimeService().isSpecialDay(DateTime.now(), _selectedDate) == MyDate.isToday
+    DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == MyDate.isToday
         ? isSelectedDateToday.value = true
         : isSelectedDateToday.value = false;
   }
@@ -88,7 +88,7 @@ class TasksScreenManager {
     final dateListSnapshot = await TaskService().getDateListSnapshot(date);
     MyList tmpDateList = TaskService().convertFirebaseSnapshotToMyList(
       firebaseSnapshot: dateListSnapshot,
-      myListTitle: DateTimeService().niceDateTimeString(date),
+      myListTitle: DateTimeUtils.niceDateTimeString(date),
       listDate: date,
     );
     log('old dateList: ${tmpDateList.tasks}');
@@ -129,7 +129,7 @@ class TasksScreenManager {
     log('\x1B[32m[$newDate]widgetManager.updateTask: ${newTask.title}, ${newTask.startTime}, ${newTask.endTime}  \x1B[0m');
 
     // check whether the date was changed
-    if (DateTimeService().isSpecialDay(originalDate, newDate) == MyDate.isToday) {
+    if (DateTimeUtils.isSpecialDay(originalDate, newDate) == MyDate.isToday) {
       // SAME DAY
       log('original: SAME DAY[${newTask.key}]: ${selectedList.value.tasks[newTask.key!]}');
       // update the new task to the selectedList locally
@@ -157,9 +157,9 @@ class TasksScreenManager {
     DateTime? endTime,
   }) {
     // use selectedDate's date and startTime's time
-    startTime = DateTimeService().mixDateAndTime(_selectedDate, startTime);
+    startTime = DateTimeUtils.mixDateAndTime(_selectedDate, startTime);
     // use selectedDate's date and endTime's time
-    endTime = DateTimeService().mixDateAndTime(_selectedDate, endTime);
+    endTime = DateTimeUtils.mixDateAndTime(_selectedDate, endTime);
     // Don't add an empty titled task
     if (title != null) {
       MyTask newTask = MyTask(
@@ -210,7 +210,7 @@ class TasksScreenManager {
         log('selected DAY [$_selectedDate]: ${selectedList.value.tasks}');
         selectedList.value = TaskService().convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
-          myListTitle: DateTimeService().niceDateTimeString(_selectedDate),
+          myListTitle: DateTimeUtils.niceDateTimeString(_selectedDate),
           listDate: _selectedDate,
         );
       } catch (e) {

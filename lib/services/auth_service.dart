@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
 
-class Auth {
+class AuthService {
   // creating firebase instance
   final FirebaseAuth auth = FirebaseAuth.instance;
   String? get uid => auth.currentUser?.uid;

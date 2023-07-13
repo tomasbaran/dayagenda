@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
-import 'package:today/services/date_time_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:intl/intl.dart';
+import 'package:today/utils/date_time_utils.dart';
 
 class TimeCard extends StatelessWidget {
   final DateTime? taskStartTime;
@@ -32,7 +32,7 @@ class TimeCard extends StatelessWidget {
         height: 68,
         width: 64,
         child: Padding(
-          padding: EdgeInsets.all(DateTimeService().isSpecialDay(tasksScreenManager.selectedDate, taskStartTime) == MyDate.isToday ? 6 : 2),
+          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(tasksScreenManager.selectedDate, taskStartTime) == MyDate.isToday ? 6 : 2),
           child: Column(
             mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
             children: [
@@ -40,7 +40,7 @@ class TimeCard extends StatelessWidget {
               Visibility(
                 visible: taskEndTime != null,
                 child: Text(
-                  DateTimeService().isSpecialDay(tasksScreenManager.selectedDate, taskStartTime) == MyDate.isToday ? '' : dateString,
+                  DateTimeUtils.isSpecialDay(tasksScreenManager.selectedDate, taskStartTime) == MyDate.isToday ? '' : dateString,
                   style: timeCardTextStyle,
                 ),
               ),
