@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
 import 'package:today/services/service_locator.dart';
@@ -12,31 +11,31 @@ import 'package:today/utils/date_time_utils.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/dialog_utlis.dart';
 
-enum TaskDetailSheetType {
+enum SheetType {
   newTask,
   updateTask,
 }
 
 class TaskDetailSheet extends StatefulWidget {
-  final TaskDetailSheetType sheetType;
-  const TaskDetailSheet.newTask({super.key}) : sheetType = TaskDetailSheetType.newTask;
-  const TaskDetailSheet.updateTask({super.key}) : sheetType = TaskDetailSheetType.updateTask;
+  final SheetType sheetType;
+  final MyTask task;
+  TaskDetailSheet.newTask({super.key})
+      : task = MyTask(title: ''),
+        sheetType = SheetType.newTask;
+  const TaskDetailSheet.updateTask(this.task, {super.key}) : sheetType = SheetType.updateTask;
   @override
   State<TaskDetailSheet> createState() => _TaskDetailSheetState();
 }
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
   final widgetManager = getIt<TasksScreenManager>();
-  late DateTime originalDate;
+  late MyList originalList;
 
   @override
   void initState() {
-    if (widget.sheetType == TaskDetailSheetType.newTask) {
-      widgetManager.selectTask = MyTask(title: '');
-    }
-
-    originalDate = widgetManager.selectedDate;
     super.initState();
+    widgetManager.selectTask = widget.task;
+    originalList = widgetManager.selectedList.value;
   }
 
   @override
@@ -56,7 +55,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           color: kThemeColor4,
         ),
         title: Text(
-          widget.sheetType == TaskDetailSheetType.newTask ? 'Add New Task' : 'Edit Task',
+          widget.sheetType == SheetType.newTask ? 'Add New Task' : 'Edit Task',
           style: addNewTaskSheetTitleTextStyle,
         ),
         actions: [
@@ -64,19 +63,19 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             visible: widgetManager.selectedTask == null ? true : !widgetManager.selectedTask!.completed,
             child: TextButton(
               child: Text(
-                widget.sheetType == TaskDetailSheetType.newTask ? 'Add' : 'Update',
+                widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
                 style: addNewTaskSheetButtonsTextStyle,
               ),
-              onPressed: () {
-                widget.sheetType == TaskDetailSheetType.newTask
-                    ? widgetManager.addTaskToDateList(widgetManager.selectedTask!)
-                    : widgetManager.updateTask(
-                        originalDate: originalDate,
-                        newTitle: widgetManager.selectedTask?.title,
-                        newStartTime: widgetManager.selectedTask?.startTime,
-                        newEndTime: widgetManager.selectedTask?.endTime,
+              onPressed: () async {
+                widget.sheetType == SheetType.newTask
+                    ? await widgetManager.addTaskToDateList(widgetManager.selectedTask!)
+                    : await widgetManager.updateTask(
+                        originalList: originalList,
+                        updatedTask: widgetManager.selectedTask!,
                       );
-                Navigator.pop(context);
+                if (mounted) {
+                  Navigator.pop(context);
+                }
               },
             ),
           ),
@@ -181,6 +180,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         );
                   if (calendarValues != null) {
                     widgetManager.updateSelectedDate(calendarValues.first!);
+                    widgetManager.updateStartEndTimeToSelectedDate();
                   }
                 },
               ),
@@ -193,7 +193,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',
                 onConfirm: () {
-                  widgetManager.removeSelectedTaskByDate(date: originalDate);
+                  widgetManager.removeTaskFromList(widgetManager.selectedTask!, widgetManager.selectedList.value);
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(context); // Pop the previous screen
                 },

@@ -24,12 +24,11 @@ class TaskCard extends StatelessWidget {
     final tasksScreenManager = getIt<TasksScreenManager>();
     return GestureDetector(
       onTap: () {
-        widgetManager.selectTask = task;
         log('open edit sheet [${task.title}]');
         showCupertinoModalBottomSheet(
           context: context,
-          builder: (context) => const Scaffold(
-            body: TaskDetailSheet.updateTask(),
+          builder: (context) => Scaffold(
+            body: TaskDetailSheet.updateTask(task),
           ),
         );
       },

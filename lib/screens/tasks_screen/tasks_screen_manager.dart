@@ -37,9 +37,18 @@ class TasksScreenManager {
 
   updateSelectedDate(DateTime newDateTime) {
     _selectedDate = newDateTime;
-
     checkIfSelectedDateIsToday();
     listenToDateList();
+  }
+
+  updateStartEndTimeToSelectedDate() {
+    // when updating date of a task, also update its start/endTime date to selectedDate
+    if (_selectedTask!.startTime != null) {
+      _selectedTask?.updateStartTime(_selectedTask!.startTime!.hour, _selectedTask!.startTime!.minute);
+    }
+    if (_selectedTask!.endTime != null) {
+      _selectedTask?.updateEndTime(_selectedTask!.endTime!.hour, _selectedTask!.endTime!.minute);
+    }
   }
 
   checkIfSelectedDateIsToday() {
@@ -75,84 +84,38 @@ class TasksScreenManager {
     }
   }
 
-  removeSelectedTaskByDate({
-    required DateTime date,
-  }) async {
-    // delete task locally and save it tmp as updatedLocalDateList
-    MyList updatedLocalDateList = await removeSelectedTaskLocallyByDate(date);
+  Future removeTaskFromList(MyTask myTask, MyList myList) async {
+    // delete myTask from myList locally
+    myList.tasks.remove(myTask);
     // delete task in the db
-    await TaskService().updateDateListInDatabase(updatedLocalDateList);
+    await TaskService().updateDateListInDatabase(myList);
   }
 
-  removeSelectedTaskLocallyByDate(DateTime date) async {
-    final dateListSnapshot = await TaskService().getDateListSnapshot(date);
-    MyList tmpDateList = TaskService().convertFirebaseSnapshotToMyList(
-      firebaseSnapshot: dateListSnapshot,
-      myListTitle: DateTimeUtils.niceDateTimeString(date),
-      listDate: date,
-    );
-    log('old dateList: ${tmpDateList.tasks}');
-    // delete from tasks list (uncompleted)
-    if (_selectedTask?.completed == null || !_selectedTask!.completed) {
-      tmpDateList.tasks.removeAt(selectedTask!.key!);
-      // delete from completedTasks list (completed)
-    } else {
-      tmpDateList.completedTasks.removeAt(selectedTask!.key!);
-    }
-
-    log('new dateList: ${tmpDateList.tasks}');
-    return tmpDateList;
-  }
-
-  updateTask({
-    required DateTime originalDate,
-    String? newTitle,
-    DateTime? newStartTime,
-    DateTime? newEndTime,
+  Future updateTask({
+    required MyTask updatedTask,
+    required MyList originalList,
   }) async {
-    MyTask? originalTask = _selectedTask;
-
-    log('\x1B[31moriginal[$originalDate]selectedTask[${originalTask!.key}]: ${originalTask.title}');
-
-    DateTime newDate = _selectedDate;
-
-    MyTask newTask = originalTask;
-    if (newTitle != null) {
-      newTask.title = newTitle;
-    }
-    if (newStartTime != null) {
-      newTask.startTime = DateTime(newDate.year, newDate.month, newDate.day, newStartTime.hour, newStartTime.minute);
-    }
-    if (newEndTime != null) {
-      newTask.endTime = DateTime(newDate.year, newDate.month, newDate.day, newEndTime.hour, newEndTime.minute);
-    }
-    log('\x1B[32m[$newDate]widgetManager.updateTask: ${newTask.title}, ${newTask.startTime}, ${newTask.endTime}  \x1B[0m');
-
     // check whether the date was changed
-    if (DateTimeUtils.isSpecialDay(originalDate, newDate) == MyDate.isToday) {
+    DateTime newDate = _selectedDate;
+    if (DateTimeUtils.isSpecialDay(originalList.date!, newDate) == MyDate.isToday) {
       // SAME DAY
-      log('original: SAME DAY[${newTask.key}]: ${selectedList.value.tasks[newTask.key!]}');
       // update the new task to the selectedList locally
-      selectedList.value.tasks[newTask.key!] = newTask;
-      log('new: SAME DAY[${newTask.key}]: ${selectedList.value.tasks[newTask.key!]}');
+      selectedList.value.tasks[updatedTask.key!] = updatedTask;
     } else {
       // DIFF DAY
-      log('DIFF DAY');
       // delete the original task from the original date in the db
-      print('selectedDate: $selectedDate; originalDate: $originalDate');
-      print('selectedTask: $selectedTask; originalTask: $originalTask');
-      removeSelectedTaskByDate(date: originalDate);
+      await removeTaskFromList(updatedTask, originalList);
       // add new task the selectedList locally
-      selectedList.value.tasks.add(newTask);
+      selectedList.value.tasks.add(updatedTask);
     }
 
     // update the list with the updated task in db
     log('final updateDateList: ${selectedList.value}');
-    TaskService().updateDateListInDatabase(selectedList.value);
+    await TaskService().updateDateListInDatabase(selectedList.value);
   }
 
-  addTaskToDateList(MyTask newTask) {
-    TaskService().addTaskToDateList(newTask, _selectedDate);
+  Future addTaskToDateList(MyTask newTask) async {
+    await TaskService().addTaskToDateList(newTask, _selectedDate);
   }
 
   toggleTaskCompleted(MyTask task) {

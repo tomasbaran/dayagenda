@@ -42,14 +42,14 @@ class TaskService {
     }
   }
 
-  updateDateListInDatabase(MyList updatedList) {
+  Future updateDateListInDatabase(MyList updatedList) async {
     if (_uid == null) {
       throw ('Error #6[updating task]: User not signed in.');
     } else {
       final listDocRef = _db.collection('users').doc(_uid).collection('date_lists').doc(updatedList.id);
       Map<String, dynamic> formattedUpdatedList = formatMyListToFirebaseList(updatedList);
 
-      listDocRef.set(formattedUpdatedList).onError((error, stackTrace) {
+      await listDocRef.set(formattedUpdatedList).onError((error, stackTrace) {
         log('\x1B[31mError #6[updating task]: $error\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('Error #6[updating task]: $error');
       });
@@ -57,7 +57,7 @@ class TaskService {
     }
   }
 
-  addTaskToDateList(MyTask myTask, DateTime date) {
+  Future addTaskToDateList(MyTask myTask, DateTime date) async {
     if (_uid == null) {
       throw ('Error #1[adding task]: User not signed in.');
     } else {
@@ -67,7 +67,7 @@ class TaskService {
       final formattedTask = formatMyTaskToFirebaseTask(myTask);
       print('adding new task: $formattedTask');
 
-      listDocRef.set({
+      await listDocRef.set({
         'tasks': FieldValue.arrayUnion([formattedTask])
       }, SetOptions(merge: true)).then((value) {
         print('added a new task: $formattedTask');
