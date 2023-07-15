@@ -60,7 +60,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         ),
         actions: [
           Visibility(
-            visible: widgetManager.selectedTask == null ? true : !widgetManager.selectedTask!.completed,
+            visible: !widgetManager.selectedTask!.completed,
             child: TextButton(
               child: Text(
                 widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
@@ -104,7 +104,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask!.completed,
                   title: 'Starts',
                   icon: Icons.access_time,
                   value: widgetManager.selectedTask?.startTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime!),
@@ -121,7 +121,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask!.completed,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
                   value: widgetManager.selectedTask?.endTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime!),
@@ -141,7 +141,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     valueListenable: widgetManager.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
-                        disabled: widgetManager.selectedTask == null ? false : widgetManager.selectedTask!.completed,
+                        disabled: widgetManager.selectedTask!.completed,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
                         value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? widgetManager.selectedDate),
