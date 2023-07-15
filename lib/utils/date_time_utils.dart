@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 enum MyDate {
@@ -34,7 +35,7 @@ class DateTimeUtils {
     }
   }
 
-  static String niceDateTimeString(DateTime dateTime) {
+  static String specialDateTimeString(DateTime dateTime) {
     switch (isSpecialDay(DateTime.now(), dateTime)) {
       case MyDate.isToday:
         return 'Today';
@@ -60,4 +61,9 @@ class DateTimeUtils {
     DateTime resetTime = resetTimeToZero(date);
     return resetTime.add(Duration(hours: hours, minutes: minutes));
   }
+
+  static DateTime? convertTimestampToDateTime(Timestamp? timestamp) =>
+      timestamp == null ? null : DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+  static Timestamp? convertDateTimeToTimestamp(DateTime? dateTime) =>
+      dateTime == null ? null : Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
 }

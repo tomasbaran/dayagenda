@@ -5,6 +5,7 @@ import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service.dart';
 import 'package:logger/logger.dart';
+import 'package:today/utils/date_time_utils.dart';
 
 class TaskService {
   final _db = FirebaseFirestore.instance;
@@ -81,8 +82,8 @@ class TaskService {
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => {
         'title': myTask.title,
         'completed': myTask.completed,
-        'start_time': convertDateTimeToTimestamp(myTask.startTime),
-        'end_time': convertDateTimeToTimestamp(myTask.endTime),
+        'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
+        'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
       };
 
   Map<String, dynamic> formatMyListToFirebaseList(MyList myList) {
@@ -107,11 +108,6 @@ class TaskService {
     return firebaseList;
   }
 
-  DateTime? convertTimestampToDateTime(Timestamp? timestamp) =>
-      timestamp == null ? null : DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
-  Timestamp? convertDateTimeToTimestamp(DateTime? dateTime) =>
-      dateTime == null ? null : Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
-
   List<MyTask> convertFirebaseTasksToMyListItems(List? firebaseTasks) {
     List<MyTask> output = [];
     if (firebaseTasks != null) {
@@ -121,8 +117,8 @@ class TaskService {
             key: key,
             title: value['title'],
             completed: value['completed'],
-            startTime: convertTimestampToDateTime(value['start_time']),
-            endTime: convertTimestampToDateTime(value['end_time']),
+            startTime: DateTimeUtils.convertTimestampToDateTime(value['start_time']),
+            endTime: DateTimeUtils.convertTimestampToDateTime(value['end_time']),
           );
           output.add(myTask);
         },

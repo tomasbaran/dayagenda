@@ -162,7 +162,7 @@ class TasksScreenManager {
         log('selected DAY [$_selectedDate]: ${selectedList.value.tasks}');
         selectedList.value = TaskService().convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
-          myListTitle: DateTimeUtils.niceDateTimeString(_selectedDate),
+          myListTitle: DateTimeUtils.specialDateTimeString(_selectedDate),
           listDate: _selectedDate,
         );
         log('!?! got new data; selectedList.value: ${selectedList.value} ');
