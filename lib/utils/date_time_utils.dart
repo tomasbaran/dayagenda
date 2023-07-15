@@ -8,7 +8,7 @@ enum MyDate {
 }
 
 class DateTimeUtils {
-  static String formatTime(DateTime dateTime) => '${dateTime.hour} : ${formatMinutes(dateTime)}';
+  static String? formatTime(DateTime? dateTime) => dateTime == null ? null : '${dateTime.hour} : ${formatMinutes(dateTime)}';
   static String formatMinutes(DateTime dateTime) => dateTime.minute.toString().padLeft(2, '0');
 
   static MyDate? isSpecialDay(DateTime defaultDateTime, DateTime? checkingDateTime) {

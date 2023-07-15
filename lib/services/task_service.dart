@@ -81,8 +81,8 @@ class TaskService {
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => {
         'title': myTask.title,
         'completed': myTask.completed,
-        'start_time': myTask.startTime == null ? null : convertDateTimeToTimestamp(myTask.startTime!),
-        'end_time': myTask.endTime == null ? null : convertDateTimeToTimestamp(myTask.endTime!),
+        'start_time': convertDateTimeToTimestamp(myTask.startTime),
+        'end_time': convertDateTimeToTimestamp(myTask.endTime),
       };
 
   Map<String, dynamic> formatMyListToFirebaseList(MyList myList) {
@@ -107,8 +107,10 @@ class TaskService {
     return firebaseList;
   }
 
-  DateTime convertTimestampToDateTime(Timestamp timestamp) => DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
-  Timestamp convertDateTimeToTimestamp(DateTime dateTime) => Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
+  DateTime? convertTimestampToDateTime(Timestamp? timestamp) =>
+      timestamp == null ? null : DateTime.fromMillisecondsSinceEpoch(timestamp.millisecondsSinceEpoch);
+  Timestamp? convertDateTimeToTimestamp(DateTime? dateTime) =>
+      dateTime == null ? null : Timestamp.fromMillisecondsSinceEpoch(dateTime.millisecondsSinceEpoch);
 
   List<MyTask> convertFirebaseTasksToMyListItems(List? firebaseTasks) {
     List<MyTask> output = [];
@@ -119,8 +121,8 @@ class TaskService {
             key: key,
             title: value['title'],
             completed: value['completed'],
-            startTime: value['start_time'] == null ? null : convertTimestampToDateTime(value['start_time']),
-            endTime: value['end_time'] == null ? null : convertTimestampToDateTime(value['end_time']),
+            startTime: convertTimestampToDateTime(value['start_time']),
+            endTime: convertTimestampToDateTime(value['end_time']),
           );
           output.add(myTask);
         },

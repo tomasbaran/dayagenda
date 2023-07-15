@@ -107,7 +107,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   disabled: widgetManager.selectedTask!.completed,
                   title: 'Starts',
                   icon: Icons.access_time,
-                  value: widgetManager.selectedTask?.startTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime!),
+                  value: DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime),
                 ),
                 onTap: () => widgetManager.selectedTask!.completed
                     ? null
@@ -124,7 +124,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   disabled: widgetManager.selectedTask!.completed,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
-                  value: widgetManager.selectedTask?.endTime == null ? null : DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime!),
+                  value: DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime),
                 ),
                 onTap: () => widgetManager.selectedTask!.completed
                     ? null
