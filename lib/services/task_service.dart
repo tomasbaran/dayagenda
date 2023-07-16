@@ -141,7 +141,6 @@ class TaskService {
 
     if (firebaseList == null) {
       // there are no tasks for that day assigned (yet)
-      print('no tasks for day: ${myList.title}');
       return myList;
     } else {
       myList.tasks = convertFirebaseTasksToMyListItems(firebaseList['tasks']);

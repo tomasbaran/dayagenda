@@ -115,7 +115,7 @@ class TasksScreenManager {
     }
 
     // update the list with the updated task in db
-    log('final updateDateList: ${selectedList.value}');
+    log('\x1B[32mfinal updateDateList: ${selectedList.value}');
     await TaskService().updateDateListInDatabase(selectedList.value);
   }
 
@@ -129,15 +129,15 @@ class TasksScreenManager {
 
       task.toggleCompleted();
       selectedList.value.completedTasks.add(task);
-      print('Task removed from tasks: ${selectedList.value.tasks}');
-      print('Task added to completedTasks: ${selectedList.value.completedTasks}');
+      log('\x1B[32mTask removed from tasks: ${selectedList.value.tasks} \x1B[0m');
+      log('\x1B[32mTask added to completedTasks: ${selectedList.value.completedTasks} \x1B[0m');
     } else {
       selectedList.value.completedTasks.remove(task);
 
       task.toggleCompleted();
       selectedList.value.tasks.add(task);
-      print('Task removed from completedTasks: ${selectedList.value.completedTasks}');
-      print('Task added to tasks: ${selectedList.value.tasks}');
+      log('\x1B[32mTask removed from completedTasks: ${selectedList.value.completedTasks} \x1B[0m');
+      log('\x1B[32mTask added to tasks: ${selectedList.value.tasks} \x1B[0m');
     }
 
     TaskService().updateDateListInDatabase(selectedList.value);
@@ -152,7 +152,7 @@ class TasksScreenManager {
     }
     final element = selectedList.value.tasks.removeAt(oldIndex);
     selectedList.value.tasks.insert(newIndex, element);
-    print('1. reordered List: ${selectedList.value}');
+    log('\x1B[32m1. reordered List: ${selectedList.value} \x1B[0m');
     TaskService().updateDateListInDatabase(selectedList.value);
   }
 
