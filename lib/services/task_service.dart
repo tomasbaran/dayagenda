@@ -36,8 +36,8 @@ class TaskService {
           log('event: $event;${event.data()}');
         },
         onError: (error) {
-          log('Error #4: Listen failed: $error');
-          throw 'Error #4: Listen failed: $error';
+          log('\x1B[31mError #4: Listen failed: $error \x1B[0m');
+          throw '\x1B[31mError #4: Listen failed: $error \x1B[0m';
         },
       );
     }
@@ -45,7 +45,7 @@ class TaskService {
 
   Future updateDateListInDatabase(MyList updatedList) async {
     if (_uid == null) {
-      throw ('Error #6[updating task]: User not signed in.');
+      throw ('\x1B[31mError #6[updating task]: User not signed in.\x1B[0m');
     } else {
       final listDocRef = _db.collection('users').doc(_uid).collection('date_lists').doc(updatedList.id);
       Map<String, dynamic> formattedUpdatedList = formatMyListToFirebaseList(updatedList);
@@ -54,7 +54,7 @@ class TaskService {
         log('\x1B[31mError #6[updating task]: $error\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('Error #6[updating task]: $error');
       });
-      log('3. updatedList:');
+      log(' \x1B[33m3. updatedList\x1B[0m');
     }
   }
 
@@ -66,15 +66,14 @@ class TaskService {
       final listDocRef = _db.collection("users").doc(_uid).collection('date_lists').doc(listDateId);
 
       final formattedTask = formatMyTaskToFirebaseTask(myTask);
-      print('adding new task: $formattedTask');
 
       await listDocRef.set({
         'tasks': FieldValue.arrayUnion([formattedTask])
       }, SetOptions(merge: true)).then((value) {
-        print('added a new task: $formattedTask');
+        log('\x1B[33madded a new task: $formattedTask\x1B[0m');
       }, onError: (e) {
         log('\x1B[31mError #3[adding task]: $e\x1B[0m');
-        Logger(printer: PrettyPrinter(colors: false)).e('Error #3[adding task]: $e');
+        Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding task]: $e\x1B[0m');
       });
     }
   }
@@ -103,7 +102,7 @@ class TaskService {
       'tasks': firebaseTasks,
       'completed_tasks': firebaseCompletedTasks,
     };
-    log('2. formattedList: $firebaseList');
+    log('\x1B[37m2. formattedList: $firebaseList  \x1B[0m');
 
     return firebaseList;
   }

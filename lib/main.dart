@@ -28,7 +28,7 @@ void main() async {
   } else {
     log(
       time: DateTime.now(),
-      'signed in',
+      'signed in\x1B[0m',
     );
   }
   // FirebaseAuth.instance.signOut();

@@ -141,7 +141,7 @@ class TasksScreenManager {
     }
 
     TaskService().updateDateListInDatabase(selectedList.value);
-    log('4. \x1B[32mupdateDateListInDatabase: ${selectedList.value.tasks}\x1B[0m');
+    log('\x1B[32m4. updateDateListInDatabase: ${selectedList.value.tasks}\x1B[0m');
   }
 
   reorderList(int oldIndex, int newIndex) {
@@ -164,13 +164,12 @@ class TasksScreenManager {
     _subscription = TaskService().listenToDateListSnapshot(date: _selectedDate);
     _subscription?.onData((data) {
       try {
-        log('selected DAY [$_selectedDate]: ${selectedList.value.tasks}');
         selectedList.value = TaskService().convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
           myListTitle: DateTimeUtils.specialDateTimeString(_selectedDate),
           listDate: _selectedDate,
         );
-        log('!?! got new data; selectedList.value: ${selectedList.value} ');
+        log('\x1B[3m\x1B[33m!got new data; selectedList.value: ${selectedList.value}\x1B[0m');
       } catch (e) {
         throw 'Error #12: $e';
       }
