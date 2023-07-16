@@ -86,7 +86,12 @@ class TasksScreenManager {
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
     // delete myTask from myList locally
-    myList.tasks.remove(myTask);
+    if (!myTask.completed) {
+      myList.tasks.remove(myTask);
+    } else {
+      myList.completedTasks.remove(myTask);
+    }
+
     // delete task in the db
     await TaskService().updateDateListInDatabase(myList);
   }
