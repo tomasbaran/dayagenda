@@ -92,7 +92,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   style: addNewTaskSheetTaskTitleTextStyle,
                   maxLines: 2,
                   onChanged: (text) => widgetManager.selectedTask?.title = text,
-                  autofocus: true,
+                  autofocus: widgetManager.selectedTask!.completed ? false : true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: const InputDecoration(hintText: 'Write Task Title', border: InputBorder.none),
                 ),
