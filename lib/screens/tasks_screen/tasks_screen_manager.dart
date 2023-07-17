@@ -124,24 +124,21 @@ class TasksScreenManager {
   }
 
   toggleTaskCompleted(MyTask task) {
+    MyList tmpMyList = selectedList.value;
     if (!task.completed) {
-      selectedList.value.tasks.remove(task);
+      tmpMyList.tasks.remove(task);
 
       task.toggleCompleted();
-      selectedList.value.completedTasks.add(task);
-      log('\x1B[32mTask removed from tasks: ${selectedList.value.tasks} \x1B[0m');
-      log('\x1B[32mTask added to completedTasks: ${selectedList.value.completedTasks} \x1B[0m');
+      tmpMyList.completedTasks.add(task);
     } else {
-      selectedList.value.completedTasks.remove(task);
+      tmpMyList.completedTasks.remove(task);
 
       task.toggleCompleted();
-      selectedList.value.tasks.add(task);
-      log('\x1B[32mTask removed from completedTasks: ${selectedList.value.completedTasks} \x1B[0m');
-      log('\x1B[32mTask added to tasks: ${selectedList.value.tasks} \x1B[0m');
+      tmpMyList.tasks.add(task);
     }
 
-    TaskService().updateDateListInDatabase(selectedList.value);
-    log('\x1B[32m4. updateDateListInDatabase: ${selectedList.value.tasks}\x1B[0m');
+    TaskService().updateDateListInDatabase(tmpMyList);
+    log('\x1B[32m4. updateDateListInDatabase according to tmpMyList: ${tmpMyList}\x1B[0m');
   }
 
   reorderList(int oldIndex, int newIndex) {

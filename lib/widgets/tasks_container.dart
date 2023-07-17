@@ -36,7 +36,7 @@ class TasksContainer extends StatelessWidget {
                 // but I don't like this approach, there has to be a better way
                 int tasksCount = pageList.tasks.length;
                 int listWidgetsCount = tasksCount + 1; // +1 is the new last item: Column of FillInHeight + COMPLETED:
-                log('\x1B[34mupdate pageList: $tasksCount \n ${pageList}\n${widgetManager.selectedList}\x1B[0m');
+                log('\x1B[34mupdate pageList: $tasksCount ${pageList}\x1B[0m');
                 return ReorderableListView.builder(
                     itemCount: listWidgetsCount, // +1 is the new last item: Column of FillInHeight + COMPLETED:
                     itemBuilder: ((___, taskIndex) {
