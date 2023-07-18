@@ -86,7 +86,7 @@ class TasksScreenManager {
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
     // delete myTask from myList locally
-    if (!myTask.completed) {
+    if (!myTask.isCompleted) {
       myList.tasks.remove(myTask);
     } else {
       myList.completedTasks.remove(myTask);
@@ -123,22 +123,25 @@ class TasksScreenManager {
     await TaskService().addTaskToDateList(newTask, _selectedDate);
   }
 
-  toggleTaskCompleted(MyTask task) {
-    MyList tmpMyList = selectedList.value;
-    if (!task.completed) {
-      tmpMyList.tasks.remove(task);
+  toggleTaskCompleted(MyTask task) async {
+    await task.toggleCompleted();
 
-      task.toggleCompleted();
+    MyList tmpMyList = selectedList.value.clone();
+    if (task.isCompleted) {
+      tmpMyList.tasks.removeWhere((element) => element.key == task.key);
+      // ALT: tmpMyList.tasks.removeAt(task.key!);
+
       tmpMyList.completedTasks.add(task);
     } else {
-      tmpMyList.completedTasks.remove(task);
+      tmpMyList.completedTasks.removeWhere((element) => element.key == task.key);
+      // ALT: tmpMyList.completedTasks.removeAt(task.key!);
 
-      task.toggleCompleted();
       tmpMyList.tasks.add(task);
     }
 
     TaskService().updateDateListInDatabase(tmpMyList);
-    log('\x1B[32m4. updateDateListInDatabase according to tmpMyList: ${tmpMyList}\x1B[0m');
+
+    log('\x1B[32mupdateDateListInDatabase according to tmpMyList: $tmpMyList\x1B[0m');
   }
 
   reorderList(int oldIndex, int newIndex) {

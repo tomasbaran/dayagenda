@@ -60,7 +60,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         ),
         actions: [
           Visibility(
-            visible: !widgetManager.selectedTask!.completed,
+            visible: !widgetManager.selectedTask!.isCompleted,
             child: TextButton(
               child: Text(
                 widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
@@ -92,7 +92,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   style: addNewTaskSheetTaskTitleTextStyle,
                   maxLines: 2,
                   onChanged: (text) => widgetManager.selectedTask?.title = text,
-                  autofocus: widgetManager.selectedTask!.completed ? false : true,
+                  autofocus: widgetManager.selectedTask!.isCompleted ? false : true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: const InputDecoration(hintText: 'Write Task Title', border: InputBorder.none),
                 ),
@@ -104,12 +104,12 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask!.isCompleted,
                   title: 'Starts',
                   icon: Icons.access_time,
                   value: DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime),
                 ),
-                onTap: () => widgetManager.selectedTask!.completed
+                onTap: () => widgetManager.selectedTask!.isCompleted
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
@@ -121,12 +121,12 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.completed,
+                  disabled: widgetManager.selectedTask!.isCompleted,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
                   value: DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime),
                 ),
-                onTap: () => widgetManager.selectedTask!.completed
+                onTap: () => widgetManager.selectedTask!.isCompleted
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
@@ -141,14 +141,14 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     valueListenable: widgetManager.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
-                        disabled: widgetManager.selectedTask!.completed,
+                        disabled: widgetManager.selectedTask!.isCompleted,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
                         value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? widgetManager.selectedDate),
                       );
                     }),
                 onTap: () async {
-                  final calendarValues = widgetManager.selectedTask!.completed
+                  final calendarValues = widgetManager.selectedTask!.isCompleted
                       ? null
                       : await showCalendarDatePicker2Dialog(
                           borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),

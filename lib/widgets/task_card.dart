@@ -34,7 +34,7 @@ class TaskCard extends StatelessWidget {
       },
       child: Card(
         elevation: elevation,
-        color: task.completed ? kThemeColor3 : null,
+        color: task.isCompleted ? kThemeColor3 : null,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(cardRadius)),
         child: Row(
           children: [
@@ -55,8 +55,8 @@ class TaskCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: taskCardTitleTextStyle.copyWith(
-                          color: task.completed ? Colors.black54 : null,
-                          decoration: task.completed ? TextDecoration.lineThrough : null,
+                          color: task.isCompleted ? Colors.black54 : null,
+                          decoration: task.isCompleted ? TextDecoration.lineThrough : null,
                         ),
                       ),
                     ),
@@ -65,7 +65,7 @@ class TaskCard extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: Checkbox(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
-                      value: task.completed,
+                      value: task.isCompleted,
                       onChanged: (newValue) {
                         tasksScreenManager.toggleTaskCompleted(task);
                       },

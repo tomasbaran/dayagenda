@@ -80,7 +80,7 @@ class TaskService {
 
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => {
         'title': myTask.title,
-        'completed': myTask.completed,
+        'completed': myTask.isCompleted,
         'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
         'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
       };
@@ -115,7 +115,7 @@ class TaskService {
           MyTask myTask = MyTask(
             key: key,
             title: value['title'],
-            completed: value['completed'],
+            isCompleted: value['completed'],
             startTime: DateTimeUtils.convertTimestampToDateTime(value['start_time']),
             endTime: DateTimeUtils.convertTimestampToDateTime(value['end_time']),
           );
