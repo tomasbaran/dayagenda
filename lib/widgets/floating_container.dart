@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/calendar_view.dart';
@@ -11,12 +11,12 @@ class FloatingContainer extends StatelessWidget {
     super.key,
   });
 
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => widgetManager.updateNavBarSelection(NavBarSelection.unselected),
+      onTap: () => listManager.updateNavBarSelection(NavBarSelection.unselected),
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
         elevation: 10,
@@ -28,7 +28,7 @@ class FloatingContainer extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
           ),
           child: ValueListenableBuilder(
-            valueListenable: widgetManager.navBar,
+            valueListenable: listManager.navBar,
             builder: (context, navBarSelection, child) {
               switch (navBarSelection) {
                 case NavBarSelection.list:

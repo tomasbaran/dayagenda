@@ -15,14 +15,8 @@ enum NavBarSelection {
   list,
 }
 
-class TasksScreenManager {
+class ListManager {
   final selectedList = ValueNotifier<MyList>(MyList());
-  MyTask? _selectedTask;
-  MyTask? get selectedTask => _selectedTask;
-  set selectTask(MyTask task) => _selectedTask = task;
-  unselectTask() {
-    _selectedTask = null;
-  }
 
   DateTime _selectedDate = DateTime.now();
   final isSelectedDateToday = ValueNotifier<bool>(true);
@@ -39,16 +33,6 @@ class TasksScreenManager {
     _selectedDate = newDateTime;
     checkIfSelectedDateIsToday();
     listenToDateList();
-  }
-
-  updateStartEndTimeToSelectedDate() {
-    // when updating date of a task, also update its start/endTime date to selectedDate
-    if (_selectedTask!.startTime != null) {
-      _selectedTask?.updateStartTime(_selectedTask!.startTime!.hour, _selectedTask!.startTime!.minute);
-    }
-    if (_selectedTask!.endTime != null) {
-      _selectedTask?.updateEndTime(_selectedTask!.endTime!.hour, _selectedTask!.endTime!.minute);
-    }
   }
 
   checkIfSelectedDateIsToday() {

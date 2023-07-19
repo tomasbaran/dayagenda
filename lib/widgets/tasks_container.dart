@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:today/models/my_list.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/floating_container.dart';
@@ -17,19 +17,19 @@ class TasksContainer extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
 
   @override
   Widget build(BuildContext context) {
-    final pageController = widgetManager.pageController;
+    final pageController = listManager.pageController;
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: widgetManager.calcFloatingBottomSafeArea()),
+      minimum: EdgeInsets.only(bottom: listManager.calcFloatingBottomSafeArea()),
       child: PageView.builder(
-        onPageChanged: (newPage) => widgetManager.changePage(pageController.page ?? todayIndex.toDouble(), newPage),
+        onPageChanged: (newPage) => listManager.changePage(pageController.page ?? todayIndex.toDouble(), newPage),
         controller: pageController,
         itemBuilder: (____, pageIndex) {
           return ValueListenableBuilder<MyList>(
-              valueListenable: widgetManager.selectedList,
+              valueListenable: listManager.selectedList,
               builder: (_, pageList, __) {
                 int tasksCount = pageList.tasks.length;
                 int listWidgetsCount = tasksCount + 1; // +1 is the new last item: Column of FillInHeight + COMPLETED:
@@ -87,7 +87,7 @@ class TasksContainer extends StatelessWidget {
                         int reversedOldIndex = tasksCount - 1 - oldIndex;
                         // if you move a TaskCard to the last place put it as the penultimate (instead of the last one): since the last one (COMPLETED) is unmovable
                         int reversedNewIndex = newIndex == listWidgetsCount ? tasksCount - newIndex : tasksCount - 1 - newIndex;
-                        widgetManager.reorderList(reversedOldIndex, reversedNewIndex);
+                        listManager.reorderList(reversedOldIndex, reversedNewIndex);
                       }
                     });
               });

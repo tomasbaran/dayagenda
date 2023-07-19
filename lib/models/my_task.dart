@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
@@ -16,7 +16,7 @@ class MyTask extends ChangeNotifier {
     required this.title,
     this.isCompleted = false,
   });
-  final taskManager = getIt<TasksScreenManager>();
+  final taskManager = getIt<ListManager>();
 
   @override
   String toString() {
@@ -27,16 +27,6 @@ class MyTask extends ChangeNotifier {
     isCompleted = !isCompleted;
     taskManager.selectedList.notifyListeners();
     await Future.delayed(const Duration(milliseconds: 900));
-  }
-
-  updateStartTime(int startTimeHours, int startTimeMinutes) {
-    startTime = DateTimeUtils.mixDateAndTime(date: taskManager.selectedDate, hours: startTimeHours, minutes: startTimeMinutes);
-    print('updatedStartTime: $startTime');
-  }
-
-  updateEndTime(int endTimeHours, int endTimeMinutes) {
-    endTime = DateTimeUtils.mixDateAndTime(date: taskManager.selectedDate, hours: endTimeHours, minutes: endTimeMinutes);
-    print('updatedStartTime: $endTime');
   }
 
   MyTask clone() {

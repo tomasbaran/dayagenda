@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_detail_sheet.dart';
@@ -12,7 +12,7 @@ class NavBar extends StatelessWidget {
     super.key,
   });
 
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +22,14 @@ class NavBar extends StatelessWidget {
       children: [
         GestureDetector(
           // onTap: () => widgetManager.pageController.animateToPage(todayIndex, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
-          onTap: () => widgetManager.updateSelectedDate(DateTime.now()),
+          onTap: () => listManager.updateSelectedDate(DateTime.now()),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.only(left: 28, top: 16, bottom: 16, right: 16),
             child: Transform.rotate(
               angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
               child: ValueListenableBuilder(
-                  valueListenable: widgetManager.isSelectedDateToday,
+                  valueListenable: listManager.isSelectedDateToday,
                   builder: (_, isSelectedToday, __) {
                     return Icon(
                       isSelectedToday ? Icons.push_pin : Icons.push_pin_outlined,
@@ -62,7 +62,7 @@ class NavBar extends StatelessWidget {
           // ),
         ),
         GestureDetector(
-          onTap: () => widgetManager.updateNavBarSelection(NavBarSelection.calendar),
+          onTap: () => listManager.updateNavBarSelection(NavBarSelection.calendar),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -119,7 +119,7 @@ class NavBar extends StatelessWidget {
         // Hamburger icon
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => widgetManager.updateNavBarSelection(NavBarSelection.list),
+          onTap: () => listManager.updateNavBarSelection(NavBarSelection.list),
           // child: Text(
           //   '&',
           //   style: bottomToolbarIconTextStyle,
@@ -137,7 +137,7 @@ class NavBar extends StatelessWidget {
         ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => widgetManager.updateNavBarSelection(NavBarSelection.list),
+          onTap: () => listManager.updateNavBarSelection(NavBarSelection.list),
           child:
               // Icons.messenger_outline_sharp,
               // CupertinoIcons.bubble_left,

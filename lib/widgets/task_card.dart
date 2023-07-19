@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_detail_sheet.dart';
@@ -18,10 +18,9 @@ class TaskCard extends StatelessWidget {
     this.elevation = 0,
   });
 
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
   @override
   Widget build(BuildContext context) {
-    final tasksScreenManager = getIt<TasksScreenManager>();
     return GestureDetector(
       onTap: () {
         log('open edit sheet [${task.title}]');
@@ -67,7 +66,7 @@ class TaskCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
                       value: task.isCompleted,
                       onChanged: (newValue) {
-                        tasksScreenManager.toggleTaskCompleted(task);
+                        listManager.toggleTaskCompleted(task);
                       },
                     ),
                   ),

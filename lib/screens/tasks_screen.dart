@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/floating_container.dart';
@@ -16,29 +16,29 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
   @override
   void initState() {
     super.initState();
-    widgetManager.listenToDateList();
+    listManager.listenToDateList();
   }
 
   @override
   void dispose() {
-    widgetManager.disposeSubscription();
+    listManager.disposeSubscription();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    widgetManager.getScreenMeasurments(context);
+    listManager.getScreenMeasurments(context);
     return GestureDetector(
-      onTap: () => widgetManager.updateNavBarSelection(NavBarSelection.unselected),
+      onTap: () => listManager.updateNavBarSelection(NavBarSelection.unselected),
       child: Scaffold(
         appBar: AppBar(
           shadowColor: Colors.transparent,
           title: ValueListenableBuilder(
-            valueListenable: widgetManager.selectedList,
+            valueListenable: listManager.selectedList,
             builder: ((_, selectedList, __) => Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

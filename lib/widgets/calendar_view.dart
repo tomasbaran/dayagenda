@@ -5,14 +5,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:today/globals/constants.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class CalendarView extends StatelessWidget {
   CalendarView({super.key});
 
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
   @override
   Widget build(BuildContext context) {
     return CalendarDatePicker2(
@@ -27,10 +27,10 @@ class CalendarView extends StatelessWidget {
           nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
           lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
         ),
-        value: [widgetManager.selectedDate],
+        value: [listManager.selectedDate],
         onValueChanged: (dates) {
-          widgetManager.updateSelectedDate(dates.first!);
-          widgetManager.updateNavBarSelection(NavBarSelection.unselected);
+          listManager.updateSelectedDate(dates.first!);
+          listManager.updateNavBarSelection(NavBarSelection.unselected);
         });
     ;
   }

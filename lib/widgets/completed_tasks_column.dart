@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_card.dart';
 
 class CompletedTasksColumn extends StatelessWidget {
-  final widgetManager = getIt<TasksScreenManager>();
+  final listManager = getIt<ListManager>();
   CompletedTasksColumn({
     super.key,
   });
 
   List<Widget> children() {
-    double emptySpaceHeight = widgetManager.calcEmptySpaceHeight();
+    double emptySpaceHeight = listManager.calcEmptySpaceHeight();
 
     List<Widget> output = [];
     output.add(
@@ -19,15 +19,15 @@ class CompletedTasksColumn extends StatelessWidget {
         padding: EdgeInsets.only(top: emptySpaceHeight < minEmptySpaceHeight ? minEmptySpaceHeight : emptySpaceHeight),
         child: Center(
           child: Text(
-            'COMPLETED: ${widgetManager.selectedList.value.completedTasks.length}',
+            'COMPLETED: ${listManager.selectedList.value.completedTasks.length}',
           ),
         ),
       ),
     );
-    if (widgetManager.selectedList.value.completedTasks.isNotEmpty) {
+    if (listManager.selectedList.value.completedTasks.isNotEmpty) {
       output.add(const SizedBox(height: completedTitleBottomPadding));
     }
-    for (var completedTask in widgetManager.selectedList.value.completedTasks) {
+    for (var completedTask in listManager.selectedList.value.completedTasks) {
       output.add(TaskCard(
         task: completedTask,
       ));

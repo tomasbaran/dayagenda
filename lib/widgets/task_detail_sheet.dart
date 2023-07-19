@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/screens/tasks_screen/tasks_screen_manager.dart';
+import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
+import 'package:today/managers/task_manager.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/dialog_utlis.dart';
 
@@ -28,19 +29,20 @@ class TaskDetailSheet extends StatefulWidget {
 }
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
-  final widgetManager = getIt<TasksScreenManager>();
+  final taskManager = getIt<TaskManager>();
+  final listManager = getIt<ListManager>();
   late MyList originalList;
 
   @override
   void initState() {
     super.initState();
-    widgetManager.selectTask = widget.task;
-    originalList = widgetManager.selectedList.value;
+    taskManager.selectTask = widget.task;
+    originalList = listManager.selectedList.value;
   }
 
   @override
   void dispose() {
-    widgetManager.unselectTask();
+    taskManager.unselectTask();
     super.dispose();
   }
 
@@ -60,7 +62,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         ),
         actions: [
           Visibility(
-            visible: !widgetManager.selectedTask!.isCompleted,
+            visible: !taskManager.selectedTask.value.isCompleted,
             child: TextButton(
               child: Text(
                 widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
@@ -68,10 +70,10 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               onPressed: () async {
                 widget.sheetType == SheetType.newTask
-                    ? await widgetManager.addTaskToDateList(widgetManager.selectedTask!)
-                    : await widgetManager.updateTask(
+                    ? await listManager.addTaskToDateList(taskManager.selectedTask.value)
+                    : await listManager.updateTask(
                         originalList: originalList,
-                        updatedTask: widgetManager.selectedTask!,
+                        updatedTask: taskManager.selectedTask.value,
                       );
                 if (mounted) {
                   Navigator.pop(context);
@@ -88,11 +90,11 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               CupertinoListTile.notched(
                 backgroundColor: kBackgroundColor,
                 title: TextField(
-                  controller: TextEditingController.fromValue(TextEditingValue(text: widgetManager.selectedTask?.title ?? '')),
+                  controller: TextEditingController.fromValue(TextEditingValue(text: taskManager.selectedTask.value.title)),
                   style: addNewTaskSheetTaskTitleTextStyle,
                   maxLines: 2,
-                  onChanged: (text) => widgetManager.selectedTask?.title = text,
-                  autofocus: widgetManager.selectedTask!.isCompleted ? false : true,
+                  onChanged: (text) => taskManager.updateTitle(text),
+                  autofocus: taskManager.selectedTask.value.isCompleted ? false : true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: const InputDecoration(hintText: 'Write Task Title', border: InputBorder.none),
                 ),
@@ -104,51 +106,51 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.isCompleted,
+                  disabled: taskManager.selectedTask.value.isCompleted,
                   title: 'Starts',
                   icon: Icons.access_time,
-                  value: DateTimeUtils.formatTime(widgetManager.selectedTask!.startTime),
+                  value: DateTimeUtils.formatTime(taskManager.selectedTask.value.startTime),
                 ),
-                onTap: () => widgetManager.selectedTask!.isCompleted
+                onTap: () => taskManager.selectedTask.value.isCompleted
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
-                        defaultTime: widgetManager.selectedTask?.startTime,
+                        defaultTime: taskManager.selectedTask.value.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => widgetManager.selectedTask?.updateStartTime(newTime.hour, newTime.minute));
+                          setState(() => taskManager.updateStartTime(listManager.selectedDate, newTime.hour, newTime.minute));
                         },
                       ),
               ),
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: widgetManager.selectedTask!.isCompleted,
+                  disabled: taskManager.selectedTask.value.isCompleted,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
-                  value: DateTimeUtils.formatTime(widgetManager.selectedTask!.endTime),
+                  value: DateTimeUtils.formatTime(taskManager.selectedTask.value.endTime),
                 ),
-                onTap: () => widgetManager.selectedTask!.isCompleted
+                onTap: () => taskManager.selectedTask.value.isCompleted
                     ? null
                     : DialogUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => widgetManager.selectedTask?.updateEndTime(newTime.hour, newTime.minute));
+                          setState(() => taskManager.updateEndTime(listManager.selectedDate, newTime.hour, newTime.minute));
                         },
-                        defaultTime: widgetManager.selectedTask?.endTime ?? widgetManager.selectedTask?.startTime,
+                        defaultTime: taskManager.selectedTask.value.endTime ?? taskManager.selectedTask.value.startTime,
                       ),
               ),
               GestureDetector(
                 child: ValueListenableBuilder(
-                    valueListenable: widgetManager.selectedList,
+                    valueListenable: listManager.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
-                        disabled: widgetManager.selectedTask!.isCompleted,
+                        disabled: taskManager.selectedTask.value.isCompleted,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
-                        value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? widgetManager.selectedDate),
+                        value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? listManager.selectedDate),
                       );
                     }),
                 onTap: () async {
-                  final calendarValues = widgetManager.selectedTask!.isCompleted
+                  final calendarValues = taskManager.selectedTask.value.isCompleted
                       ? null
                       : await showCalendarDatePicker2Dialog(
                           borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
@@ -176,11 +178,11 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                             nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
                             lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
                           ),
-                          value: [widgetManager.selectedDate],
+                          value: [listManager.selectedDate],
                         );
                   if (calendarValues != null) {
-                    widgetManager.updateSelectedDate(calendarValues.first!);
-                    widgetManager.updateStartEndTimeToSelectedDate();
+                    listManager.updateSelectedDate(calendarValues.first!);
+                    taskManager.updateStartEndTimeToSelectedDate();
                   }
                 },
               ),
@@ -193,7 +195,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',
                 onConfirm: () {
-                  widgetManager.removeTaskFromList(widgetManager.selectedTask!, widgetManager.selectedList.value);
+                  listManager.removeTaskFromList(taskManager.selectedTask.value, listManager.selectedList.value);
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(context); // Pop the previous screen
                 },
