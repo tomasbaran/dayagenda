@@ -53,7 +53,7 @@ class TasksContainer extends StatelessWidget {
                     // possible bugfix of scrollbug#2 by utilizing the below scrollController instead of using PageView's NotificationListener
                     // scrollController: ,
                     proxyDecorator: (_, taskIndex, animation) {
-                      print('taskIndex: $taskIndex; lastIndex: $tasksCount');
+                      debugPrint('taskIndex: $taskIndex; lastIndex: $tasksCount');
                       // Don't animate lastIndex
                       if (taskIndex == tasksCount) {
                         // print('taskIndex: not animating the lastIndex');
@@ -80,7 +80,7 @@ class TasksContainer extends StatelessWidget {
                       }
                     },
                     onReorder: (oldIndex, newIndex) {
-                      print('oldIndex: $oldIndex; lastIndex: $listWidgetsCount');
+                      debugPrint('oldIndex: $oldIndex; lastIndex: $listWidgetsCount');
                       // order any item except for the last one
                       if (oldIndex != tasksCount) {
                         int reversedOldIndex = tasksCount - 1 - oldIndex;

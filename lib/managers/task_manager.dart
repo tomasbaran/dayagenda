@@ -23,7 +23,7 @@ class TaskManager {
     int startTimeMinutes,
   ) {
     selectedTask.value.startTime = DateTimeUtils.mixDateAndTime(date: date, hours: startTimeHours, minutes: startTimeMinutes);
-    print('updatedStartTime: ${selectedTask.value.startTime}');
+    debugPrint('updatedStartTime: ${selectedTask.value.startTime}');
   }
 
   updateEndTime(
@@ -32,7 +32,7 @@ class TaskManager {
     int endTimeMinutes,
   ) {
     selectedTask.value.endTime = DateTimeUtils.mixDateAndTime(date: date, hours: endTimeHours, minutes: endTimeMinutes);
-    print('updatedStartTime: ${selectedTask.value.endTime}');
+    debugPrint('updatedStartTime: ${selectedTask.value.endTime}');
   }
 
   updateStartEndTimeToSelectedDate() {
