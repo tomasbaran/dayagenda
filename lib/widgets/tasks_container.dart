@@ -1,12 +1,10 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:today/managers/app_manager.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/floating_container.dart';
 import 'package:today/widgets/completed_tasks_column.dart';
 import 'package:today/widgets/task_card.dart';
 
@@ -18,12 +16,13 @@ class TasksContainer extends StatelessWidget {
   }) : super(key: key);
 
   final listManager = getIt<ListManager>();
+  final appManager = getIt<AppManager>();
 
   @override
   Widget build(BuildContext context) {
     final pageController = listManager.pageController;
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: listManager.calcFloatingBottomSafeArea()),
+      minimum: EdgeInsets.only(bottom: appManager.floatingBottomSafeArea),
       child: PageView.builder(
         onPageChanged: (newPage) => listManager.changePage(pageController.page ?? todayIndex.toDouble(), newPage),
         controller: pageController,

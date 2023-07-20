@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 
-class DialogUtils {
+class ScreenUtils {
   static void showPlatformAlertDialog({
     required BuildContext context,
     required String title,

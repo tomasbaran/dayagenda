@@ -10,7 +10,7 @@ import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
 import 'package:today/managers/task_manager.dart';
 import 'package:today/widgets/task_time_tile.dart';
-import 'package:today/utils/dialog_utlis.dart';
+import 'package:today/utils/screen_utlis.dart';
 
 enum SheetType {
   newTask,
@@ -113,7 +113,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 ),
                 onTap: () => taskManager.selectedTask.value.isCompleted
                     ? null
-                    : DialogUtils.showCupertinoTimePicker(
+                    : ScreenUtils.showCupertinoTimePicker(
                         context: context,
                         defaultTime: taskManager.selectedTask.value.startTime,
                         onDateTimeChanged: (DateTime newTime) {
@@ -130,7 +130,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 ),
                 onTap: () => taskManager.selectedTask.value.isCompleted
                     ? null
-                    : DialogUtils.showCupertinoTimePicker(
+                    : ScreenUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
                           setState(() => taskManager.updateEndTime(listManager.selectedDate, newTime.hour, newTime.minute));
@@ -190,7 +190,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           ),
           GestureDetector(
             onTap: () {
-              DialogUtils.showPlatformAlertDialog(
+              ScreenUtils.showPlatformAlertDialog(
                 context: context,
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',

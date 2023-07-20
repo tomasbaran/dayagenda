@@ -41,24 +41,6 @@ class ListManager {
         : isSelectedDateToday.value = false;
   }
 
-  double screenHeight = 0;
-  EdgeInsets safeArea = EdgeInsets.zero;
-  getScreenMeasurments(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    safeArea = MediaQuery.of(context).padding;
-  }
-
-  double calcEmptySpaceHeight() =>
-      screenHeight -
-      safeArea.top - //iOS status bar
-      AppBar().preferredSize.height - //appBar's height
-      (selectedList.value.tasks.length * taskCardHeight) -
-      completedTitleHeight -
-      completedTitleBottomPadding -
-      calcFloatingBottomSafeArea();
-
-  double calcFloatingBottomSafeArea() => safeArea.bottom + floatingNavBarContainerHeight + 4;
-
   changePage(double oldPageIndex, int newPageIndex) {
     // print('$oldPageIndex -> $newPageIndex');
     if (newPageIndex.toDouble() > oldPageIndex) {

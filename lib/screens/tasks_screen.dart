@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:today/managers/app_manager.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/floating_container.dart';
 import 'package:today/widgets/tasks_container.dart';
-import 'package:today/widgets/task_detail_sheet.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   final listManager = getIt<ListManager>();
+  final appManager = getIt<AppManager>();
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    listManager.getScreenMeasurments(context);
+    appManager.getScreenMeasurments(context);
     return GestureDetector(
       onTap: () => listManager.updateNavBarSelection(NavBarSelection.unselected),
       child: Scaffold(
