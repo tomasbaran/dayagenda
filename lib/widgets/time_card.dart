@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:today/managers/list_manager.dart';
+import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:intl/intl.dart';

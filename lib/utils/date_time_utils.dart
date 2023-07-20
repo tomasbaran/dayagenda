@@ -1,12 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
-
-enum MyDate {
-  isToday,
-  isTomorrow,
-  isYesterday,
-  isAnotherDay,
-}
+import 'package:today/models/enums.dart';
 
 class DateTimeUtils {
   static String? formatTime(DateTime? dateTime) => dateTime == null ? null : '${dateTime.hour} : ${formatMinutes(dateTime)}';

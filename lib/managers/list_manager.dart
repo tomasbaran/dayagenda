@@ -3,17 +3,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
+import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/services/task_service.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
-
-enum NavBarSelection {
-  unselected,
-  calendar,
-  list,
-}
 
 class ListManager {
   final selectedList = ValueNotifier<MyList>(MyList());
