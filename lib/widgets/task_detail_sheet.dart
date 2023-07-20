@@ -71,7 +71,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               onPressed: () async {
                 widget.sheetType == SheetType.newTask
                     ? await listManager.addTaskToDateList(taskManager.selectedTask.value)
-                    : await listManager.updateTask(
+                    : await listManager.updateListByTask(
                         originalList: originalList,
                         updatedTask: taskManager.selectedTask.value,
                       );

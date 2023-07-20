@@ -62,7 +62,7 @@ class ListManager {
     await TaskService().updateDateListInDatabase(myList);
   }
 
-  Future updateTask({
+  Future updateListByTask({
     required MyTask updatedTask,
     required MyList originalList,
   }) async {
