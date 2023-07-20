@@ -16,10 +16,6 @@ class ListManager {
   DateTime _selectedDate = DateTime.now();
   final isSelectedDateToday = ValueNotifier<bool>(true);
 
-  final navBar = ValueNotifier<NavBarSelection>(NavBarSelection.unselected);
-
-  updateNavBarSelection(NavBarSelection newNavBarSelection) => navBar.value = newNavBarSelection;
-
   DateTime get selectedDate => _selectedDate;
 
   final pageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);

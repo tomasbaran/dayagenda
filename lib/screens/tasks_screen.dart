@@ -34,7 +34,7 @@ class _TasksScreenState extends State<TasksScreen> {
   Widget build(BuildContext context) {
     appManager.getScreenMeasurments(context);
     return GestureDetector(
-      onTap: () => listManager.updateNavBarSelection(NavBarSelection.unselected),
+      onTap: () => appManager.updateNavBarSelection(NavBarSelection.unselected),
       child: Scaffold(
         appBar: AppBar(
           shadowColor: Colors.transparent,

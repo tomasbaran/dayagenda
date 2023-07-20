@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:today/managers/app_manager.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -14,6 +15,7 @@ class NavBar extends StatelessWidget {
   });
 
   final listManager = getIt<ListManager>();
+  final appManager = getIt<AppManager>();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class NavBar extends StatelessWidget {
           // ),
         ),
         GestureDetector(
-          onTap: () => listManager.updateNavBarSelection(NavBarSelection.calendar),
+          onTap: () => appManager.updateNavBarSelection(NavBarSelection.calendar),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -120,7 +122,7 @@ class NavBar extends StatelessWidget {
         // Hamburger icon
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => listManager.updateNavBarSelection(NavBarSelection.list),
+          onTap: () => appManager.updateNavBarSelection(NavBarSelection.list),
           // child: Text(
           //   '&',
           //   style: bottomToolbarIconTextStyle,
@@ -138,7 +140,7 @@ class NavBar extends StatelessWidget {
         ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => listManager.updateNavBarSelection(NavBarSelection.list),
+          onTap: () => appManager.updateNavBarSelection(NavBarSelection.list),
           child:
               // Icons.messenger_outline_sharp,
               // CupertinoIcons.bubble_left,
