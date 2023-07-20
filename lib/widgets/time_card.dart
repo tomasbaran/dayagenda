@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:today/managers/date_manager.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -9,16 +10,16 @@ import 'package:today/utils/date_time_utils.dart';
 class TimeCard extends StatelessWidget {
   final DateTime? taskStartTime;
   final DateTime? taskEndTime;
-  const TimeCard({
+  TimeCard({
     super.key,
     this.taskEndTime,
     this.taskStartTime,
   });
 
+  final dateManager = getIt<DateManager>();
+
   @override
   Widget build(BuildContext context) {
-    final listManager = getIt<ListManager>();
-
     String startTimeString = taskStartTime == null ? '' : '${taskStartTime!.hour}:${taskStartTime!.minute.toString().padLeft(2, '0')}';
     String endTimeString = taskEndTime == null ? '' : '${taskEndTime!.hour}:${taskEndTime!.minute.toString().padLeft(2, '0')}';
     String dateString = taskStartTime == null ? '' : '${taskStartTime!.day} ${DateFormat('MMM').format(taskStartTime!)}';
@@ -33,7 +34,7 @@ class TimeCard extends StatelessWidget {
         height: 68,
         width: 64,
         child: Padding(
-          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(listManager.selectedDate, taskStartTime) == MyDate.isToday ? 6 : 2),
+          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == MyDate.isToday ? 6 : 2),
           child: Column(
             mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
             children: [
@@ -41,7 +42,7 @@ class TimeCard extends StatelessWidget {
               Visibility(
                 visible: taskEndTime != null,
                 child: Text(
-                  DateTimeUtils.isSpecialDay(listManager.selectedDate, taskStartTime) == MyDate.isToday ? '' : dateString,
+                  DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == MyDate.isToday ? '' : dateString,
                   style: timeCardTextStyle,
                 ),
               ),

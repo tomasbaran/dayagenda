@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:today/managers/date_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
@@ -27,6 +28,7 @@ class TaskDetailSheet extends StatefulWidget {
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
   final taskManager = getIt<TaskManager>();
   final listManager = getIt<ListManager>();
+  final dateManager = getIt<DateManager>();
   late MyList originalList;
 
   @override
@@ -113,7 +115,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         context: context,
                         defaultTime: taskManager.selectedTask.value.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskManager.updateStartTime(listManager.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskManager.updateStartTime(dateManager.selectedDate, newTime.hour, newTime.minute));
                         },
                       ),
               ),
@@ -129,7 +131,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     : ScreenUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskManager.updateEndTime(listManager.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskManager.updateEndTime(dateManager.selectedDate, newTime.hour, newTime.minute));
                         },
                         defaultTime: taskManager.selectedTask.value.endTime ?? taskManager.selectedTask.value.startTime,
                       ),
@@ -142,7 +144,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         disabled: taskManager.selectedTask.value.isCompleted,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
-                        value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? listManager.selectedDate),
+                        value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? dateManager.selectedDate),
                       );
                     }),
                 onTap: () async {
@@ -174,10 +176,10 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                             nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
                             lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
                           ),
-                          value: [listManager.selectedDate],
+                          value: [dateManager.selectedDate],
                         );
                   if (calendarValues != null) {
-                    listManager.updateSelectedDate(calendarValues.first!);
+                    listManager.updateListByDate(calendarValues.first!);
                     taskManager.updateStartEndTimeToSelectedDate();
                   }
                 },

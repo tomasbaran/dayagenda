@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:today/managers/app_manager.dart';
+import 'package:today/managers/date_manager.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -16,6 +17,7 @@ class NavBar extends StatelessWidget {
 
   final listManager = getIt<ListManager>();
   final appManager = getIt<AppManager>();
+  final dateManager = getIt<DateManager>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +26,16 @@ class NavBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         GestureDetector(
+          // Flutter BUG: https://github.com/flutter/flutter/issues/128530
           // onTap: () => widgetManager.pageController.animateToPage(todayIndex, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
-          onTap: () => listManager.updateSelectedDate(DateTime.now()),
+          onTap: () => listManager.updateListByDate(DateTime.now()),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.only(left: 28, top: 16, bottom: 16, right: 16),
             child: Transform.rotate(
               angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
               child: ValueListenableBuilder(
-                  valueListenable: listManager.isSelectedDateToday,
+                  valueListenable: dateManager.isSelectedDateToday,
                   builder: (_, isSelectedToday, __) {
                     return Icon(
                       isSelectedToday ? Icons.push_pin : Icons.push_pin_outlined,

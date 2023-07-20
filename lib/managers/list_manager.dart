@@ -2,44 +2,18 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:today/globals/constants.dart';
+import 'package:today/managers/date_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/models/my_list.dart';
+import 'package:today/services/service_locator.dart';
 import 'package:today/services/task_service.dart';
-import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class ListManager {
   final selectedList = ValueNotifier<MyList>(MyList());
 
-  DateTime _selectedDate = DateTime.now();
-  final isSelectedDateToday = ValueNotifier<bool>(true);
-
-  DateTime get selectedDate => _selectedDate;
-
-  final pageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
-
-  updateSelectedDate(DateTime newDateTime) {
-    _selectedDate = newDateTime;
-    checkIfSelectedDateIsToday();
-    listenToDateList();
-  }
-
-  checkIfSelectedDateIsToday() {
-    DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == MyDate.isToday
-        ? isSelectedDateToday.value = true
-        : isSelectedDateToday.value = false;
-  }
-
-  changePage(double oldPageIndex, int newPageIndex) {
-    // print('$oldPageIndex -> $newPageIndex');
-    if (newPageIndex.toDouble() > oldPageIndex) {
-      updateSelectedDate(_selectedDate.add(const Duration(days: 1)));
-    } else {
-      updateSelectedDate(_selectedDate.subtract(const Duration(days: 1)));
-    }
-  }
+  final dateManager = getIt<DateManager>();
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
     // delete myTask from myList locally
@@ -53,12 +27,23 @@ class ListManager {
     await TaskService().updateDateListInDatabase(myList);
   }
 
+  updateListByPage(double oldPageIndex, int newPageIndex) {
+    // print('$oldPageIndex -> $newPageIndex');
+    dateManager.updateSelectedDate(dateManager.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
+    listenToDateList();
+  }
+
+  updateListByDate(DateTime newDate) {
+    dateManager.updateSelectedDate(newDate);
+    listenToDateList();
+  }
+
   Future updateListByTask({
     required MyTask updatedTask,
     required MyList originalList,
   }) async {
     // check whether the date was changed
-    DateTime newDate = _selectedDate;
+    DateTime newDate = dateManager.selectedDate;
     if (DateTimeUtils.isSpecialDay(originalList.date!, newDate) == MyDate.isToday) {
       // SAME DAY
       // update the new task to the selectedList locally
@@ -77,7 +62,7 @@ class ListManager {
   }
 
   Future addTaskToDateList(MyTask newTask) async {
-    await TaskService().addTaskToDateList(newTask, _selectedDate);
+    await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
   }
 
   toggleTaskCompleted(MyTask task) async {
@@ -118,13 +103,13 @@ class ListManager {
   listenToDateList() {
     _subscription?.cancel();
 
-    _subscription = TaskService().listenToDateListSnapshot(date: _selectedDate);
+    _subscription = TaskService().listenToDateListSnapshot(date: dateManager.selectedDate);
     _subscription?.onData((data) {
       try {
         selectedList.value = TaskService().convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
-          myListTitle: DateTimeUtils.specialDateTimeString(_selectedDate),
-          listDate: _selectedDate,
+          myListTitle: DateTimeUtils.specialDateTimeString(dateManager.selectedDate),
+          listDate: dateManager.selectedDate,
         );
         log('\x1B[3m\x1B[33m!got new data; selectedList.value: ${selectedList.value}\x1B[0m');
       } catch (e) {

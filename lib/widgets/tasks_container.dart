@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:today/managers/app_manager.dart';
+import 'package:today/managers/date_manager.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
@@ -17,14 +18,15 @@ class TasksContainer extends StatelessWidget {
 
   final listManager = getIt<ListManager>();
   final appManager = getIt<AppManager>();
+  final dateManager = getIt<DateManager>();
 
   @override
   Widget build(BuildContext context) {
-    final pageController = listManager.pageController;
+    final pageController = dateManager.datePageController;
     return SafeArea(
       minimum: EdgeInsets.only(bottom: appManager.floatingBottomSafeArea),
       child: PageView.builder(
-        onPageChanged: (newPage) => listManager.changePage(pageController.page ?? todayIndex.toDouble(), newPage),
+        onPageChanged: (newPage) => listManager.updateListByPage(pageController.page ?? todayIndex.toDouble(), newPage),
         controller: pageController,
         itemBuilder: (____, pageIndex) {
           return ValueListenableBuilder<MyList>(
