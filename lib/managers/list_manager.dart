@@ -55,8 +55,6 @@ class ListManager {
     }
 
     TaskService().updateDateListInDatabase(selectedList.value);
-
-    log('\x1B[32mupdateDateListInDatabase according to tmpMyList: ${selectedList}\x1B[0m');
   }
 
   updateSameDateListByTask(MyTask updatedTask) {
