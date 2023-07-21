@@ -34,7 +34,7 @@ class CalendarView extends StatelessWidget {
         ),
         value: [dateManager.selectedDate],
         onValueChanged: (dates) {
-          listManager.updateListByDate(dates.first!);
+          listManager.selectListByDate(dates.first!);
           appManager.updateNavBarSelection(NavBarSelection.unselected);
         });
     ;

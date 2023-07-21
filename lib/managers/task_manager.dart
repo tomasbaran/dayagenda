@@ -5,7 +5,7 @@ import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
-class TaskManager {
+class TaskManager extends ChangeNotifier {
   final selectedTask = ValueNotifier<MyTask>(MyTask(title: ''));
   final listManager = getIt<ListManager>();
   final dateManager = getIt<DateManager>();
@@ -45,5 +45,13 @@ class TaskManager {
     if (selectedTask.value.endTime != null) {
       updateEndTime(dateManager.selectedDate, selectedTask.value.endTime!.hour, selectedTask.value.endTime!.minute);
     }
+  }
+
+  toggleTaskCompleted(MyTask task) async {
+    task.isCompleted = !task.isCompleted;
+    listManager.selectedList.notifyListeners(); //so the phone screen reflects the state change
+    await Future.delayed(const Duration(milliseconds: 900));
+
+    listManager.updateListByTaskIsCompleted(task);
   }
 }

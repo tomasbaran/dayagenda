@@ -11,7 +11,7 @@ class DateManager {
 
   DateTime get selectedDate => _selectedDate;
 
-  updateSelectedDate(DateTime newDateTime) {
+  selecteNewDate(DateTime newDateTime) {
     _selectedDate = newDateTime;
     checkIfSelectedDateIsToday();
   }

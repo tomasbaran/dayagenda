@@ -3,7 +3,7 @@ import 'package:today/managers/list_manager.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
-class MyTask extends ChangeNotifier {
+class MyTask {
   DateTime? startTime;
   DateTime? endTime;
   String title;
@@ -21,12 +21,6 @@ class MyTask extends ChangeNotifier {
   @override
   String toString() {
     return '\n[$key] $title: $isCompleted; $startTime';
-  }
-
-  Future toggleCompleted() async {
-    isCompleted = !isCompleted;
-    taskManager.selectedList.notifyListeners();
-    await Future.delayed(const Duration(milliseconds: 900));
   }
 
   MyTask clone() {

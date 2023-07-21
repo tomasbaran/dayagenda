@@ -26,7 +26,7 @@ class TasksContainer extends StatelessWidget {
     return SafeArea(
       minimum: EdgeInsets.only(bottom: appManager.floatingBottomSafeArea),
       child: PageView.builder(
-        onPageChanged: (newPage) => listManager.updateListByPage(pageController.page ?? todayIndex.toDouble(), newPage),
+        onPageChanged: (newPage) => listManager.selectDateListByPage(pageController.page ?? todayIndex.toDouble(), newPage),
         controller: pageController,
         itemBuilder: (____, pageIndex) {
           return ValueListenableBuilder<MyList>(

@@ -70,8 +70,8 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 widget.sheetType == SheetType.newTask
                     ? await listManager.addTaskToDateList(taskManager.selectedTask.value)
                     : await listManager.updateListByTask(
-                        originalList: originalList,
                         updatedTask: taskManager.selectedTask.value,
+                        originalList: originalList,
                       );
                 if (mounted) {
                   Navigator.pop(context);
@@ -179,7 +179,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                           value: [dateManager.selectedDate],
                         );
                   if (calendarValues != null) {
-                    listManager.updateListByDate(calendarValues.first!);
+                    listManager.selectListByDate(calendarValues.first!);
                     taskManager.updateStartEndTimeToSelectedDate();
                   }
                 },

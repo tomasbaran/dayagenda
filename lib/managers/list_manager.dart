@@ -15,6 +15,21 @@ class ListManager {
 
   final dateManager = getIt<DateManager>();
 
+  selectDateListByPage(double oldPageIndex, int newPageIndex) {
+    // print('$oldPageIndex -> $newPageIndex');
+    dateManager.selecteNewDate(dateManager.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
+    listenToDateList();
+  }
+
+  selectListByDate(DateTime newDate) {
+    dateManager.selecteNewDate(newDate);
+    listenToDateList();
+  }
+
+  Future addTaskToDateList(MyTask newTask) async {
+    await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
+  }
+
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
     // delete myTask from myList locally
     if (!myTask.isCompleted) {
@@ -27,63 +42,45 @@ class ListManager {
     await TaskService().updateDateListInDatabase(myList);
   }
 
-  updateListByPage(double oldPageIndex, int newPageIndex) {
-    // print('$oldPageIndex -> $newPageIndex');
-    dateManager.updateSelectedDate(dateManager.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
-    listenToDateList();
+  updateListByTaskIsCompleted(MyTask updatedTask) {
+    // MyList tmpMyList = listManager.selectedList.value.clone();
+    if (updatedTask.isCompleted) {
+      // ALT: tmpMyList.tasks.removeAt(task.key!);
+      selectedList.value.tasks.removeWhere((element) => element.key == updatedTask.key);
+      selectedList.value.completedTasks.add(updatedTask);
+    } else {
+      // ALT: tmpMyList.completedTasks.removeAt(task.key!);
+      selectedList.value.completedTasks.removeWhere((element) => element.key == updatedTask.key);
+      selectedList.value.tasks.add(updatedTask);
+    }
+
+    TaskService().updateDateListInDatabase(selectedList.value);
+
+    log('\x1B[32mupdateDateListInDatabase according to tmpMyList: ${selectedList}\x1B[0m');
   }
 
-  updateListByDate(DateTime newDate) {
-    dateManager.updateSelectedDate(newDate);
-    listenToDateList();
+  updateSameDateListByTask(MyTask updatedTask) {
+    // update the new task to the selectedList locally
+    selectedList.value.tasks[updatedTask.key!] = updatedTask;
+    // update the updated list in the db
+    TaskService().updateDateListInDatabase(selectedList.value);
   }
 
   Future updateListByTask({
     required MyTask updatedTask,
     required MyList originalList,
   }) async {
-    // check whether the date was changed
-    DateTime newDate = dateManager.selectedDate;
-    if (DateTimeUtils.isSpecialDay(originalList.date!, newDate) == MyDate.isToday) {
+    // check whether the date of the updatedTask was changed
+    if (DateTimeUtils.isSpecialDay(originalList.date!, dateManager.selectedDate) == MyDate.isToday) {
       // SAME DAY
-      // update the new task to the selectedList locally
-      selectedList.value.tasks[updatedTask.key!] = updatedTask;
+      updateSameDateListByTask(updatedTask);
     } else {
       // DIFF DAY
       // delete the original task from the original date in the db
-      await removeTaskFromList(updatedTask, originalList);
-      // add new task the selectedList locally
-      selectedList.value.tasks.add(updatedTask);
+      removeTaskFromList(updatedTask, originalList);
+      // add task to list in the db
+      addTaskToDateList(updatedTask);
     }
-
-    // update the list with the updated task in db
-    log('\x1B[32mfinal updateDateList: ${selectedList.value}');
-    await TaskService().updateDateListInDatabase(selectedList.value);
-  }
-
-  Future addTaskToDateList(MyTask newTask) async {
-    await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
-  }
-
-  toggleTaskCompleted(MyTask task) async {
-    await task.toggleCompleted();
-
-    MyList tmpMyList = selectedList.value.clone();
-    if (task.isCompleted) {
-      tmpMyList.tasks.removeWhere((element) => element.key == task.key);
-      // ALT: tmpMyList.tasks.removeAt(task.key!);
-
-      tmpMyList.completedTasks.add(task);
-    } else {
-      tmpMyList.completedTasks.removeWhere((element) => element.key == task.key);
-      // ALT: tmpMyList.completedTasks.removeAt(task.key!);
-
-      tmpMyList.tasks.add(task);
-    }
-
-    TaskService().updateDateListInDatabase(tmpMyList);
-
-    log('\x1B[32mupdateDateListInDatabase according to tmpMyList: $tmpMyList\x1B[0m');
   }
 
   reorderList(int oldIndex, int newIndex) {
