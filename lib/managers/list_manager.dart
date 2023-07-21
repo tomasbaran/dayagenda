@@ -69,7 +69,7 @@ class ListManager {
     required MyList originalList,
   }) async {
     // check whether the date of the updatedTask was changed
-    if (DateTimeUtils.isSpecialDay(originalList.date!, dateManager.selectedDate) == MyDate.isToday) {
+    if (DateTimeUtils.isSpecialDay(originalList.date!, dateManager.selectedDate) == DayType.isToday) {
       // SAME DAY
       updateSameDateListByTask(updatedTask);
     } else {

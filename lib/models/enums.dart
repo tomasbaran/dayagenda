@@ -4,11 +4,11 @@ enum NavBarSelection {
   list,
 }
 
-enum MyDate {
+enum DayType {
   isToday,
   isTomorrow,
   isYesterday,
-  isAnotherDay,
+  isNoSpecial,
 }
 
 enum SheetType {

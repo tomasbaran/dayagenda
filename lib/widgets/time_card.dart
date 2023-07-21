@@ -34,7 +34,7 @@ class TimeCard extends StatelessWidget {
         height: 68,
         width: 64,
         child: Padding(
-          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == MyDate.isToday ? 6 : 2),
+          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == DayType.isToday ? 6 : 2),
           child: Column(
             mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
             children: [
@@ -42,7 +42,7 @@ class TimeCard extends StatelessWidget {
               Visibility(
                 visible: taskEndTime != null,
                 child: Text(
-                  DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == MyDate.isToday ? '' : dateString,
+                  DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == DayType.isToday ? '' : dateString,
                   style: timeCardTextStyle,
                 ),
               ),

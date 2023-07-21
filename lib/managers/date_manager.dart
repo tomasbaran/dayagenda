@@ -17,7 +17,7 @@ class DateManager {
   }
 
   checkIfSelectedDateIsToday() {
-    DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == MyDate.isToday
+    DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == DayType.isToday
         ? isSelectedDateToday.value = true
         : isSelectedDateToday.value = false;
   }
