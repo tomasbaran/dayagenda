@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:today/globals/constants.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -28,4 +29,6 @@ class AppManager {
       floatingBottomSafeArea;
 
   double get floatingBottomSafeArea => safeArea.bottom + floatingNavBarContainerHeight + 4;
+
+  final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
 }

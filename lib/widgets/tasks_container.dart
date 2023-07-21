@@ -22,7 +22,7 @@ class TasksContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pageController = dateManager.datePageController;
+    final pageController = appManager.datePageController;
     return SafeArea(
       minimum: EdgeInsets.only(bottom: appManager.floatingBottomSafeArea),
       child: PageView.builder(

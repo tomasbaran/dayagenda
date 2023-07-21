@@ -21,6 +21,4 @@ class DateManager {
         ? isSelectedDateToday.value = true
         : isSelectedDateToday.value = false;
   }
-
-  final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
 }
