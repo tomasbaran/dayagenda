@@ -12,18 +12,16 @@ class AppManager {
   double screenHeight = 0;
   EdgeInsets safeArea = EdgeInsets.zero;
 
-  final listManager = getIt<ListManager>();
-
   getScreenMeasurments(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
     safeArea = MediaQuery.of(context).padding;
   }
 
-  double get emptySpaceHeight =>
+  double emptySpaceHeight(int taskCount) =>
       screenHeight -
       safeArea.top - //iOS status bar
       AppBar().preferredSize.height - //appBar's height
-      (listManager.selectedList.value.tasks.length * taskCardHeight) -
+      (taskCount * taskCardHeight) -
       completedTitleHeight -
       completedTitleBottomPadding -
       floatingBottomSafeArea;

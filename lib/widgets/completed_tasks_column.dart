@@ -16,7 +16,10 @@ class CompletedTasksColumn extends StatelessWidget {
     List<Widget> output = [];
     output.add(
       Padding(
-        padding: EdgeInsets.only(top: appManager.emptySpaceHeight < minEmptySpaceHeight ? minEmptySpaceHeight : appManager.emptySpaceHeight),
+        padding: EdgeInsets.only(
+            top: appManager.emptySpaceHeight(listManager.selectedList.value.tasks.length) < minEmptySpaceHeight
+                ? minEmptySpaceHeight
+                : appManager.emptySpaceHeight(listManager.selectedList.value.tasks.length)),
         child: Center(
           child: Text(
             'COMPLETED: ${listManager.selectedList.value.completedTasks.length}',
