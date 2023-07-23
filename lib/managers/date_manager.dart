@@ -13,12 +13,8 @@ class DateManager {
 
   selecteNewDate(DateTime newDateTime) {
     _selectedDate = newDateTime;
-    checkIfSelectedDateIsToday();
+    isSelectedDateToday.value = checkIfSelectedDateIsToday();
   }
 
-  checkIfSelectedDateIsToday() {
-    DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == DayType.isToday
-        ? isSelectedDateToday.value = true
-        : isSelectedDateToday.value = false;
-  }
+  bool checkIfSelectedDateIsToday() => DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == DayType.isToday;
 }
