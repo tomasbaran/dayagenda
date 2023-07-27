@@ -5,12 +5,14 @@ import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service.dart';
 import 'package:logger/logger.dart';
+import 'package:today/services/list_service/list_service.dart';
 import 'package:today/utils/date_time_utils.dart';
 
-class TaskService {
+class FirestoreListService extends ListService {
   final _db = FirebaseFirestore.instance;
   final String? _uid = AuthService().uid;
 
+  @override
   Future<DocumentSnapshot<Map<String, dynamic>>> getDateListSnapshot(DateTime date) {
     String listDateId = '${date.year}-${date.month}-${date.day}_$_uid';
     final DocumentReference<Map<String, dynamic>> listDocRef = _db.collection("users").doc(_uid).collection('date_lists').doc(listDateId);
@@ -18,6 +20,7 @@ class TaskService {
   }
 
   // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
+  @override
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId}) {
     if (_uid == null) {
       throw ('Error #2[getting list]: User not signed in.');
@@ -43,6 +46,7 @@ class TaskService {
     }
   }
 
+  @override
   Future updateDateListInDatabase(MyList updatedList) async {
     if (_uid == null) {
       throw ('\x1B[31mError #6[updating task]: User not signed in.\x1B[0m');
@@ -58,6 +62,7 @@ class TaskService {
     }
   }
 
+  @override
   Future addTaskToDateList(MyTask myTask, DateTime date) async {
     if (_uid == null) {
       throw ('Error #1[adding task]: User not signed in.');
@@ -78,6 +83,7 @@ class TaskService {
     }
   }
 
+  @override
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => {
         'title': myTask.title,
         'completed': myTask.isCompleted,
@@ -85,6 +91,7 @@ class TaskService {
         'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
       };
 
+  @override
   Map<String, dynamic> formatMyListToFirebaseList(MyList myList) {
     List<Map> firebaseTasks = [];
     for (var myTask in myList.tasks) {
@@ -107,6 +114,7 @@ class TaskService {
     return firebaseList;
   }
 
+  @override
   List<MyTask> convertFirebaseTasksToMyListItems(List? firebaseTasks) {
     List<MyTask> output = [];
     if (firebaseTasks != null) {
@@ -127,6 +135,7 @@ class TaskService {
     return output;
   }
 
+  @override
   MyList convertFirebaseSnapshotToMyList({
     required DocumentSnapshot<Map<String, dynamic>> firebaseSnapshot,
     required String myListTitle,

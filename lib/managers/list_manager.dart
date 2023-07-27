@@ -7,13 +7,14 @@ import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/services/service_locator.dart';
-import 'package:today/services/task_service.dart';
+import 'package:today/services/list_service/list_service.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class ListManager {
   final selectedList = ValueNotifier<MyList>(MyList());
 
   final dateManager = getIt<DateManager>();
+  final listService = getIt<ListService>();
 
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
     dateManager.selecteNewDate(dateManager.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
@@ -25,7 +26,7 @@ class ListManager {
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask) async => await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
+  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateList(newTask, dateManager.selectedDate);
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
     MyList tmpList = myList.clone();
@@ -36,7 +37,7 @@ class ListManager {
       tmpList.completedTasks.removeAt(myTask.key!);
     }
     // delete task in the db
-    await TaskService().updateDateListInDatabase(tmpList);
+    await listService.updateDateListInDatabase(tmpList);
     log('selectedList: $selectedList');
   }
 
@@ -52,14 +53,14 @@ class ListManager {
       selectedList.value.tasks.add(updatedTask);
     }
 
-    TaskService().updateDateListInDatabase(selectedList.value);
+    listService.updateDateListInDatabase(selectedList.value);
   }
 
   updateSameDateListByTask(MyTask updatedTask) {
     // update the new task to the selectedList locally
     selectedList.value.tasks[updatedTask.key!] = updatedTask;
     // update the updated list in the db
-    TaskService().updateDateListInDatabase(selectedList.value);
+    listService.updateDateListInDatabase(selectedList.value);
   }
 
   Future updateListByTask({
@@ -88,7 +89,7 @@ class ListManager {
     final element = selectedList.value.tasks.removeAt(oldIndex);
     selectedList.value.tasks.insert(newIndex, element);
     log('\x1B[32m1. reordered List: ${selectedList.value} \x1B[0m');
-    TaskService().updateDateListInDatabase(selectedList.value);
+    listService.updateDateListInDatabase(selectedList.value);
   }
 
   StreamSubscription? _subscription;
@@ -96,10 +97,10 @@ class ListManager {
   listenToDateList() {
     _subscription?.cancel();
 
-    _subscription = TaskService().listenToDateListSnapshot(date: dateManager.selectedDate);
+    _subscription = listService.listenToDateListSnapshot(date: dateManager.selectedDate);
     _subscription?.onData((data) {
       try {
-        selectedList.value = TaskService().convertFirebaseSnapshotToMyList(
+        selectedList.value = listService.convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
           myListTitle: DateTimeUtils.specialDateTimeString(dateManager.selectedDate),
           listDate: dateManager.selectedDate,

@@ -3,6 +3,8 @@ import 'package:today/managers/app_manager.dart';
 import 'package:today/managers/date_manager.dart';
 import 'package:today/managers/list_manager.dart';
 import 'package:today/managers/task_manager.dart';
+import 'package:today/services/list_service/list_service.dart';
+import 'package:today/services/list_service/firestore_list_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -11,4 +13,5 @@ void setupGetIt() {
   getIt.registerLazySingleton<TaskManager>(() => TaskManager());
   getIt.registerLazySingleton<AppManager>(() => AppManager());
   getIt.registerLazySingleton<DateManager>(() => DateManager());
+  getIt.registerLazySingleton<ListService>(() => FirestoreListService());
 }
