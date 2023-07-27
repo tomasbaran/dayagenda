@@ -16,30 +16,28 @@ class ListManager {
   final dateManager = getIt<DateManager>();
 
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
-    // print('$oldPageIndex -> $newPageIndex');
     dateManager.selecteNewDate(dateManager.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
     listenToDateList();
   }
 
-  selectListByDate(DateTime newDate) {
+  selectDateListByDate(DateTime newDate) {
     dateManager.selecteNewDate(newDate);
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask) async {
-    await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
-  }
+  Future addTaskToDateList(MyTask newTask) async => await TaskService().addTaskToDateList(newTask, dateManager.selectedDate);
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
+    MyList tmpList = myList.clone();
     // delete myTask from myList locally
     if (!myTask.isCompleted) {
-      myList.tasks.remove(myTask);
+      tmpList.tasks.removeAt(myTask.key!);
     } else {
-      myList.completedTasks.remove(myTask);
+      tmpList.completedTasks.removeAt(myTask.key!);
     }
-
     // delete task in the db
-    await TaskService().updateDateListInDatabase(myList);
+    await TaskService().updateDateListInDatabase(tmpList);
+    log('selectedList: $selectedList');
   }
 
   updateListByTaskIsCompleted(MyTask updatedTask) {

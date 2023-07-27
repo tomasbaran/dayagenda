@@ -28,7 +28,7 @@ class NavBar extends StatelessWidget {
         GestureDetector(
           // Flutter BUG: https://github.com/flutter/flutter/issues/128530
           // onTap: () => widgetManager.pageController.animateToPage(todayIndex, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
-          onTap: () => listManager.selectListByDate(DateTime.now()),
+          onTap: () => listManager.selectDateListByDate(DateTime.now()),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.only(left: 28, top: 16, bottom: 16, right: 16),
