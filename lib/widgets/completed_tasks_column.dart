@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:today/states/app_state.dart';
-import 'package:today/states/list_state.dart';
+import 'package:today/states/list_state/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_card.dart';

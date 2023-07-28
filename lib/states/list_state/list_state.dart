@@ -9,7 +9,7 @@ import 'package:today/models/my_list.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/services/list_service/list_service.dart';
 import 'package:today/utils/date_time_utils.dart';
-import 'list_state_notifier/selected_list_notifier.dart';
+import 'selected_list_notifier.dart';
 
 class ListState {
   final selectedList = SelectedListNotifier();

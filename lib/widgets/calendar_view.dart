@@ -7,7 +7,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/states/app_state.dart';
 import 'package:today/states/date_state.dart';
-import 'package:today/states/list_state.dart';
+import 'package:today/states/list_state/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
