@@ -9,9 +9,15 @@ import 'package:today/models/my_list.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/services/list_service/list_service.dart';
 import 'package:today/utils/date_time_utils.dart';
+import 'list_state_notifier/selected_list_notifier.dart';
 
 class ListState {
-  final selectedList = ValueNotifier<MyList>(MyList());
+  final selectedList = SelectedListNotifier();
+  listenToDateList() => selectedList.listenToDateList();
+  disposeSubscription() => selectedList.disposeSubscription();
+  reorderList(int oldIndex, int newIndex) => selectedList.reorderList(oldIndex, newIndex);
+  updateListByTaskIsCompleted(MyTask updatedTask) => selectedList.updateListByTaskIsCompleted(updatedTask);
+  updateSameDateListByTask(MyTask updatedTask) => selectedList.updateSameDateListByTask(updatedTask);
 
   final dateState = getIt<DateState>();
   final listService = getIt<ListService>();
@@ -38,29 +44,6 @@ class ListState {
     }
     // delete task in the db
     await listService.updateDateListInDatabase(tmpList);
-    log('selectedList: $selectedList');
-  }
-
-  updateListByTaskIsCompleted(MyTask updatedTask) {
-    // MyList tmpMyList = listState.selectedList.value.clone();
-    if (updatedTask.isCompleted) {
-      // ALT: tmpMyList.tasks.removeAt(task.key!);
-      selectedList.value.tasks.removeWhere((element) => element.key == updatedTask.key);
-      selectedList.value.completedTasks.add(updatedTask);
-    } else {
-      // ALT: tmpMyList.completedTasks.removeAt(task.key!);
-      selectedList.value.completedTasks.removeWhere((element) => element.key == updatedTask.key);
-      selectedList.value.tasks.add(updatedTask);
-    }
-
-    listService.updateDateListInDatabase(selectedList.value);
-  }
-
-  updateSameDateListByTask(MyTask updatedTask) {
-    // update the new task to the selectedList locally
-    selectedList.value.tasks[updatedTask.key!] = updatedTask;
-    // update the updated list in the db
-    listService.updateDateListInDatabase(selectedList.value);
   }
 
   Future updateListByTask({
@@ -78,41 +61,5 @@ class ListState {
       // add task to list in the db
       addTaskToDateList(updatedTask);
     }
-  }
-
-  reorderList(int oldIndex, int newIndex) {
-    // print('0. before ordering List: ${selectedList.value}');
-
-    if (newIndex < oldIndex) {
-      newIndex = newIndex + 1;
-    }
-    final element = selectedList.value.tasks.removeAt(oldIndex);
-    selectedList.value.tasks.insert(newIndex, element);
-    log('\x1B[32m1. reordered List: ${selectedList.value} \x1B[0m');
-    listService.updateDateListInDatabase(selectedList.value);
-  }
-
-  StreamSubscription? _subscription;
-
-  listenToDateList() {
-    _subscription?.cancel();
-
-    _subscription = listService.listenToDateListSnapshot(date: dateState.selectedDate);
-    _subscription?.onData((data) {
-      try {
-        selectedList.value = listService.convertFirebaseSnapshotToMyList(
-          firebaseSnapshot: data,
-          myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate),
-          listDate: dateState.selectedDate,
-        );
-        log('\x1B[3m\x1B[33m!got new data; selectedList.value: ${selectedList.value}\x1B[0m');
-      } catch (e) {
-        throw 'Error #12: $e';
-      }
-    });
-  }
-
-  disposeSubscription() {
-    _subscription?.cancel();
   }
 }
