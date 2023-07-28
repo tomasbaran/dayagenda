@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:today/states/app_state.dart';
-import 'package:today/states/date_manager.dart';
+import 'package:today/states/date_state.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -17,7 +17,7 @@ class NavBar extends StatelessWidget {
 
   final listState = getIt<ListState>();
   final appState = getIt<AppState>();
-  final dateManager = getIt<DateManager>();
+  final dateState = getIt<DateState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class NavBar extends StatelessWidget {
             child: Transform.rotate(
               angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
               child: ValueListenableBuilder(
-                  valueListenable: dateManager.isSelectedDateToday,
+                  valueListenable: dateState.isSelectedDateToday,
                   builder: (_, isSelectedToday, __) {
                     return Icon(
                       isSelectedToday ? Icons.push_pin : Icons.push_pin_outlined,

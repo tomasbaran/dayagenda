@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:today/states/app_state.dart';
-import 'package:today/states/date_manager.dart';
+import 'package:today/states/date_state.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
@@ -18,7 +18,7 @@ class TasksContainer extends StatelessWidget {
 
   final listState = getIt<ListState>();
   final appState = getIt<AppState>();
-  final dateManager = getIt<DateManager>();
+  final dateState = getIt<DateState>();
 
   @override
   Widget build(BuildContext context) {

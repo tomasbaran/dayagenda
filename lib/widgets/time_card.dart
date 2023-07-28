@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/states/date_manager.dart';
+import 'package:today/states/date_state.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -16,7 +16,7 @@ class TimeCard extends StatelessWidget {
     this.taskStartTime,
   });
 
-  final dateManager = getIt<DateManager>();
+  final dateState = getIt<DateState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TimeCard extends StatelessWidget {
         height: 68,
         width: 64,
         child: Padding(
-          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == DayType.isToday ? 6 : 2),
+          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateState.selectedDate, taskStartTime) == DayType.isToday ? 6 : 2),
           child: Column(
             mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
             children: [
@@ -42,7 +42,7 @@ class TimeCard extends StatelessWidget {
               Visibility(
                 visible: taskEndTime != null,
                 child: Text(
-                  DateTimeUtils.isSpecialDay(dateManager.selectedDate, taskStartTime) == DayType.isToday ? '' : dateString,
+                  DateTimeUtils.isSpecialDay(dateState.selectedDate, taskStartTime) == DayType.isToday ? '' : dateString,
                   style: timeCardTextStyle,
                 ),
               ),

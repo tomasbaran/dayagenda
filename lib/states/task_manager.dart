@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/states/date_manager.dart';
+import 'package:today/states/date_state.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
@@ -8,7 +8,7 @@ import 'package:today/utils/date_time_utils.dart';
 class TaskManager extends ChangeNotifier {
   final selectedTask = ValueNotifier<MyTask>(MyTask(title: ''));
   final listState = getIt<ListState>();
-  final dateManager = getIt<DateManager>();
+  final dateState = getIt<DateState>();
 
   set selectTask(MyTask task) => selectedTask.value = task;
   unselectTask() {
@@ -40,10 +40,10 @@ class TaskManager extends ChangeNotifier {
   updateStartEndTimeToSelectedDate() {
     // when updating date of a task, also update its start/endTime date to selectedDate
     if (selectedTask.value.startTime != null) {
-      updateStartTime(dateManager.selectedDate, selectedTask.value.startTime!.hour, selectedTask.value.startTime!.minute);
+      updateStartTime(dateState.selectedDate, selectedTask.value.startTime!.hour, selectedTask.value.startTime!.minute);
     }
     if (selectedTask.value.endTime != null) {
-      updateEndTime(dateManager.selectedDate, selectedTask.value.endTime!.hour, selectedTask.value.endTime!.minute);
+      updateEndTime(dateState.selectedDate, selectedTask.value.endTime!.hour, selectedTask.value.endTime!.minute);
     }
   }
 
