@@ -118,7 +118,14 @@ double floatingBarRadius = 32;
 
 // # navBarList
 TextStyle navBarListTextStyle = TextStyle(
-  color: Colors.amber,
+  color: kThemeColor7,
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+);
+
+// # navBarAccount
+TextStyle navBarAccountTextStyle = TextStyle(
+  color: kThemeColor2,
   fontSize: 18,
   fontWeight: FontWeight.w500,
 );

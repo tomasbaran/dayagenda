@@ -14,30 +14,9 @@ class ListsNavContainer extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(32.0),
             child: Text(
-              '#Family',
-              style: navBarListTextStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '#Family',
-              style: navBarListTextStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '#Family',
-              style: navBarListTextStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '#Family',
+              'Lists are coming soon.',
               style: navBarListTextStyle,
             ),
           ),
