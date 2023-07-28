@@ -47,6 +47,19 @@ class FirestoreListService extends ListService {
   }
 
   @override
+  Future removeTaskFromList(MyTask myTask, MyList myList) async {
+    MyList tmpList = myList.clone();
+    // delete myTask from myList locally
+    if (!myTask.isCompleted) {
+      tmpList.tasks.removeAt(myTask.key!);
+    } else {
+      tmpList.completedTasks.removeAt(myTask.key!);
+    }
+    // delete task in the db
+    await updateDateListInDatabase(tmpList);
+  }
+
+  @override
   Future updateDateListInDatabase(MyList updatedList) async {
     if (_uid == null) {
       throw ('\x1B[31mError #6[updating task]: User not signed in.\x1B[0m');

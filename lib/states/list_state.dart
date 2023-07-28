@@ -34,17 +34,7 @@ class ListState {
 
   Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateList(newTask, dateState.selectedDate);
 
-  Future removeTaskFromList(MyTask myTask, MyList myList) async {
-    MyList tmpList = myList.clone();
-    // delete myTask from myList locally
-    if (!myTask.isCompleted) {
-      tmpList.tasks.removeAt(myTask.key!);
-    } else {
-      tmpList.completedTasks.removeAt(myTask.key!);
-    }
-    // delete task in the db
-    await listService.updateDateListInDatabase(tmpList);
-  }
+  Future removeTaskFromList(MyTask myTask, MyList myList) async => listService.removeTaskFromList(myTask, myList);
 
   Future updateListByTask({
     required MyTask updatedTask,

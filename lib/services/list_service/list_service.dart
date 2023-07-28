@@ -9,6 +9,8 @@ abstract class ListService {
 
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId});
 
+  Future removeTaskFromList(MyTask myTask, MyList myList);
+
   Future updateDateListInDatabase(MyList updatedList);
 
   Future addTaskToDateList(MyTask myTask, DateTime date);
