@@ -5,7 +5,7 @@ import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
-class AppManager {
+class AppState {
   final navBar = ValueNotifier<NavBarSelection>(NavBarSelection.unselected);
   updateNavBarSelection(NavBarSelection newNavBarSelection) => navBar.value = newNavBarSelection;
 

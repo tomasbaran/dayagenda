@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -14,12 +14,12 @@ class FloatingContainer extends StatelessWidget {
   });
 
   final listState = getIt<ListState>();
-  final appManager = getIt<AppManager>();
+  final appState = getIt<AppState>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => appManager.updateNavBarSelection(NavBarSelection.unselected),
+      onTap: () => appState.updateNavBarSelection(NavBarSelection.unselected),
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
         elevation: 10,
@@ -31,7 +31,7 @@ class FloatingContainer extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
           ),
           child: ValueListenableBuilder(
-            valueListenable: appManager.navBar,
+            valueListenable: appState.navBar,
             builder: (context, navBarSelection, child) {
               switch (navBarSelection) {
                 case NavBarSelection.list:

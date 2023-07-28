@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
@@ -17,7 +17,7 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   final listState = getIt<ListState>();
-  final appManager = getIt<AppManager>();
+  final appState = getIt<AppState>();
   @override
   void initState() {
     super.initState();
@@ -32,9 +32,9 @@ class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    appManager.getScreenMeasurments(context);
+    appState.getScreenMeasurments(context);
     return GestureDetector(
-      onTap: () => appManager.updateNavBarSelection(NavBarSelection.unselected),
+      onTap: () => appState.updateNavBarSelection(NavBarSelection.unselected),
       child: Scaffold(
         appBar: AppBar(
           shadowColor: Colors.transparent,

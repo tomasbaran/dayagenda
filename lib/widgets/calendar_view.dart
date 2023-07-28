@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:today/globals/constants.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/date_manager.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
@@ -16,7 +16,7 @@ class CalendarView extends StatelessWidget {
   CalendarView({super.key});
 
   final listState = getIt<ListState>();
-  final appManager = getIt<AppManager>();
+  final appState = getIt<AppState>();
   final dateManager = getIt<DateManager>();
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class CalendarView extends StatelessWidget {
         value: [dateManager.selectedDate],
         onValueChanged: (dates) {
           listState.selectDateListByDate(dates.first!);
-          appManager.updateNavBarSelection(NavBarSelection.unselected);
+          appState.updateNavBarSelection(NavBarSelection.unselected);
         });
     ;
   }

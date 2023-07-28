@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/date_manager.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/states/task_manager.dart';
@@ -11,7 +11,7 @@ final getIt = GetIt.instance;
 void setupGetIt() {
   getIt.registerLazySingleton<ListState>(() => ListState());
   getIt.registerLazySingleton<TaskManager>(() => TaskManager());
-  getIt.registerLazySingleton<AppManager>(() => AppManager());
+  getIt.registerLazySingleton<AppState>(() => AppState());
   getIt.registerLazySingleton<DateManager>(() => DateManager());
   getIt.registerLazySingleton<ListService>(() => FirestoreListService());
 }

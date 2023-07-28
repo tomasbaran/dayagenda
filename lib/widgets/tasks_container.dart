@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/date_manager.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/states/list_state.dart';
@@ -17,14 +17,14 @@ class TasksContainer extends StatelessWidget {
   }) : super(key: key);
 
   final listState = getIt<ListState>();
-  final appManager = getIt<AppManager>();
+  final appState = getIt<AppState>();
   final dateManager = getIt<DateManager>();
 
   @override
   Widget build(BuildContext context) {
-    final pageController = appManager.datePageController;
+    final pageController = appState.datePageController;
     return SafeArea(
-      minimum: EdgeInsets.only(bottom: appManager.floatingBottomSafeArea),
+      minimum: EdgeInsets.only(bottom: appState.floatingBottomSafeArea),
       child: PageView.builder(
         onPageChanged: (newPage) => listState.selectDateListByPage(pageController.page ?? todayIndex.toDouble(), newPage),
         controller: pageController,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/states/app_manager.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -7,7 +7,7 @@ import 'package:today/widgets/task_card.dart';
 
 class CompletedTasksColumn extends StatelessWidget {
   final listState = getIt<ListState>();
-  final appManager = getIt<AppManager>();
+  final appState = getIt<AppState>();
   CompletedTasksColumn({
     super.key,
   });
@@ -17,9 +17,9 @@ class CompletedTasksColumn extends StatelessWidget {
     output.add(
       Padding(
         padding: EdgeInsets.only(
-            top: appManager.emptySpaceHeight(listState.selectedList.value.tasks.length) < minEmptySpaceHeight
+            top: appState.emptySpaceHeight(listState.selectedList.value.tasks.length) < minEmptySpaceHeight
                 ? minEmptySpaceHeight
-                : appManager.emptySpaceHeight(listState.selectedList.value.tasks.length)),
+                : appState.emptySpaceHeight(listState.selectedList.value.tasks.length)),
         child: Center(
           child: Text(
             'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
