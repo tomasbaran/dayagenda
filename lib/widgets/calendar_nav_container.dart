@@ -12,8 +12,8 @@ import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
-class CalendarView extends StatelessWidget {
-  CalendarView({super.key});
+class CalendarNavContainer extends StatelessWidget {
+  CalendarNavContainer({super.key});
 
   final listState = getIt<ListState>();
   final appState = getIt<AppState>();

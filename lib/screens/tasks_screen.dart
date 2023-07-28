@@ -5,8 +5,8 @@ import 'package:today/states/list_state/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/floating_container.dart';
 import 'package:today/widgets/tasks_container.dart';
+import 'package:today/widgets/nav_container.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingContainer(),
+        floatingActionButton: NavContainer(),
         body: TasksContainer(),
       ),
     );

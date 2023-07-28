@@ -4,12 +4,13 @@ import 'package:today/states/list_state/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/calendar_view.dart';
+import 'package:today/widgets/calendar_nav_container.dart';
 import 'package:today/widgets/nav_bar.dart';
-import 'package:today/widgets/floating_list_view.dart';
+import 'package:today/widgets/lists_nav_container.dart';
+import 'package:today/widgets/account_nav_container.dart';
 
-class FloatingContainer extends StatelessWidget {
-  FloatingContainer({
+class NavContainer extends StatelessWidget {
+  NavContainer({
     super.key,
   });
 
@@ -34,10 +35,12 @@ class FloatingContainer extends StatelessWidget {
             valueListenable: appState.navBar,
             builder: (context, navBarSelection, child) {
               switch (navBarSelection) {
+                case NavBarSelection.account:
+                  return const AccountNavContainer();
                 case NavBarSelection.list:
-                  return FloatingListView();
+                  return const ListsNavContainer();
                 case NavBarSelection.calendar:
-                  return CalendarView();
+                  return CalendarNavContainer();
                 default:
                   return NavBar();
               }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:today/style/style_constants.dart';
 
-class FloatingListView extends StatelessWidget {
-  const FloatingListView({super.key});
+class AccountNavContainer extends StatelessWidget {
+  const AccountNavContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +16,14 @@ class FloatingListView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '#Family',
+              'signed in as name@mail.com',
               style: navBarListTextStyle,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              '#Family',
-              style: navBarListTextStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '#Family',
-              style: navBarListTextStyle,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '#Family',
+              'SEND FEEDBACK',
               style: navBarListTextStyle,
             ),
           ),

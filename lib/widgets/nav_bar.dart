@@ -143,17 +143,21 @@ class NavBar extends StatelessWidget {
         ),
         GestureDetector(
           behavior: HitTestBehavior.translucent,
-          onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
+          onTap: () => appState.updateNavBarSelection(NavBarSelection.account),
           child:
               // Icons.messenger_outline_sharp,
               // CupertinoIcons.bubble_left,
               Padding(
             padding: const EdgeInsets.only(right: 32, top: 16, bottom: 16, left: 16),
             child: FaIcon(
-              FontAwesomeIcons.paperPlane,
+              // Icons.account_circle_outlined,
+              // CupertinoIcons.person,
+              FontAwesomeIcons.user,
+              // FontAwesomeIcons.paperPlane,
               // FontAwesomeIcons.commentDots,
               color: kIconColor,
-              size: 22,
+              // size: 22,
+              size: 24,
             ),
           ),
         ),
