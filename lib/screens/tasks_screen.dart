@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/managers/app_manager.dart';
-import 'package:today/managers/list_manager.dart';
+import 'package:today/states/app_manager.dart';
+import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -16,17 +16,17 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final listManager = getIt<ListManager>();
+  final listState = getIt<ListState>();
   final appManager = getIt<AppManager>();
   @override
   void initState() {
     super.initState();
-    listManager.listenToDateList();
+    listState.listenToDateList();
   }
 
   @override
   void dispose() {
-    listManager.disposeSubscription();
+    listState.disposeSubscription();
     super.dispose();
   }
 
@@ -39,7 +39,7 @@ class _TasksScreenState extends State<TasksScreen> {
         appBar: AppBar(
           shadowColor: Colors.transparent,
           title: ValueListenableBuilder(
-            valueListenable: listManager.selectedList,
+            valueListenable: listState.selectedList,
             builder: ((_, selectedList, __) => Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

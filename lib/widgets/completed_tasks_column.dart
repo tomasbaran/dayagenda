@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:today/managers/app_manager.dart';
-import 'package:today/managers/list_manager.dart';
+import 'package:today/states/app_manager.dart';
+import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/widgets/task_card.dart';
 
 class CompletedTasksColumn extends StatelessWidget {
-  final listManager = getIt<ListManager>();
+  final listState = getIt<ListState>();
   final appManager = getIt<AppManager>();
   CompletedTasksColumn({
     super.key,
@@ -17,20 +17,20 @@ class CompletedTasksColumn extends StatelessWidget {
     output.add(
       Padding(
         padding: EdgeInsets.only(
-            top: appManager.emptySpaceHeight(listManager.selectedList.value.tasks.length) < minEmptySpaceHeight
+            top: appManager.emptySpaceHeight(listState.selectedList.value.tasks.length) < minEmptySpaceHeight
                 ? minEmptySpaceHeight
-                : appManager.emptySpaceHeight(listManager.selectedList.value.tasks.length)),
+                : appManager.emptySpaceHeight(listState.selectedList.value.tasks.length)),
         child: Center(
           child: Text(
-            'COMPLETED: ${listManager.selectedList.value.completedTasks.length}',
+            'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
           ),
         ),
       ),
     );
-    if (listManager.selectedList.value.completedTasks.isNotEmpty) {
+    if (listState.selectedList.value.completedTasks.isNotEmpty) {
       output.add(const SizedBox(height: completedTitleBottomPadding));
     }
-    for (var completedTask in listManager.selectedList.value.completedTasks) {
+    for (var completedTask in listState.selectedList.value.completedTasks) {
       output.add(TaskCard(
         task: completedTask,
       ));

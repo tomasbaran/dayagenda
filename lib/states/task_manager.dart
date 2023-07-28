@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:today/managers/date_manager.dart';
+import 'package:today/states/date_manager.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/managers/list_manager.dart';
+import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class TaskManager extends ChangeNotifier {
   final selectedTask = ValueNotifier<MyTask>(MyTask(title: ''));
-  final listManager = getIt<ListManager>();
+  final listState = getIt<ListState>();
   final dateManager = getIt<DateManager>();
 
   set selectTask(MyTask task) => selectedTask.value = task;
@@ -49,9 +49,9 @@ class TaskManager extends ChangeNotifier {
 
   toggleTaskCompleted(MyTask task) async {
     task.isCompleted = !task.isCompleted;
-    listManager.selectedList.notifyListeners(); //so the phone screen reflects the state change
+    listState.selectedList.notifyListeners(); //so the phone screen reflects the state change
     await Future.delayed(const Duration(milliseconds: 900));
 
-    listManager.updateListByTaskIsCompleted(task);
+    listState.updateListByTaskIsCompleted(task);
   }
 }

@@ -2,15 +2,15 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/managers/date_manager.dart';
+import 'package:today/states/date_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/managers/list_manager.dart';
+import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
-import 'package:today/managers/task_manager.dart';
+import 'package:today/states/task_manager.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/screen_utlis.dart';
 
@@ -27,7 +27,7 @@ class TaskDetailSheet extends StatefulWidget {
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
   final taskManager = getIt<TaskManager>();
-  final listManager = getIt<ListManager>();
+  final listState = getIt<ListState>();
   final dateManager = getIt<DateManager>();
   late MyList originalList;
 
@@ -35,7 +35,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
   void initState() {
     super.initState();
     taskManager.selectTask = widget.task;
-    originalList = listManager.selectedList.value;
+    originalList = listState.selectedList.value;
   }
 
   @override
@@ -68,8 +68,8 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               onPressed: () {
                 widget.sheetType == SheetType.newTask
-                    ? listManager.addTaskToDateList(taskManager.selectedTask.value)
-                    : listManager.updateListByTask(
+                    ? listState.addTaskToDateList(taskManager.selectedTask.value)
+                    : listState.updateListByTask(
                         updatedTask: taskManager.selectedTask.value,
                         originalList: originalList,
                       );
@@ -138,7 +138,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               GestureDetector(
                 child: ValueListenableBuilder(
-                    valueListenable: listManager.selectedList,
+                    valueListenable: listState.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
                         disabled: taskManager.selectedTask.value.isCompleted,
@@ -179,7 +179,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                           value: [dateManager.selectedDate],
                         );
                   if (calendarValues != null) {
-                    listManager.selectDateListByDate(calendarValues.first!);
+                    listState.selectDateListByDate(calendarValues.first!);
                     taskManager.updateStartEndTimeToSelectedDate();
                   }
                 },
@@ -193,7 +193,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',
                 onConfirm: () {
-                  listManager.removeTaskFromList(taskManager.selectedTask.value, listManager.selectedList.value);
+                  listState.removeTaskFromList(taskManager.selectedTask.value, listState.selectedList.value);
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(context); // Pop the previous screen
                 },

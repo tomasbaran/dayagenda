@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/managers/task_manager.dart';
+import 'package:today/states/task_manager.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';

@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:today/managers/list_manager.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/utils/date_time_utils.dart';
-
 class MyTask {
   DateTime? startTime;
   DateTime? endTime;
@@ -16,7 +11,6 @@ class MyTask {
     required this.title,
     this.isCompleted = false,
   });
-  final taskManager = getIt<ListManager>();
 
   @override
   String toString() {

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/managers/app_manager.dart';
-import 'package:today/managers/date_manager.dart';
-import 'package:today/managers/list_manager.dart';
+import 'package:today/states/app_manager.dart';
+import 'package:today/states/date_manager.dart';
+import 'package:today/states/list_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -15,7 +15,7 @@ class NavBar extends StatelessWidget {
     super.key,
   });
 
-  final listManager = getIt<ListManager>();
+  final listState = getIt<ListState>();
   final appManager = getIt<AppManager>();
   final dateManager = getIt<DateManager>();
 
@@ -28,7 +28,7 @@ class NavBar extends StatelessWidget {
         GestureDetector(
           // Flutter BUG: https://github.com/flutter/flutter/issues/128530
           // onTap: () => widgetManager.pageController.animateToPage(todayIndex, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
-          onTap: () => listManager.selectDateListByDate(DateTime.now()),
+          onTap: () => listState.selectDateListByDate(DateTime.now()),
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.only(left: 28, top: 16, bottom: 16, right: 16),

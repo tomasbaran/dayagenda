@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:today/managers/date_manager.dart';
+import 'package:today/states/date_manager.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/models/my_list.dart';
@@ -10,7 +10,7 @@ import 'package:today/services/service_locator.dart';
 import 'package:today/services/list_service/list_service.dart';
 import 'package:today/utils/date_time_utils.dart';
 
-class ListManager {
+class ListState {
   final selectedList = ValueNotifier<MyList>(MyList());
 
   final dateManager = getIt<DateManager>();
@@ -42,7 +42,7 @@ class ListManager {
   }
 
   updateListByTaskIsCompleted(MyTask updatedTask) {
-    // MyList tmpMyList = listManager.selectedList.value.clone();
+    // MyList tmpMyList = listState.selectedList.value.clone();
     if (updatedTask.isCompleted) {
       // ALT: tmpMyList.tasks.removeAt(task.key!);
       selectedList.value.tasks.removeWhere((element) => element.key == updatedTask.key);
