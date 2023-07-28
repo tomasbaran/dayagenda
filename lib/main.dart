@@ -25,7 +25,7 @@ class TodayApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: AppTheme.light,
-      title: 'Today',
+      title: 'DayAgenda',
       // home: Auth().uid == null ? LoginScreen() : const TasksScreen(),
       // onGenerateRoute (instead of home) is necessary for the showCupertinoModalBottomSheet to animate and shrink the background when adding a new task
       onGenerateRoute: (RouteSettings settings) {
