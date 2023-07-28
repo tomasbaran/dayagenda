@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/states/task_manager.dart';
+import 'package:today/states/task_state.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
@@ -18,7 +18,7 @@ class TaskCard extends StatelessWidget {
     this.elevation = 0,
   });
 
-  final taskManager = getIt<TaskManager>();
+  final taskState = getIt<TaskState>();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -66,7 +66,7 @@ class TaskCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
                       value: task.isCompleted,
                       onChanged: (newValue) {
-                        taskManager.toggleTaskCompleted(task);
+                        taskState.toggleTaskCompleted(task);
                       },
                     ),
                   ),

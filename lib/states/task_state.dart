@@ -5,7 +5,7 @@ import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
-class TaskManager extends ChangeNotifier {
+class TaskState extends ChangeNotifier {
   final selectedTask = ValueNotifier<MyTask>(MyTask(title: ''));
   final listState = getIt<ListState>();
   final dateState = getIt<DateState>();

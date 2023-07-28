@@ -10,7 +10,7 @@ import 'package:today/states/list_state.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/date_time_utils.dart';
-import 'package:today/states/task_manager.dart';
+import 'package:today/states/task_state.dart';
 import 'package:today/widgets/task_time_tile.dart';
 import 'package:today/utils/screen_utlis.dart';
 
@@ -26,7 +26,7 @@ class TaskDetailSheet extends StatefulWidget {
 }
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
-  final taskManager = getIt<TaskManager>();
+  final taskState = getIt<TaskState>();
   final listState = getIt<ListState>();
   final dateState = getIt<DateState>();
   late MyList originalList;
@@ -34,13 +34,13 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
   @override
   void initState() {
     super.initState();
-    taskManager.selectTask = widget.task;
+    taskState.selectTask = widget.task;
     originalList = listState.selectedList.value;
   }
 
   @override
   void dispose() {
-    taskManager.unselectTask();
+    taskState.unselectTask();
     super.dispose();
   }
 
@@ -60,7 +60,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         ),
         actions: [
           Visibility(
-            visible: !taskManager.selectedTask.value.isCompleted,
+            visible: !taskState.selectedTask.value.isCompleted,
             child: TextButton(
               child: Text(
                 widget.sheetType == SheetType.newTask ? 'Add' : 'Update',
@@ -68,9 +68,9 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               onPressed: () {
                 widget.sheetType == SheetType.newTask
-                    ? listState.addTaskToDateList(taskManager.selectedTask.value)
+                    ? listState.addTaskToDateList(taskState.selectedTask.value)
                     : listState.updateListByTask(
-                        updatedTask: taskManager.selectedTask.value,
+                        updatedTask: taskState.selectedTask.value,
                         originalList: originalList,
                       );
                 if (mounted) {
@@ -88,11 +88,11 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               CupertinoListTile.notched(
                 backgroundColor: kBackgroundColor,
                 title: TextField(
-                  controller: TextEditingController.fromValue(TextEditingValue(text: taskManager.selectedTask.value.title)),
+                  controller: TextEditingController.fromValue(TextEditingValue(text: taskState.selectedTask.value.title)),
                   style: addNewTaskSheetTaskTitleTextStyle,
                   maxLines: 2,
-                  onChanged: (text) => taskManager.updateTitle(text),
-                  autofocus: taskManager.selectedTask.value.isCompleted ? false : true,
+                  onChanged: (text) => taskState.updateTitle(text),
+                  autofocus: taskState.selectedTask.value.isCompleted ? false : true,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: const InputDecoration(hintText: 'Write Task Title', border: InputBorder.none),
                 ),
@@ -104,36 +104,36 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
             children: [
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: taskManager.selectedTask.value.isCompleted,
+                  disabled: taskState.selectedTask.value.isCompleted,
                   title: 'Starts',
                   icon: Icons.access_time,
-                  value: DateTimeUtils.formatTime(taskManager.selectedTask.value.startTime),
+                  value: DateTimeUtils.formatTime(taskState.selectedTask.value.startTime),
                 ),
-                onTap: () => taskManager.selectedTask.value.isCompleted
+                onTap: () => taskState.selectedTask.value.isCompleted
                     ? null
                     : ScreenUtils.showCupertinoTimePicker(
                         context: context,
-                        defaultTime: taskManager.selectedTask.value.startTime,
+                        defaultTime: taskState.selectedTask.value.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskManager.updateStartTime(dateState.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskState.updateStartTime(dateState.selectedDate, newTime.hour, newTime.minute));
                         },
                       ),
               ),
               GestureDetector(
                 child: TaskTimeTile(
-                  disabled: taskManager.selectedTask.value.isCompleted,
+                  disabled: taskState.selectedTask.value.isCompleted,
                   title: 'Ends',
                   icon: Icons.access_time_filled,
-                  value: DateTimeUtils.formatTime(taskManager.selectedTask.value.endTime),
+                  value: DateTimeUtils.formatTime(taskState.selectedTask.value.endTime),
                 ),
-                onTap: () => taskManager.selectedTask.value.isCompleted
+                onTap: () => taskState.selectedTask.value.isCompleted
                     ? null
                     : ScreenUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskManager.updateEndTime(dateState.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskState.updateEndTime(dateState.selectedDate, newTime.hour, newTime.minute));
                         },
-                        defaultTime: taskManager.selectedTask.value.endTime ?? taskManager.selectedTask.value.startTime,
+                        defaultTime: taskState.selectedTask.value.endTime ?? taskState.selectedTask.value.startTime,
                       ),
               ),
               GestureDetector(
@@ -141,14 +141,14 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     valueListenable: listState.selectedList,
                     builder: (context, selectedList, child) {
                       return TaskTimeTile(
-                        disabled: taskManager.selectedTask.value.isCompleted,
+                        disabled: taskState.selectedTask.value.isCompleted,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
                         value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? dateState.selectedDate),
                       );
                     }),
                 onTap: () async {
-                  final calendarValues = taskManager.selectedTask.value.isCompleted
+                  final calendarValues = taskState.selectedTask.value.isCompleted
                       ? null
                       : await showCalendarDatePicker2Dialog(
                           borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
@@ -180,7 +180,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         );
                   if (calendarValues != null) {
                     listState.selectDateListByDate(calendarValues.first!);
-                    taskManager.updateStartEndTimeToSelectedDate();
+                    taskState.updateStartEndTimeToSelectedDate();
                   }
                 },
               ),
@@ -193,7 +193,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 title: 'Delete Task',
                 message: 'Are you sure you want to delete this task?',
                 onConfirm: () {
-                  listState.removeTaskFromList(taskManager.selectedTask.value, listState.selectedList.value);
+                  listState.removeTaskFromList(taskState.selectedTask.value, listState.selectedList.value);
                   Navigator.pop(context); // Close the dialog
                   Navigator.pop(context); // Pop the previous screen
                 },
