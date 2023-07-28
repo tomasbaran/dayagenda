@@ -1,8 +1,10 @@
+import 'dart:developer';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
-import 'package:today/states/list_state.dart';
+import 'package:today/services/auth_service.dart';
 import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class AppState {
@@ -29,4 +31,23 @@ class AppState {
   double get floatingBottomSafeArea => safeArea.bottom + floatingNavBarContainerHeight + 4;
 
   final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
+
+  Future<void> initialize() async {
+    await Firebase.initializeApp();
+
+    // DEV-MODE:
+    // check whether the user is signed in
+    if (AuthService().uid == null) {
+      log(
+        time: DateTime.now(),
+        '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
+      );
+    } else {
+      log(
+        time: DateTime.now(),
+        'signed in\x1B[0m',
+      );
+    }
+    // FirebaseAuth.instance.signOut();
+  }
 }

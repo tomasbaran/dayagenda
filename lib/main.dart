@@ -1,12 +1,9 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:today/screens/tasks_screen.dart';
 import 'package:today/services/auth_service.dart';
 import 'package:today/services/service_locator.dart';
+import 'package:today/states/app_state.dart';
 import 'screens/login_screen.dart';
 import 'style/theme.dart';
 
@@ -15,23 +12,8 @@ void main() async {
 
   setupGetIt();
 
-// initializing the firebase app
-  await Firebase.initializeApp();
-
-  // DEV-MODE:
-  // check whether the user is signed in
-  if (AuthService().uid == null) {
-    log(
-      time: DateTime.now(),
-      '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
-    );
-  } else {
-    log(
-      time: DateTime.now(),
-      'signed in\x1B[0m',
-    );
-  }
-  // FirebaseAuth.instance.signOut();
+  final appState = getIt<AppState>();
+  await appState.initialize();
 
   runApp(const TodayApp());
 }
