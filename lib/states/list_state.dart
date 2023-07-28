@@ -32,9 +32,9 @@ class ListState {
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateList(newTask, dateState.selectedDate);
+  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate);
 
-  Future removeTaskFromList(MyTask myTask, MyList myList) async => listService.removeTaskFromList(myTask, myList);
+  Future removeTaskFromList(MyTask myTask, MyList myList) async => listService.removeTaskFromListInCloud(myTask, myList);
 
   Future updateListByTask({
     required MyTask updatedTask,

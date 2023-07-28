@@ -9,11 +9,11 @@ abstract class ListService {
 
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId});
 
-  Future removeTaskFromList(MyTask myTask, MyList myList);
+  Future removeTaskFromListInCloud(MyTask myTask, MyList myList);
 
-  Future updateDateListInDatabase(MyList updatedList);
+  Future updateDateListInCloud(MyList updatedList);
 
-  Future addTaskToDateList(MyTask myTask, DateTime date);
+  Future addTaskToDateListInCloud(MyTask myTask, DateTime date);
 
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask);
 

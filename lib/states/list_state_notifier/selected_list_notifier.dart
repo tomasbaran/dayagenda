@@ -48,7 +48,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     final element = value.tasks.removeAt(oldIndex);
     value.tasks.insert(newIndex, element);
     log('\x1B[32m1. reordered List: ${value} \x1B[0m');
-    listService.updateDateListInDatabase(value);
+    listService.updateDateListInCloud(value);
   }
 
   updateListByTaskIsCompleted(MyTask updatedTask) {
@@ -63,13 +63,13 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
       value.tasks.add(updatedTask);
     }
 
-    listService.updateDateListInDatabase(value);
+    listService.updateDateListInCloud(value);
   }
 
   updateSameDateListByTask(MyTask updatedTask) {
     // update the new task to the selectedList locally
     value.tasks[updatedTask.key!] = updatedTask;
     // update the updated list in the db
-    listService.updateDateListInDatabase(value);
+    listService.updateDateListInCloud(value);
   }
 }
