@@ -125,7 +125,23 @@ TextStyle navBarListTextStyle = TextStyle(
 
 // # navBarAccount
 TextStyle navBarAccountTextStyle = TextStyle(
+  color: kThemeColor3,
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  // decoration: TextDecoration.underline,
+);
+
+// # navBarAccount
+TextStyle navBarAccountHighlightedTextStyle = TextStyle(
   color: kThemeColor2,
+  fontSize: 18,
+  fontWeight: FontWeight.w700,
+  // decoration: TextDecoration.underline,
+);
+
+// # navBarAccount
+TextStyle navBarAccountInformationTextStyle = TextStyle(
+  color: kThemeColor9,
   fontSize: 18,
   fontWeight: FontWeight.w500,
 );
