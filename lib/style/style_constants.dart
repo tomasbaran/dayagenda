@@ -119,14 +119,14 @@ double floatingBarRadius = 32;
 // # navBarList
 TextStyle navBarListTextStyle = TextStyle(
   color: kThemeColor7,
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: FontWeight.w500,
 );
 
 // # navBarAccount
 TextStyle navBarAccountTextStyle = TextStyle(
   color: kThemeColor3,
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: FontWeight.w600,
   // decoration: TextDecoration.underline,
 );
@@ -134,7 +134,7 @@ TextStyle navBarAccountTextStyle = TextStyle(
 // # navBarAccount
 TextStyle navBarAccountHighlightedTextStyle = TextStyle(
   color: kThemeColor2,
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: FontWeight.w700,
   // decoration: TextDecoration.underline,
 );
@@ -142,6 +142,6 @@ TextStyle navBarAccountHighlightedTextStyle = TextStyle(
 // # navBarAccount
 TextStyle navBarAccountInformationTextStyle = TextStyle(
   color: kThemeColor9,
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: FontWeight.w500,
 );

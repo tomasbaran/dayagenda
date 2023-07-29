@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:today/style/style_constants.dart';
+import 'package:today/utils/send_feedback.dart';
 
 class AccountNavContainer extends StatelessWidget {
   const AccountNavContainer({super.key});
@@ -30,28 +31,31 @@ class AccountNavContainer extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: navBarAccountInformationTextStyle.color,
-                borderRadius: BorderRadius.all(Radius.circular(6)),
-              ),
-              padding: EdgeInsets.all(12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.commentAlt,
-                    color: navBarAccountHighlightedTextStyle.color,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    'SEND FEEDBACK',
-                    style: navBarAccountHighlightedTextStyle,
-                  ),
-                ],
+          GestureDetector(
+            onTap: () => SendFeedback().sendEmail(context, 'Feedback'),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: navBarAccountInformationTextStyle.color,
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
+                padding: EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.commentAlt,
+                      color: navBarAccountHighlightedTextStyle.color,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      'Send Feedback',
+                      style: navBarAccountHighlightedTextStyle,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
