@@ -17,5 +17,6 @@ class AppTheme {
 
   static ThemeData dark = ThemeData(
     primaryColor: Colors.black,
+    // primaryColor: Colors.amber,
   );
 }

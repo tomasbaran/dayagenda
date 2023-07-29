@@ -23,7 +23,7 @@ const kIconColor = Color(0xFF5E6678);
 const kThemeColor10 = Color(0xFF232B34); // blueGrey
 const kThemeColor11 = Color(0xFF152335); // blueGrey
 const kThemeColor12 = Color(0xFF041427); // blueGrey
-const kHighlightColor = Colors.black;
+const kHighlightColor = kThemeColor11;
 
 // LoginScreen
 
