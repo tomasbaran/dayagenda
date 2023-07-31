@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
-import 'package:today/services/auth_service.dart';
+import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
-import 'package:today/services/auth_service.dart';
+import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 
 import 'package:today/style/style_constants.dart';

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
+import 'package:today/services/auth_service/auth_service.dart';
 
-class AuthService {
+class FirebaseAuthService extends AuthService {
   // creating firebase instance
+  @override
   final FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
   String? get uid => auth.currentUser?.uid;
 
   GoogleSignIn googleSignIn = GoogleSignIn(
@@ -14,6 +18,7 @@ class AuthService {
   );
 
   // function to implement the google signin
+  @override
   Future<UserCredential> signInWithGoogle(BuildContext context) async {
     GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
@@ -34,6 +39,7 @@ class AuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  @override
   logout() {
     FirebaseAuth.instance.signOut();
   }

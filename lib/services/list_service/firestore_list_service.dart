@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
-import 'package:today/services/auth_service.dart';
+import 'package:today/services/auth_service/auth_service.dart';
 import 'package:logger/logger.dart';
 import 'package:today/services/list_service/list_service.dart';
 import 'package:today/services/service_locator.dart';

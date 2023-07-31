@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:today/services/auth_service.dart';
+import 'package:today/services/auth_service/auth_service.dart';
+import 'package:today/services/auth_service/firebase_auth_service.dart';
 import 'package:today/states/app_state.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/states/list_state/list_state.dart';
@@ -15,5 +16,5 @@ void setupGetIt() {
   getIt.registerLazySingleton<AppState>(() => AppState());
   getIt.registerLazySingleton<DateState>(() => DateState());
   getIt.registerLazySingleton<ListService>(() => FirestoreListService());
-  getIt.registerLazySingleton<AuthService>(() => AuthService());
+  getIt.registerLazySingleton<AuthService>(() => FirebaseAuthService());
 }

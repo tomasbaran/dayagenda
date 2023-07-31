@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:googleapis/servicemanagement/v1.dart';
-import 'package:today/services/auth_service.dart';
+import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/send_feedback.dart';
