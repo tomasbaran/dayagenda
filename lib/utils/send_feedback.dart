@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/services/auth_service.dart';
+import 'package:today/services/service_locator.dart';
 
 import 'package:today/style/style_constants.dart';
 
@@ -17,12 +18,14 @@ class SendFeedback {
     String appVersion = packageInfo.version;
     String buildNumber = packageInfo.buildNumber;
 
+    final authService = getIt<AuthService>();
+
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       String dash = '--------------------------------------\n';
-      String uid = 'UID: ${AuthService().uid}\n';
+      String uid = 'UID: ${authService.uid}\n';
       String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
       String brand = 'Brand: ${androidInfo.brand}\n';
       String manufacturer = 'Manufacturer: ${androidInfo.manufacturer}\n';
@@ -55,7 +58,7 @@ class SendFeedback {
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       String dash = '--------------------------------------\n';
-      String uid = 'UID: ${AuthService().uid}\n';
+      String uid = 'UID: ${authService.uid}\n';
       String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
       String isPhysicalDevice = 'Physical Device: ${iosInfo.isPhysicalDevice}\n';
       String uuid = 'UUID: ${iosInfo.identifierForVendor}\n';

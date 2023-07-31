@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/services/auth_service.dart';
 import 'package:today/models/enums.dart';
+import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class AppState {
@@ -34,10 +35,11 @@ class AppState {
 
   Future<void> initialize() async {
     await Firebase.initializeApp();
+    final authService = getIt<AuthService>();
 
     // DEV-MODE:
     // check whether the user is signed in
-    if (AuthService().uid == null) {
+    if (authService.uid == null) {
       log(
         time: DateTime.now(),
         '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
@@ -48,6 +50,6 @@ class AppState {
         'signed in\x1B[0m',
       );
     }
-    // FirebaseAuth.instance.signOut();
+    // authService.logout();
   }
 }

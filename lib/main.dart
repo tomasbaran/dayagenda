@@ -15,11 +15,13 @@ void main() async {
   final appState = getIt<AppState>();
   await appState.initialize();
 
-  runApp(const TodayApp());
+  runApp(TodayApp());
 }
 
 class TodayApp extends StatelessWidget {
-  const TodayApp({super.key});
+  TodayApp({super.key});
+
+  final authService = getIt<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class TodayApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialWithModalsPageRoute(
-              builder: (_) => AuthService().uid == null ? LoginScreen() : const TasksScreen(),
+              builder: (_) => authService.uid == null ? LoginScreen() : const TasksScreen(),
               settings: settings,
             );
         }
