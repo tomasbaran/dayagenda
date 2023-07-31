@@ -36,7 +36,7 @@ class NavContainer extends StatelessWidget {
             builder: (context, navBarSelection, child) {
               switch (navBarSelection) {
                 case NavBarSelection.account:
-                  return const AccountNavContainer();
+                  return AccountNavContainer();
                 case NavBarSelection.list:
                   return const ListsNavContainer();
                 case NavBarSelection.calendar:
