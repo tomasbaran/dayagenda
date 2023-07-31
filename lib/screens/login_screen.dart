@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'tasks_screen.dart';
 import '../services/auth_service.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final authService = getIt<AuthService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 SignInButton(Buttons.GoogleDark, text: 'Sync Google Calendar', onPressed: () async {
-                  await AuthService().signInWithGoogle(context);
-                  if (AuthService().uid != null) {
+                  await authService.signInWithGoogle(context);
+                  if (authService.uid != null) {
                     if (context.mounted) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => TasksScreen()));
                   } else {
                     throw 'Error #5: unable to signInWithGoogle';
