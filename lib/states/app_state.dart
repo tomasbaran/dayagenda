@@ -44,10 +44,15 @@ class AppState {
         time: DateTime.now(),
         '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
       );
+      authService.signInAnonymously();
+      log(
+        time: DateTime.now(),
+        'signed in as: ${authService.uid}\x1B[0m',
+      );
     } else {
       log(
         time: DateTime.now(),
-        'signed in\x1B[0m',
+        'signed in as: ${authService.uid}\x1B[0m',
       );
     }
     // authService.logout();
