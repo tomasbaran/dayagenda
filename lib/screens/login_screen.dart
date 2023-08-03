@@ -1,16 +1,15 @@
 //SignInScreen
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 import 'tasks_screen.dart';
 import '../services/auth_service/auth_service.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -23,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Colors.blue,
@@ -32,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: Card(
-          margin: EdgeInsets.only(top: 200, bottom: 200, left: 30, right: 30),
+          margin: const EdgeInsets.only(top: 200, bottom: 200, left: 30, right: 30),
           elevation: 20,
           child: Padding(
             padding: const EdgeInsets.all(32),
@@ -57,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SignInButton(Buttons.GoogleDark, text: 'Sync Google Calendar', onPressed: () async {
                   await authService.signInWithGoogle(context);
                   if (authService.uid != null) {
-                    if (context.mounted) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => TasksScreen()));
+                    if (context.mounted) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TasksScreen()));
                   } else {
                     throw 'Error #5: unable to signInWithGoogle';
                   }

@@ -28,7 +28,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
           myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate),
           listDate: dateState.selectedDate,
         );
-        log('\x1B[3m\x1B[33m!got new data; selectedList.value: ${value}\x1B[0m');
+        log('\x1B[3m\x1B[33m!got new data; selectedList.value: $value\x1B[0m');
       } catch (e) {
         throw 'Error #12: $e';
       }
@@ -47,7 +47,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     }
     final element = value.tasks.removeAt(oldIndex);
     value.tasks.insert(newIndex, element);
-    log('\x1B[32m1. reordered List: ${value} \x1B[0m');
+    log('\x1B[32m1. reordered List: $value \x1B[0m');
     listService.updateDateListInCloud(value);
   }
 

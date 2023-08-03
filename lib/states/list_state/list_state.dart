@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';

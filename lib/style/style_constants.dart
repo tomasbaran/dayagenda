@@ -31,7 +31,7 @@ const TextStyle loginScreenTitle = TextStyle(
   fontSize: 34,
   fontWeight: FontWeight.bold,
 );
-TextStyle loginScreenSubtitle = TextStyle(
+TextStyle loginScreenSubtitle = const TextStyle(
   color: kThemeColor7,
   fontWeight: FontWeight.w500,
   fontSize: 24,
@@ -95,7 +95,7 @@ const TextStyle addNewTaskSheetFieldTitleTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
   fontSize: 15,
 );
-TextStyle addNewTaskSheetFieldHintTitleTextStyle = TextStyle(
+TextStyle addNewTaskSheetFieldHintTitleTextStyle = const TextStyle(
   color: kThemeColor3,
   fontWeight: FontWeight.w500,
   fontSize: 15,
@@ -108,7 +108,7 @@ const double cupertinoListTileLeadingSize = 76;
 double floatingContainerWidth = 340;
 
 // NavBar
-TextStyle bottomToolbarIconTextStyle = TextStyle(
+TextStyle bottomToolbarIconTextStyle = const TextStyle(
   color: kIconColor,
   fontSize: 26,
   fontWeight: FontWeight.w400,
@@ -117,14 +117,14 @@ TextStyle bottomToolbarIconTextStyle = TextStyle(
 double floatingBarRadius = 32;
 
 // # navBarList
-TextStyle navBarListTextStyle = TextStyle(
+TextStyle navBarListTextStyle = const TextStyle(
   color: kThemeColor7,
   fontSize: 16,
   fontWeight: FontWeight.w500,
 );
 
 // # navBarAccount
-TextStyle navBarAccountTextStyle = TextStyle(
+TextStyle navBarAccountTextStyle = const TextStyle(
   color: kThemeColor3,
   fontSize: 16,
   fontWeight: FontWeight.w600,
@@ -132,7 +132,7 @@ TextStyle navBarAccountTextStyle = TextStyle(
 );
 
 // # navBarAccount
-TextStyle navBarAccountHighlightedTextStyle = TextStyle(
+TextStyle navBarAccountHighlightedTextStyle = const TextStyle(
   color: kThemeColor2,
   fontSize: 16,
   fontWeight: FontWeight.w700,
@@ -140,7 +140,7 @@ TextStyle navBarAccountHighlightedTextStyle = TextStyle(
 );
 
 // # navBarAccount
-TextStyle navBarAccountInformationTextStyle = TextStyle(
+TextStyle navBarAccountInformationTextStyle = const TextStyle(
   color: kThemeColor9,
   fontSize: 16,
   fontWeight: FontWeight.w500,

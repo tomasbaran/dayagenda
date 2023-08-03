@@ -70,10 +70,10 @@ class NavBar extends StatelessWidget {
         GestureDetector(
           onTap: () => appState.updateNavBarSelection(NavBarSelection.calendar),
           behavior: HitTestBehavior.translucent,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+          child: const Padding(
+            padding: EdgeInsets.all(16),
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 2),
+              padding: EdgeInsets.only(bottom: 2),
               child: Icon(
                 // CupertinoIcons.calendar,
                 Icons.calendar_today_outlined,
@@ -107,7 +107,7 @@ class NavBar extends StatelessWidget {
                   width: 2.3,
                   color: kIconColor,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: const Center(
                 child: Icon(
@@ -130,8 +130,8 @@ class NavBar extends StatelessWidget {
           //   '&',
           //   style: bottomToolbarIconTextStyle,
           // ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+          child: const Padding(
+            padding: EdgeInsets.all(16),
             child: Icon(
               // Icons.flash_auto,
               CupertinoIcons.line_horizontal_3_decrease,
@@ -147,8 +147,8 @@ class NavBar extends StatelessWidget {
           child:
               // Icons.messenger_outline_sharp,
               // CupertinoIcons.bubble_left,
-              Padding(
-            padding: const EdgeInsets.only(right: 32, top: 16, bottom: 16, left: 16),
+              const Padding(
+            padding: EdgeInsets.only(right: 32, top: 16, bottom: 16, left: 16),
             child: FaIcon(
               // Icons.account_circle_outlined,
               // CupertinoIcons.person,

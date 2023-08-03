@@ -156,8 +156,8 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                           dialogSize: const Size(340, 340),
                           context: context,
                           config: CalendarDatePicker2WithActionButtonsConfig(
-                            okButton: Padding(
-                              padding: const EdgeInsets.only(right: 8),
+                            okButton: const Padding(
+                              padding: EdgeInsets.only(right: 8),
                               child: Text('OK',
                                   style: TextStyle(
                                     color: kBackgroundColor,
@@ -165,16 +165,16 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                                     fontSize: 14,
                                   )),
                             ),
-                            buttonPadding: EdgeInsets.all(16),
-                            cancelButtonTextStyle: TextStyle(fontWeight: FontWeight.w500, color: kThemeColor9),
+                            buttonPadding: const EdgeInsets.all(16),
+                            cancelButtonTextStyle: const TextStyle(fontWeight: FontWeight.w500, color: kThemeColor9),
                             firstDayOfWeek: 1,
-                            dayTextStyle: TextStyle(color: kThemeColor2),
+                            dayTextStyle: const TextStyle(color: kThemeColor2),
                             disableModePicker: true,
-                            controlsTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
-                            weekdayLabelTextStyle: TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
-                            selectedDayTextStyle: TextStyle(color: kThemeColor11, fontWeight: FontWeight.w700),
-                            nextMonthIcon: Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
-                            lastMonthIcon: Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
+                            controlsTextStyle: const TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
+                            weekdayLabelTextStyle: const TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
+                            selectedDayTextStyle: const TextStyle(color: kThemeColor11, fontWeight: FontWeight.w700),
+                            nextMonthIcon: const Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
+                            lastMonthIcon: const Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
                           ),
                           value: [dateState.selectedDate],
                         );
@@ -200,7 +200,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               );
             },
             child: CupertinoListSection.insetGrouped(
-              children: [
+              children: const [
                 CupertinoListTile.notched(
                   title: Center(
                     child: Text(

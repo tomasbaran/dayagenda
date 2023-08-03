@@ -89,7 +89,7 @@ class SendFeedback {
 
   Future showErrorMessageBottomSheet(BuildContext context) {
     return showModalBottomSheet(
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(42),
           topRight: Radius.circular(42),
@@ -100,7 +100,7 @@ class SendFeedback {
       builder: (BuildContext context) => Container(
         height: 300,
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: kThemeColor11,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(42),
@@ -127,7 +127,7 @@ class SendFeedback {
                 textAlign: TextAlign.center,
                 text: TextSpan(style: addNewTaskSheetFieldHintTitleTextStyle, text: 'Please, send me an email to ', children: <TextSpan>[
                   TextSpan(text: feedbackRecipient, style: addNewTaskSheetFieldHintTitleTextStyle.copyWith(decoration: TextDecoration.underline)),
-                  TextSpan(text: ' from wherever it is convenient to you.'),
+                  const TextSpan(text: ' from wherever it is convenient to you.'),
                 ]),
               ),
             )

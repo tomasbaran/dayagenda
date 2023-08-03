@@ -42,7 +42,7 @@ class TaskCard extends StatelessWidget {
               taskEndTime: task.endTime,
             ),
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 68,
                 child: Stack(children: [
                   Padding(
@@ -63,15 +63,15 @@ class TaskCard extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: Checkbox(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
                       value: task.isCompleted,
                       onChanged: (newValue) {
                         taskState.toggleTaskCompleted(task);
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(cardRadius),
+                  const Padding(
+                    padding: EdgeInsets.all(cardRadius),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       // This is where the listTitle will go.

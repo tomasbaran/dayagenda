@@ -18,7 +18,7 @@ class ScreenUtils {
             content: Text(message),
             actions: [
               CupertinoDialogAction(
-                child: Text(
+                child: const Text(
                   'Cancel',
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                 ),
@@ -27,9 +27,9 @@ class ScreenUtils {
                 },
               ),
               CupertinoDialogAction(
-                child: Text('Delete'),
                 onPressed: onConfirm,
                 isDestructiveAction: true,
+                child: const Text('Delete'),
               ),
             ],
           );
@@ -44,17 +44,17 @@ class ScreenUtils {
             content: Text(message),
             actions: [
               TextButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Navigator.pop(context); // Close the dialog
                 },
               ),
               TextButton(
-                child: Text(
+                onPressed: onConfirm,
+                child: const Text(
                   'Delete',
                   style: TextStyle(backgroundColor: Colors.red),
                 ),
-                onPressed: onConfirm,
               ),
             ],
           );

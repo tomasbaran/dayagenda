@@ -34,10 +34,11 @@ class TodayApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialWithModalsPageRoute(
-              builder: (_) => authService.uid == null ? LoginScreen() : const TasksScreen(),
+              builder: (_) => authService.uid == null ? const LoginScreen() : const TasksScreen(),
               settings: settings,
             );
         }
+        return null;
       },
     );
   }
