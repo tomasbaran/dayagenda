@@ -4,7 +4,6 @@ import 'package:today/screens/tasks_screen.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/app_state.dart';
-import 'screens/login_screen.dart';
 import 'style/theme.dart';
 
 void main() async {
@@ -34,7 +33,7 @@ class TodayApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialWithModalsPageRoute(
-              builder: (_) => authService.uid == null ? const LoginScreen() : const TasksScreen(),
+              builder: (_) => const TasksScreen(),
               settings: settings,
             );
         }
