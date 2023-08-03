@@ -10,13 +10,13 @@ import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class FirestoreListService extends ListService {
-  final _db = FirebaseFirestore.instance;
+  final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
   @override
   Future<DocumentSnapshot<Map<String, dynamic>>> getDateListSnapshot(DateTime date) {
     String listDateId = '${date.year}-${date.month}-${date.day}_$uid';
-    final DocumentReference<Map<String, dynamic>> listDocRef = _db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
+    final DocumentReference<Map<String, dynamic>> listDocRef = db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
     return listDocRef.get();
   }
 
@@ -30,9 +30,9 @@ class FirestoreListService extends ListService {
       // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
       if (date != null) {
         String listDateId = '${date.year}-${date.month}-${date.day}_$uid';
-        listDocRef = _db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
+        listDocRef = db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
       } else {
-        listDocRef = _db.collection("users").doc(uid).collection('id_lists').doc(listId);
+        listDocRef = db.collection("users").doc(uid).collection('id_lists').doc(listId);
       }
 
       return listDocRef.snapshots().listen(
@@ -65,7 +65,7 @@ class FirestoreListService extends ListService {
     if (uid == null) {
       throw ('\x1B[31mError #6[updating task]: User not signed in.\x1B[0m');
     } else {
-      final listDocRef = _db.collection('users').doc(uid).collection('date_lists').doc(updatedList.id);
+      final listDocRef = db.collection('users').doc(uid).collection('date_lists').doc(updatedList.id);
       Map<String, dynamic> formattedUpdatedList = formatMyListToFirebaseList(updatedList);
 
       await listDocRef.set(formattedUpdatedList).onError((error, stackTrace) {
@@ -82,7 +82,7 @@ class FirestoreListService extends ListService {
       throw ('Error #1[adding task]: User not signed in.');
     } else {
       String listDateId = '${date.year}-${date.month}-${date.day}_$uid';
-      final listDocRef = _db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
+      final listDocRef = db.collection("users").doc(uid).collection('date_lists').doc(listDateId);
 
       final formattedTask = formatMyTaskToFirebaseTask(myTask);
 

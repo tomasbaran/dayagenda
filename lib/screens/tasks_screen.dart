@@ -12,7 +12,7 @@ class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
   @override
-  _TasksScreenState createState() => _TasksScreenState();
+  State<TasksScreen> createState() => _TasksScreenState();
 }
 
 class _TasksScreenState extends State<TasksScreen> {

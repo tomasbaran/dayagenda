@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/services/auth_service/auth_service.dart';
@@ -81,7 +83,7 @@ class SendFeedback {
       try {
         await FlutterEmailSender.send(email);
       } catch (e) {
-        print(e);
+        log(e.toString());
         showErrorMessageBottomSheet(context);
       }
     }
