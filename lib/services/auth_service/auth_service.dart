@@ -7,6 +7,8 @@ abstract class AuthService {
 
   String? get uid;
 
+  bool get isSignedUp;
+
   signInAnonymously();
 
   Future<UserCredential> signInWithGoogle();

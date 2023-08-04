@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
@@ -20,20 +21,37 @@ class AccountNavContainer extends StatelessWidget {
         // shrinkWrap: true,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'signed in as ${authService.auth.currentUser?.email}',
-              style: navBarAccountInformationTextStyle,
-            ),
-          ),
-          GestureDetector(
-            onTap: () => authService.logout(),
+          Visibility(
+            visible: authService.isSignedUp,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Log Out',
-                style: navBarAccountTextStyle,
+                'signed in as ${authService.auth.currentUser?.email}',
+                style: navBarAccountInformationTextStyle,
+              ),
+            ),
+          ),
+          Visibility(
+            visible: !authService.isSignedUp,
+            child: SignInButton(Buttons.GoogleDark, text: 'Sync Google Calendar', onPressed: () async {
+              await authService.signInWithGoogle();
+              // if (authService.uid != null) {
+              //   if (context.mounted) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TasksScreen()));
+              // } else {
+              //   throw 'Error #5: unable to signInWithGoogle';
+              // }
+            }),
+          ),
+          Visibility(
+            visible: authService.isSignedUp,
+            child: GestureDetector(
+              onTap: () => authService.logout(),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Log Out',
+                  style: navBarAccountTextStyle,
+                ),
               ),
             ),
           ),
