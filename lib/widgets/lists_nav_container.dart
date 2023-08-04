@@ -7,18 +7,20 @@ class ListsNavContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         // shrinkWrap: true,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: Text(
-              'Lists are coming soon.',
-              style: navBarListTextStyle,
-            ),
+          Text(
+            'Lists',
+            style: navBarHeadlineTextStyle,
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Coming soon.',
+            style: navBarListTextStyle,
           ),
         ],
       ),

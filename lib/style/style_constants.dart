@@ -114,6 +114,13 @@ TextStyle bottomToolbarIconTextStyle = const TextStyle(
   fontWeight: FontWeight.w400,
 );
 
+// NavBar
+TextStyle navBarHeadlineTextStyle = TextStyle(
+  color: kThemeColor6,
+  fontSize: 20,
+  fontWeight: FontWeight.w700,
+);
+
 double floatingBarRadius = 32;
 
 // # navBarList
@@ -142,6 +149,18 @@ TextStyle navBarAccountHighlightedTextStyle = const TextStyle(
 // # navBarAccount
 TextStyle navBarAccountInformationTextStyle = const TextStyle(
   color: kThemeColor9,
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle navBarAccountEmailInputTextStyle = const TextStyle(
+  color: kThemeColor2,
+  fontSize: 16,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle navBarAccountEmailSubmitButtonTextStyle = const TextStyle(
+  color: kThemeColor12,
   fontSize: 16,
   fontWeight: FontWeight.w500,
 );
