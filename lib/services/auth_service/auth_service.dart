@@ -13,5 +13,5 @@ abstract class AuthService {
 
   Future<UserCredential> signInWithGoogle();
 
-  logout();
+  Future logout();
 }

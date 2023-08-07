@@ -71,7 +71,7 @@ class FirebaseAuthService extends AuthService {
   }
 
   @override
-  logout() {
-    FirebaseAuth.instance.signOut();
+  Future logout() async {
+    await FirebaseAuth.instance.signOut();
   }
 }
