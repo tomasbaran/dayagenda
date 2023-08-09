@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ambee.today">
+    package="com.ambee.dayagenda">
    <application
         android:label="today"
         android:name="${applicationName}"

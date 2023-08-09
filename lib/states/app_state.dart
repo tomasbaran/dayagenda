@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:today/firebase_options.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/models/enums.dart';
@@ -34,7 +35,7 @@ class AppState {
   final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
 
   Future<void> initialize() async {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(name: 'today2023', options: DefaultFirebaseOptions.currentPlatform);
     final authService = getIt<AuthService>();
 
     // DEV-MODE:

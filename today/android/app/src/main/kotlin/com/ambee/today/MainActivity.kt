@@ -1,4 +1,4 @@
-package com.ambee.today
+package com.ambee.dayagenda
 
 import io.flutter.embedding.android.FlutterActivity
 
