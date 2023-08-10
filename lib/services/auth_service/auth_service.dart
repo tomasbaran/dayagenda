@@ -11,7 +11,7 @@ abstract class AuthService {
 
   signInAnonymously();
 
-  Future<UserCredential> signInWithGoogle();
+  // Future<UserCredential> signInWithGoogle();
 
   Future logout();
 }

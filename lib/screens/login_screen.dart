@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 SignInButton(Buttons.GoogleDark, text: 'Sync Google Calendar', onPressed: () async {
-                  await authService.signInWithGoogle();
+                  // await authService.signInWithGoogle();
                   if (authService.uid != null) {
                     if (context.mounted) Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const TasksScreen()));
                   } else {

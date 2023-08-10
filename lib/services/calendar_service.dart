@@ -1,13 +1,11 @@
-import 'package:extension_google_sign_in_as_googleapis_auth/extension_google_sign_in_as_googleapis_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
 import 'package:today/models/my_list.dart';
 
 class CalendarService {
-  GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: <String>[CalendarApi.calendarScope, TasksApi.tasksScope],
-  );
+  // GoogleSignIn googleSignIn = GoogleSignIn(
+  //   scopes: <String>[CalendarApi.calendarScope, TasksApi.tasksScope],
+  // );
 
   // Future<List<TaskList>> getLists() async {
   //   TasksApi taskApi = await getTaskApi();
@@ -62,10 +60,10 @@ class CalendarService {
   }
 
   addEvent() async {
-    await googleSignIn.signInSilently();
+    // await googleSignIn.signInSilently();
 
-    var httpClient = (await googleSignIn.authenticatedClient())!;
-    var calendarApi = CalendarApi(httpClient);
+    // var httpClient = (await googleSignIn.authenticatedClient())!;
+    // var calendarApi = CalendarApi(httpClient);
 
     Event event = Event(); // Create object of event
     event.summary = 'summaryText'; //Setting summary of object
