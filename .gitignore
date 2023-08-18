@@ -2,7 +2,8 @@
 /lib/firebase_options.dart 
 *.plist
 *google-services.json
-
+*firebase_app_id_file.json
+*firebaserc
 
 # Miscellaneous
 *.class
