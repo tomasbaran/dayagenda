@@ -45,7 +45,7 @@ class AppState {
         time: DateTime.now(),
         '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
       );
-      authService.signInAnonymously();
+      await authService.signInAnonymously();
       log(
         time: DateTime.now(),
         'signed in as: ${authService.uid}\x1B[0m',
@@ -56,6 +56,5 @@ class AppState {
         'signed in as: ${authService.uid}\x1B[0m',
       );
     }
-    // authService.logout();
   }
 }

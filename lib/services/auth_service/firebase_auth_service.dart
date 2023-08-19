@@ -32,7 +32,7 @@ class FirebaseAuthService extends AuthService {
   // );
 
   @override
-  signInAnonymously() async {
+  Future signInAnonymously() async {
     try {
       await auth.signInAnonymously();
       print("Signed in with temporary account.");

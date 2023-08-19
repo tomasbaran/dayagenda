@@ -9,7 +9,7 @@ abstract class AuthService {
 
   bool get isSignedUp;
 
-  signInAnonymously();
+  Future signInAnonymously();
 
   // Future<UserCredential> signInWithGoogle();
 
