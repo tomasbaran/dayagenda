@@ -35,7 +35,7 @@ class AppState {
   final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
 
   Future<void> initialize() async {
-    await Firebase.initializeApp(name: 'day-agenda', options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     final authService = getIt<AuthService>();
 
     // DEV-MODE:

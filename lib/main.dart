@@ -33,8 +33,7 @@ class TodayApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialWithModalsPageRoute(
-              // builder: (_) => const TasksScreen(),
-              builder: (_) => const Text('hello'),
+              builder: (_) => const TasksScreen(),
               settings: settings,
             );
         }
