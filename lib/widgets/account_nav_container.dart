@@ -36,7 +36,23 @@ class AccountNavContainer extends StatelessWidget {
               ),
             ),
           ),
-          EmailSignupFormContainer(),
+          Visibility(
+            visible: !authService.isSignedUp,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: () => null,
+                  child: Text('Sign Up', style: navBarAccountButtonTitleTextStyle),
+                ),
+                ElevatedButton(
+                  onPressed: () => null,
+                  child: Text('Log In', style: navBarAccountButtonTitleTextStyle),
+                ),
+              ],
+            ),
+          ),
+
           Visibility(
             visible: authService.isSignedUp,
             child: GestureDetector(
