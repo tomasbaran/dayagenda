@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:today/style/style_constants.dart';
 
-class EmailSignupFormContainer extends StatefulWidget {
-  const EmailSignupFormContainer({super.key});
+class EmailFormContainer extends StatefulWidget {
+  const EmailFormContainer.signup({super.key}) : isRegisterType = true;
+  const EmailFormContainer.login({super.key}) : isRegisterType = false;
+
+  final isRegisterType;
 
   @override
-  State<EmailSignupFormContainer> createState() => _EmailSignupFormContainerState();
+  State<EmailFormContainer> createState() => _EmailFormContainerState();
 }
 
-class _EmailSignupFormContainerState extends State<EmailSignupFormContainer> {
+class _EmailFormContainerState extends State<EmailFormContainer> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -76,7 +79,7 @@ class _EmailSignupFormContainerState extends State<EmailSignupFormContainer> {
                     }
                   },
                   child: Text(
-                    'Signup / Signin with Email',
+                    widget.isRegisterType ? 'Sign Up' : 'Log In',
                     style: navBarAccountEmailSubmitButtonTextStyle,
                   ),
                 ),

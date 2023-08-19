@@ -42,11 +42,29 @@ class AccountNavContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ElevatedButton(
-                  onPressed: () => null,
+                  onPressed: () => showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(42),
+                        topRight: Radius.circular(42),
+                      ),
+                    ),
+                    context: context,
+                    builder: (BuildContext context) => EmailFormContainer.signup(),
+                  ),
                   child: Text('Sign Up', style: navBarAccountButtonTitleTextStyle),
                 ),
                 ElevatedButton(
-                  onPressed: () => null,
+                  onPressed: () => showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(42),
+                        topRight: Radius.circular(42),
+                      ),
+                    ),
+                    context: context,
+                    builder: (BuildContext context) => EmailFormContainer.login(),
+                  ),
                   child: Text('Log In', style: navBarAccountButtonTitleTextStyle),
                 ),
               ],
