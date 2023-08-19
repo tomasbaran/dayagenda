@@ -37,12 +37,13 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              style: navBarAccountEmailInputTextStyle,
               controller: _emailController,
               decoration: InputDecoration(
                 // enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
                 icon: Icon(Icons.email, color: kThemeColor2),
                 labelText: 'Email',
-                labelStyle: navBarAccountEmailInputTextStyle,
+                labelStyle: navBarAccountEmailInputLabelTextStyle,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -52,11 +53,12 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
               },
             ),
             TextFormField(
+              style: navBarAccountEmailInputTextStyle,
               controller: _passwordController,
               decoration: InputDecoration(
                 icon: Icon(Icons.lock, color: kThemeColor2),
                 labelText: 'Password',
-                labelStyle: navBarAccountEmailInputTextStyle,
+                labelStyle: navBarAccountEmailInputLabelTextStyle,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {

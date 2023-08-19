@@ -43,7 +43,9 @@ class AccountNavContainer extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () => showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(42),
                         topRight: Radius.circular(42),
@@ -56,7 +58,9 @@ class AccountNavContainer extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () => showModalBottomSheet(
-                    shape: RoundedRectangleBorder(
+                    isScrollControlled: true,
+                    useSafeArea: true,
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(42),
                         topRight: Radius.circular(42),
