@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:today/services/auth_service/auth_service.dart';
+import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class EmailFormContainer extends StatefulWidget {
@@ -15,6 +19,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final authState = getIt<AuthService>();
 
   @override
   void dispose() {
@@ -72,12 +77,18 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Center(
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')),
-                      );
-                      // You can call your registration API here, using the values from _emailController.text and _passwordController.text
+                      Navigator.of(context).pop();
+
+                      try {
+                        await authState.convertAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
+                      } catch (e) {
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   SnackBar(content: Text('Error: $e Data: ${_emailController.text}, ${_passwordController.text}')),
+                        // );
+                        log('Error: $e Data: ${_emailController.text}, ${_passwordController.text}');
+                      }
                     }
                   },
                   child: Text(

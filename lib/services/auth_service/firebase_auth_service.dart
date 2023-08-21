@@ -47,6 +47,30 @@ class FirebaseAuthService extends AuthService {
     }
   }
 
+  @override
+  Future convertAnonymousUserToPermanentUser(String emailAddress, String password) async {
+    // Email and password sign-in
+    final credential = EmailAuthProvider.credential(email: emailAddress, password: password);
+
+    try {
+      final userCredential = await auth.currentUser?.linkWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "provider-already-linked":
+          throw "The provider has already been linked to the user.";
+        case "invalid-credential":
+          throw "The provider's credential is not valid.";
+        case "credential-already-in-use":
+          ("The account corresponding to the credential already exists, "
+              "or is already linked to a Firebase User.");
+          break;
+        // See the API reference for the full list of error codes.
+        default:
+          throw "Unknown error: ${e.code}}";
+      }
+    }
+  }
+
   // function to implement the google signin
   // @override
   // Future<UserCredential> signInWithGoogle() async {
