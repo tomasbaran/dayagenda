@@ -44,6 +44,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              autofocus: true,
               style: navBarAccountEmailInputTextStyle,
               controller: _emailController,
               decoration: InputDecoration(
@@ -85,6 +86,24 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                       final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
                         await authState.convertAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
+                        scaffoldMessengerState.showSnackBar(SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Signup Success!',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text('You signed up successfully with ${_emailController.text}'),
+                            ],
+                          ),
+                        ));
                       } catch (e) {
                         scaffoldMessengerState.showSnackBar(SnackBar(
                           backgroundColor: Colors.red,
