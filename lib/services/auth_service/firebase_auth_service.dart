@@ -56,6 +56,8 @@ class FirebaseAuthService extends AuthService {
       final userCredential = await auth.currentUser?.linkWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
+        case "email-already-in-use":
+          throw "You already have an account with this email address. Please, log in instead.";
         case "provider-already-linked":
           throw "The provider has already been linked to the user.";
         case "invalid-credential":
