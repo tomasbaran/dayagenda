@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
+import 'package:today/models/enums.dart';
 
 class ScreenUtils {
   static void showPlatformAlertDialog({
@@ -93,6 +94,35 @@ class ScreenUtils {
             use24hFormat: true,
             onDateTimeChanged: (DateTime newTime) => onDateTimeChanged(newTime),
           ),
+        ),
+      ),
+    );
+  }
+
+  static void showMySnackBar({
+    required SnackBarType snackBarType,
+    required ScaffoldMessengerState scaffoldMessengerState,
+    required String title,
+    required String message,
+  }) {
+    scaffoldMessengerState.showSnackBar(
+      SnackBar(
+        backgroundColor: snackBarType == SnackBarType.error ? Colors.red : Colors.green,
+        duration: Duration(seconds: snackBarType == SnackBarType.error ? 7 : 2),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(message),
+          ],
         ),
       ),
     );

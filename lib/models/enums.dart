@@ -16,3 +16,8 @@ enum SheetType {
   newTask,
   updateTask,
 }
+
+enum SnackBarType {
+  success,
+  error,
+}

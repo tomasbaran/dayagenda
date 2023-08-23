@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:today/models/enums.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/app_state.dart';
 import 'package:today/style/style_constants.dart';
+import 'package:today/utils/screen_utlis.dart';
 
 class EmailFormContainer extends StatefulWidget {
   const EmailFormContainer.signup({super.key}) : isRegisterType = true;
@@ -85,45 +87,21 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                       // Capture a reference to the ScaffoldMessengerState before async call
                       final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
-                        await authState.convertAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
-                        scaffoldMessengerState.showSnackBar(SnackBar(
-                          backgroundColor: Colors.green,
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Signup Success!',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Text('You signed up successfully with ${_emailController.text}'),
-                            ],
-                          ),
-                        ));
+                        await authState.signupByConvertingAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
+
+                        ScreenUtils.showMySnackBar(
+                          scaffoldMessengerState: scaffoldMessengerState,
+                          snackBarType: SnackBarType.success,
+                          title: 'Signup Success!',
+                          message: 'You signed up successfully with ${_emailController.text}',
+                        );
                       } catch (e) {
-                        scaffoldMessengerState.showSnackBar(SnackBar(
-                          backgroundColor: Colors.red,
-                          duration: const Duration(seconds: 7),
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Signup Error [${_emailController.text}]',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                              SizedBox(height: 8),
-                              Text('$e'),
-                            ],
-                          ),
-                        ));
+                        ScreenUtils.showMySnackBar(
+                          scaffoldMessengerState: scaffoldMessengerState,
+                          snackBarType: SnackBarType.error,
+                          title: 'Signup Error [${_emailController.text}]',
+                          message: e.toString(),
+                        );
 
                         log('Error: $e Data: ${_emailController.text}, ${_passwordController.text}');
                       }
