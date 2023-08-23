@@ -10,6 +10,7 @@ import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class AppState {
+  final navigatorKey = GlobalKey<NavigatorState>();
   final navBar = ValueNotifier<NavBarSelection>(NavBarSelection.unselected);
   updateNavBarSelection(NavBarSelection newNavBarSelection) => navBar.value = newNavBarSelection;
 

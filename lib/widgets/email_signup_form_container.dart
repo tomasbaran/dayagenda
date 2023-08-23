@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
+import 'package:today/states/app_state.dart';
 import 'package:today/style/style_constants.dart';
 
 class EmailFormContainer extends StatefulWidget {
@@ -20,6 +21,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final authState = getIt<AuthService>();
+  final appState = getIt<AppState>();
 
   @override
   void dispose() {
@@ -106,7 +108,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
 
                         log('Error: $e Data: ${_emailController.text}, ${_passwordController.text}');
                       }
-                      Navigator.pop(context);
+                      appState.navigatorKey.currentState?.pop();
                     }
                   },
                   child: Text(

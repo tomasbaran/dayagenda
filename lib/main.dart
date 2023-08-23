@@ -21,10 +21,12 @@ class TodayApp extends StatelessWidget {
   TodayApp({super.key});
 
   final authService = getIt<AuthService>();
+  final appState = getIt<AppState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: appState.navigatorKey,
       theme: AppTheme.light,
       title: 'DayAgenda',
       // home: Auth().uid == null ? LoginScreen() : const TasksScreen(),
