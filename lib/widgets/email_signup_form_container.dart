@@ -79,16 +79,34 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.of(context).pop();
-
+                      // Capture a reference to the ScaffoldMessengerState before async call
+                      final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
                         await authState.convertAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
                       } catch (e) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   SnackBar(content: Text('Error: $e Data: ${_emailController.text}, ${_passwordController.text}')),
-                        // );
+                        scaffoldMessengerState.showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 7),
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Signup Error [${_emailController.text}]',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text('$e'),
+                            ],
+                          ),
+                        ));
+
                         log('Error: $e Data: ${_emailController.text}, ${_passwordController.text}');
                       }
+                      Navigator.pop(context);
                     }
                   },
                   child: Text(

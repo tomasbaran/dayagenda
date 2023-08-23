@@ -66,7 +66,7 @@ class FirebaseAuthService extends AuthService {
           break;
         // See the API reference for the full list of error codes.
         default:
-          throw "Unknown error: ${e.code}}";
+          throw e.code;
       }
     }
   }
