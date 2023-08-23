@@ -10,7 +10,10 @@ abstract class AuthService {
   bool get isSignedUp;
 
   Future signInAnonymously();
-  Future convertAnonymousUserToPermanentUser(String emailAddress, String password);
+
+  Future signupByConvertingAnonymousUserToPermanentUser(String emailAddress, String password);
+
+  Future loginWithEmailAndPassword(String emailAddress, String password);
 
   // Future<UserCredential> signInWithGoogle();
 

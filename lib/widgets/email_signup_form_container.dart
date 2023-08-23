@@ -87,19 +87,22 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                       // Capture a reference to the ScaffoldMessengerState before async call
                       final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
-                        await authState.signupByConvertingAnonymousUserToPermanentUser(_emailController.text, _passwordController.text);
-
+                        widget.isRegisterType
+                            ? await authState.signupByConvertingAnonymousUserToPermanentUser(_emailController.text, _passwordController.text)
+                            : await authState.loginWithEmailAndPassword(_emailController.text, _passwordController.text);
                         ScreenUtils.showMySnackBar(
                           scaffoldMessengerState: scaffoldMessengerState,
                           snackBarType: SnackBarType.success,
                           title: 'Signup Success!',
-                          message: 'You signed up successfully with ${_emailController.text}',
+                          message: widget.isRegisterType
+                              ? 'You signed up successfully with ${_emailController.text}'
+                              : 'You logged in successfully with ${_emailController.text}',
                         );
                       } catch (e) {
                         ScreenUtils.showMySnackBar(
                           scaffoldMessengerState: scaffoldMessengerState,
                           snackBarType: SnackBarType.error,
-                          title: 'Signup Error [${_emailController.text}]',
+                          title: widget.isRegisterType ? 'Signup Error [${_emailController.text}]' : 'Login Error [${_emailController.text}]',
                           message: e.toString(),
                         );
 

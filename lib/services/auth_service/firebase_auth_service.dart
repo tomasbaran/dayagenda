@@ -48,12 +48,12 @@ class FirebaseAuthService extends AuthService {
   }
 
   @override
-  Future convertAnonymousUserToPermanentUser(String emailAddress, String password) async {
+  Future signupByConvertingAnonymousUserToPermanentUser(String emailAddress, String password) async {
     // Email and password sign-in
     final credential = EmailAuthProvider.credential(email: emailAddress, password: password);
 
     try {
-      final userCredential = await auth.currentUser?.linkWithCredential(credential);
+      await auth.currentUser?.linkWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "email-already-in-use":
@@ -69,6 +69,30 @@ class FirebaseAuthService extends AuthService {
         // See the API reference for the full list of error codes.
         default:
           throw e.code;
+      }
+    }
+  }
+
+  @override
+  Future loginWithEmailAndPassword(String emailAddress, String password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: emailAddress, password: password);
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "invalid-email":
+          throw "Your email address appears to be malformed.";
+        case "wrong-password":
+          throw "Your password is wrong.";
+        case "user-not-found":
+          throw "User with this email doesn't exist.";
+        case "user-disabled":
+          throw "User with this email has been disabled.";
+        case "too-many-requests":
+          throw "Too many requests. Try again later.";
+        case "operation-not-allowed":
+          throw "Signing in with Email and Password is not enabled.";
+        default:
+          throw "An undefined Error happened.";
       }
     }
   }
