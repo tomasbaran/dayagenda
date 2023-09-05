@@ -44,7 +44,11 @@ class FirebaseAuthService extends AuthService {
     final credential = EmailAuthProvider.credential(email: emailAddress, password: password);
 
     try {
-      await auth.currentUser?.linkWithCredential(credential);
+      if (auth.currentUser == null) {
+        throw "Please kill the app and try again.";
+      } else {
+        await auth.currentUser?.linkWithCredential(credential);
+      }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "email-already-in-use":
