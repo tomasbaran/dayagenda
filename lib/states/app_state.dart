@@ -37,11 +37,11 @@ class AppState {
 
   final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
 
-  Future<void> initialize() async {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  listenToAuthChanges() {
     final authService = getIt<AuthService>();
 
     authService.myAuthSubscription().onData((data) {
+      log('new data:$data ');
       if (data == null) {
         // print('User is currently signed out!');
         isSignedIn.value = false;
@@ -54,14 +54,12 @@ class AppState {
         }
       }
     });
+  }
 
-    // DEV-MODE:
-    // check whether the user is signed in
+  signUpFirstTimeUserAnonymously() async {
+    final authService = getIt<AuthService>();
+
     if (authService.uid == null) {
-      log(
-        time: DateTime.now(),
-        '${DateTime.now().minute}:${DateTime.now().second} NOT signed in',
-      );
       await authService.signInAnonymously();
       log(
         time: DateTime.now(),
@@ -73,5 +71,13 @@ class AppState {
         'signed in as: ${authService.uid}\x1B[0m',
       );
     }
+  }
+
+  Future<void> initialize() async {
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+    listenToAuthChanges();
+
+    await signUpFirstTimeUserAnonymously();
   }
 }

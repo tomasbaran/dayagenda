@@ -106,7 +106,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                           message: e.toString(),
                         );
 
-                        log('Error: $e Data: ${_emailController.text}, ${_passwordController.text}');
+                        log('Signup Error #7: $e Data: ${_emailController.text}, ${_passwordController.text}');
                       }
                       appState.navigatorKey.currentState?.pop();
                     }
