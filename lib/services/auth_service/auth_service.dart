@@ -7,7 +7,7 @@ abstract class AuthService {
 
   String? get uid;
 
-  bool get isSignedUp;
+  StreamSubscription<User?> myAuthSubscription();
 
   Future signInAnonymously();
 

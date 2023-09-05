@@ -10,6 +10,8 @@ import 'package:today/services/service_locator.dart';
 import 'package:today/style/style_constants.dart';
 
 class AppState {
+  final isSignedIn = ValueNotifier<bool>(false);
+
   final navigatorKey = GlobalKey<NavigatorState>();
   final navBar = ValueNotifier<NavBarSelection>(NavBarSelection.unselected);
   updateNavBarSelection(NavBarSelection newNavBarSelection) => navBar.value = newNavBarSelection;
@@ -39,6 +41,20 @@ class AppState {
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     final authService = getIt<AuthService>();
 
+    authService.myAuthSubscription().onData((data) {
+      if (data == null) {
+        // print('User is currently signed out!');
+        isSignedIn.value = false;
+      } else {
+        // print('User is signed in!');
+        if (data.email != null) {
+          isSignedIn.value = true;
+        } else {
+          isSignedIn.value = false;
+        }
+      }
+    });
+
     // DEV-MODE:
     // check whether the user is signed in
     if (authService.uid == null) {
@@ -49,7 +65,7 @@ class AppState {
       await authService.signInAnonymously();
       log(
         time: DateTime.now(),
-        'signed in as: ${authService.uid}\x1B[0m',
+        'signed up anonymously as: ${authService.uid}\x1B[0m',
       );
     } else {
       log(

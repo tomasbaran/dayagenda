@@ -14,18 +14,9 @@ class FirebaseAuthService extends AuthService {
   String? get uid => auth.currentUser?.uid;
 
   @override
-  bool get isSignedUp {
-    final currentUser = auth.currentUser;
-    if (currentUser == null) {
-      return false;
-    } else {
-      if (currentUser.isAnonymous) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
+  StreamSubscription<User?> myAuthSubscription() => auth.userChanges().listen((User? user) {
+        // print('firing event: ${user?.refreshToken}');
+      });
 
   // GoogleSignIn googleSignIn = GoogleSignIn(
   //   scopes: <String>[CalendarApi.calendarScope, TasksApi.tasksScope],
