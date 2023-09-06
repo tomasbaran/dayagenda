@@ -37,6 +37,7 @@ class _TasksScreenState extends State<TasksScreen> {
       onTap: () => appState.updateNavBarSelection(NavBarSelection.unselected),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: kBackgroundColor,
           shadowColor: Colors.transparent,
           title: ValueListenableBuilder(
             valueListenable: listState.selectedList,
