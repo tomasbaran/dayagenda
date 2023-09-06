@@ -49,27 +49,34 @@ class TaskCard extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(cardRadius, cardRadius, 36, cardRadius),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text(
-                        task.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: taskCardTitleTextStyle.copyWith(
-                          color: task.isCompleted ? kThemeColor10 : null,
-                          decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-                        ),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+                            value: task.isCompleted,
+                            onChanged: (newValue) {
+                              taskState.toggleTaskCompleted(task);
+                            },
+                          ),
+                          Expanded(
+                            child: Text(
+                              task.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: taskCardTitleTextStyle.copyWith(
+                                color: task.isCompleted ? kThemeColor10 : null,
+                                decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Checkbox(
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
-                      value: task.isCompleted,
-                      onChanged: (newValue) {
-                        taskState.toggleTaskCompleted(task);
-                      },
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: ,
+                  // ),
                   const Padding(
                     padding: EdgeInsets.all(cardRadius),
                     child: Align(
