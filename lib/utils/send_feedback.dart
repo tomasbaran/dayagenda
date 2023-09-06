@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:today/style/style_constants.dart';
 
@@ -11,80 +12,119 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SendFeedback {
   void sendEmail(BuildContext context, String subject) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    // ?packageInfo.appName has a bug if you don't include the name in Plist.info: https://github.com/flutter/flutter/issues/42510
-    String appName = packageInfo.appName;
-    String appVersion = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
-
     final authService = getIt<AuthService>();
-
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    if (kIsWeb) {
+      debugPrint('kIsWeb is true');
+      WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+      String appName = packageInfo.appName;
+      // String packageName = packageInfo.packageName;
+      String appVersion = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+
       String dash = '--------------------------------------\n';
       String uid = 'UID: ${authService.uid}\n';
       String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
-      String brand = 'Brand: ${androidInfo.brand}\n';
-      String manufacturer = 'Manufacturer: ${androidInfo.manufacturer}\n';
-      String isPhysicalDevice = 'Physical Device: ${androidInfo.isPhysicalDevice}\n';
-      String model = 'Model: ${androidInfo.model}\n';
-      String supportedAbis = 'SupportedAbis: ${androidInfo.supportedAbis}\n';
-      String type = 'Type: ${androidInfo.type}\n';
-      String versionBaseOs = 'Version BaseOS: ${androidInfo.version.baseOS}\n';
-      String versionCodeName = 'Version Type (Release/Beta): ${androidInfo.version.codename}\n';
-      String versionPreviewSdkInt = 'Version PreviewSdkInt: ${androidInfo.version.previewSdkInt}\n';
-      String versionRelease = 'Version Release: ${androidInfo.version.release}\n';
-      //SRC: https://developer.android.com/reference/android/os/Build.VERSION_CODES
-      String versionSdk = 'Version SDK: ${androidInfo.version.sdkInt}\n';
-      // String versionSecurityPatch =
-      //     'Version SecurityPatch: ${androidInfo.version.securityPatch}\n';
-      String deviceInfoForDebugging =
-          '\n\n\n\n$dash$uid$versionAndBuild$isPhysicalDevice$brand$manufacturer$model$supportedAbis$type$versionBaseOs$versionCodeName$versionPreviewSdkInt$versionRelease$versionSdk';
+      String webUesrAgent = 'web user agent: ${webBrowserInfo.userAgent}\n';
+      String webLanguage = 'web language: ${webBrowserInfo.language}\n';
+      String webVendor = 'web vendor: ${webBrowserInfo.vendor}\n';
 
-      final Email email = Email(
-        body: deviceInfoForDebugging,
-        subject: '$subject ($appName $appVersion)',
-        recipients: [feedbackRecipient],
-        isHTML: false,
-      );
+      String deviceInfoForDebugging = '\n\n\n\n$dash$uid$versionAndBuild$webUesrAgent$webLanguage$webVendor';
+
       try {
-        await FlutterEmailSender.send(email);
+        String? encodeQueryParameters(Map<String, String> params) {
+          return params.entries.map((MapEntry<String, String> e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&');
+        }
+
+        final Uri emailLaunchUri = Uri(
+          scheme: 'mailto',
+          path: feedbackRecipient,
+          query: encodeQueryParameters(<String, String>{
+            'subject': '$subject ($appName $appVersion)',
+            'body': deviceInfoForDebugging,
+          }),
+        );
+
+        launchUrl(emailLaunchUri);
       } catch (e) {
         showErrorMessageBottomSheet(context);
       }
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      String dash = '--------------------------------------\n';
-      String uid = 'UID: ${authService.uid}\n';
-      String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
-      String isPhysicalDevice = 'Physical Device: ${iosInfo.isPhysicalDevice}\n';
-      String uuid = 'UUID: ${iosInfo.identifierForVendor}\n';
-      String model = 'Model: ${iosInfo.model} (${iosInfo.utsname.machine})\n';
-      String os = 'OS: ${iosInfo.systemName} ${iosInfo.systemVersion}\n';
-      String utsnameRelease = 'UTS Name (release level): ${iosInfo.utsname.release}\n';
-      String utsnameSystem = 'UTS Name (operatin system name): ${iosInfo.utsname.sysname}\n';
-      // String utsnameVersion =
-      //     'UTS Name (Kernel version): ${iosInfo.utsname.version}\n';
+    } else {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      // ?packageInfo.appName has a bug if you don't include the name in Plist.info: https://github.com/flutter/flutter/issues/42510
+      String appName = packageInfo.appName;
+      String appVersion = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
 
-      String deviceInfoForDebugging = '\n\n\n\n$dash$uid$versionAndBuild$isPhysicalDevice$model$os$utsnameRelease$utsnameSystem$uuid';
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        String dash = '--------------------------------------\n';
+        String uid = 'UID: ${authService.uid}\n';
+        String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
+        String brand = 'Brand: ${androidInfo.brand}\n';
+        String manufacturer = 'Manufacturer: ${androidInfo.manufacturer}\n';
+        String isPhysicalDevice = 'Physical Device: ${androidInfo.isPhysicalDevice}\n';
+        String model = 'Model: ${androidInfo.model}\n';
+        String supportedAbis = 'SupportedAbis: ${androidInfo.supportedAbis}\n';
+        String type = 'Type: ${androidInfo.type}\n';
+        String versionBaseOs = 'Version BaseOS: ${androidInfo.version.baseOS}\n';
+        String versionCodeName = 'Version Type (Release/Beta): ${androidInfo.version.codename}\n';
+        String versionPreviewSdkInt = 'Version PreviewSdkInt: ${androidInfo.version.previewSdkInt}\n';
+        String versionRelease = 'Version Release: ${androidInfo.version.release}\n';
+        //SRC: https://developer.android.com/reference/android/os/Build.VERSION_CODES
+        String versionSdk = 'Version SDK: ${androidInfo.version.sdkInt}\n';
+        // String versionSecurityPatch =
+        //     'Version SecurityPatch: ${androidInfo.version.securityPatch}\n';
+        String deviceInfoForDebugging =
+            '\n\n\n\n$dash$uid$versionAndBuild$isPhysicalDevice$brand$manufacturer$model$supportedAbis$type$versionBaseOs$versionCodeName$versionPreviewSdkInt$versionRelease$versionSdk';
 
-      final Email email = Email(
-        body: deviceInfoForDebugging,
-        subject: '$subject ($appName $appVersion)',
-        recipients: [feedbackRecipient],
-        isHTML: false,
-      );
+        final Email email = Email(
+          body: deviceInfoForDebugging,
+          subject: '$subject ($appName $appVersion)',
+          recipients: [feedbackRecipient],
+          isHTML: false,
+        );
+        try {
+          await FlutterEmailSender.send(email);
+        } catch (e) {
+          showErrorMessageBottomSheet(context);
+        }
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        String dash = '--------------------------------------\n';
+        String uid = 'UID: ${authService.uid}\n';
+        String versionAndBuild = '$appName version: $appVersion($buildNumber)\n';
+        String isPhysicalDevice = 'Physical Device: ${iosInfo.isPhysicalDevice}\n';
+        String uuid = 'UUID: ${iosInfo.identifierForVendor}\n';
+        String model = 'Model: ${iosInfo.model} (${iosInfo.utsname.machine})\n';
+        String os = 'OS: ${iosInfo.systemName} ${iosInfo.systemVersion}\n';
+        String utsnameRelease = 'UTS Name (release level): ${iosInfo.utsname.release}\n';
+        String utsnameSystem = 'UTS Name (operatin system name): ${iosInfo.utsname.sysname}\n';
+        // String utsnameVersion =
+        //     'UTS Name (Kernel version): ${iosInfo.utsname.version}\n';
 
-      try {
-        await FlutterEmailSender.send(email);
-      } catch (e) {
-        log(e.toString());
-        showErrorMessageBottomSheet(context);
+        String deviceInfoForDebugging = '\n\n\n\n$dash$uid$versionAndBuild$isPhysicalDevice$model$os$utsnameRelease$utsnameSystem$uuid';
+
+        final Email email = Email(
+          body: deviceInfoForDebugging,
+          subject: '$subject ($appName $appVersion)',
+          recipients: [feedbackRecipient],
+          isHTML: false,
+        );
+
+        try {
+          await FlutterEmailSender.send(email);
+        } catch (e) {
+          log(e.toString());
+          showErrorMessageBottomSheet(context);
+        }
       }
     }
   }
