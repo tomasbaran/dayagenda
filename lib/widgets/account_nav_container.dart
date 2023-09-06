@@ -95,7 +95,7 @@ class AccountNavContainer extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         'Log Out',
-                        style: navBarAccountTextStyle,
+                        style: navBarAccountTextStyle.copyWith(color: Colors.red),
                       ),
                     ),
                   ),
