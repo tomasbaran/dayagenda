@@ -15,13 +15,13 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
   final listService = getIt<ListService>();
   final dateState = getIt<DateState>();
 
-  StreamSubscription? subscription;
+  StreamSubscription? listSubscription;
 
   listenToDateList() {
-    subscription?.cancel();
+    listSubscription?.cancel();
 
-    subscription = listService.listenToDateListSnapshot(date: dateState.selectedDate);
-    subscription?.onData((data) {
+    listSubscription = listService.listenToDateListSnapshot(date: dateState.selectedDate);
+    listSubscription?.onData((data) {
       try {
         value = listService.convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
@@ -36,7 +36,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
   }
 
   disposeSubscription() {
-    subscription?.cancel();
+    listSubscription?.cancel();
   }
 
   reorderList(int oldIndex, int newIndex) {
