@@ -115,7 +115,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         context: context,
                         defaultTime: taskState.selectedTask.value.startTime,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskState.updateStartTime(dateState.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskState.updateStartTime(dateState.selectedDate.value, newTime.hour, newTime.minute));
                         },
                       ),
               ),
@@ -131,7 +131,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                     : ScreenUtils.showCupertinoTimePicker(
                         context: context,
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => taskState.updateEndTime(dateState.selectedDate, newTime.hour, newTime.minute));
+                          setState(() => taskState.updateEndTime(dateState.selectedDate.value, newTime.hour, newTime.minute));
                         },
                         defaultTime: taskState.selectedTask.value.endTime ?? taskState.selectedTask.value.startTime,
                       ),
@@ -144,7 +144,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         disabled: taskState.selectedTask.value.isCompleted,
                         title: 'Date',
                         icon: CupertinoIcons.calendar,
-                        value: DateFormat.yMMMMd('en_US').format(selectedList.date ?? dateState.selectedDate),
+                        value: DateFormat.yMMMMd('en_US').format(dateState.selectedDate.value),
                       );
                     }),
                 onTap: () async {
@@ -176,7 +176,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                             nextMonthIcon: const Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
                             lastMonthIcon: const Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
                           ),
-                          value: [dateState.selectedDate],
+                          value: [dateState.selectedDate.value],
                         );
                   if (calendarValues != null) {
                     listState.selectDateListByDate(calendarValues.first!);

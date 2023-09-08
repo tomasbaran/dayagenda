@@ -3,15 +3,13 @@ import 'package:today/models/enums.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class DateState {
-  DateTime _selectedDate = DateTime.now();
+  final selectedDate = ValueNotifier<DateTime>(DateTime.now());
   final isSelectedDateToday = ValueNotifier<bool>(true);
 
-  DateTime get selectedDate => _selectedDate;
-
   selecteNewDate(DateTime newDateTime) {
-    _selectedDate = newDateTime;
+    selectedDate.value = newDateTime;
     isSelectedDateToday.value = checkIfSelectedDateIsToday();
   }
 
-  bool checkIfSelectedDateIsToday() => DateTimeUtils.isSpecialDay(DateTime.now(), _selectedDate) == DayType.isToday;
+  bool checkIfSelectedDateIsToday() => DateTimeUtils.isSpecialDay(DateTime.now(), selectedDate.value) == DayType.isToday;
 }

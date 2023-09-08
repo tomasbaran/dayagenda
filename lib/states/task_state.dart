@@ -40,10 +40,10 @@ class TaskState extends ChangeNotifier {
   updateStartEndTimeToSelectedDate() {
     // when updating date of a task, also update its start/endTime date to selectedDate
     if (selectedTask.value.startTime != null) {
-      updateStartTime(dateState.selectedDate, selectedTask.value.startTime!.hour, selectedTask.value.startTime!.minute);
+      updateStartTime(dateState.selectedDate.value, selectedTask.value.startTime!.hour, selectedTask.value.startTime!.minute);
     }
     if (selectedTask.value.endTime != null) {
-      updateEndTime(dateState.selectedDate, selectedTask.value.endTime!.hour, selectedTask.value.endTime!.minute);
+      updateEndTime(dateState.selectedDate.value, selectedTask.value.endTime!.hour, selectedTask.value.endTime!.minute);
     }
   }
 

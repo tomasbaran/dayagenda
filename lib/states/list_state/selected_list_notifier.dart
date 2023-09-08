@@ -20,13 +20,13 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
   listenToDateList() {
     listSubscription?.cancel();
 
-    listSubscription = listService.listenToDateListSnapshot(date: dateState.selectedDate);
+    listSubscription = listService.listenToDateListSnapshot(date: dateState.selectedDate.value);
     listSubscription?.onData((data) {
       try {
         value = listService.convertFirebaseSnapshotToMyList(
           firebaseSnapshot: data,
-          myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate),
-          listDate: dateState.selectedDate,
+          myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate.value),
+          listDate: dateState.selectedDate.value,
         );
         log('\x1B[3m\x1B[33m!got new data; selectedList.value: $value\x1B[0m');
       } catch (e) {

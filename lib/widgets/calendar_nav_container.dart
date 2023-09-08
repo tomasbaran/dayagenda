@@ -37,7 +37,7 @@ class CalendarNavContainer extends StatelessWidget {
                 nextMonthIcon: const Icon(Icons.arrow_forward_ios_rounded, size: 20, color: kThemeColor9),
                 lastMonthIcon: const Icon(Icons.arrow_back_ios_rounded, size: 20, color: kThemeColor9),
               ),
-              value: [dateState.selectedDate],
+              value: [dateState.selectedDate.value],
               onValueChanged: (dates) {
                 listState.selectDateListByDate(dates.first!);
                 appState.updateNavBarSelection(NavBarSelection.unselected);

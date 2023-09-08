@@ -21,7 +21,7 @@ class ListState {
   final listService = getIt<ListService>();
 
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
-    dateState.selecteNewDate(dateState.selectedDate.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
+    dateState.selecteNewDate(dateState.selectedDate.value.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
     listenToDateList();
   }
 
@@ -30,7 +30,7 @@ class ListState {
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate);
+  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate.value);
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async => listService.removeTaskFromListInCloud(myTask, myList);
 
@@ -39,7 +39,7 @@ class ListState {
     required MyList originalList,
   }) async {
     // check whether the date of the updatedTask was changed
-    if (DateTimeUtils.isSpecialDay(originalList.date!, dateState.selectedDate) == DayType.isToday) {
+    if (DateTimeUtils.isSpecialDay(originalList.date!, dateState.selectedDate.value) == DayType.isToday) {
       // SAME DAY
       updateSameDateListByTask(updatedTask);
     } else {
