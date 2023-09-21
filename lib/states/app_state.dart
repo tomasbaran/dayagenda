@@ -79,29 +79,41 @@ class AppState {
   void addDefaultTasks() async {
     final listState = getIt<ListState>();
 
+    // Yesterday
     listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
     await listState.addTaskToDateList(MyTask(title: 'Tap on the pushpin icon to go back to today'));
 
+    // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
     await listState.addTaskToDateList(MyTask(title: 'Send feedback by going into my account tab'));
-    await listState.addTaskToDateList(MyTask(title: 'Sign up to have all my tasks synced also on the web'));
+    await listState.addTaskToDateList(MyTask(title: 'Sign up to have all my tasks synced on the web'));
 
+    // Today
     listState.selectDateListByDate(DateTime.now());
 
+    // 7.
     await listState.addTaskToDateList(MyTask(
         title: 'Review today\'s tasks',
         startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 00, 00),
         endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 10, 00)));
 
-    await listState.addTaskToDateList(MyTask(title: 'Add new task with by tapping on the + icon'));
+    // 6.
+    await listState.addTaskToDateList(MyTask(title: 'Add a new to-do by tapping on the + icon'));
 
-    await listState.addTaskToDateList(MyTask(title: 'Hold me to reorder me'));
-
-    await listState.addTaskToDateList(MyTask(title: 'Tap on me to edit me'));
-
+    // 5.
     await listState.addTaskToDateList(MyTask(title: 'Tap on the calendar icon to switch to tomorrow'));
 
+    // 4.
     await listState.addTaskToDateList(MyTask(title: 'Swipe to the left to see yesterday\'s unfinished tasks'));
+
+    // 3.
+    await listState.addTaskToDateList(MyTask(title: 'Hold me to reorder me'));
+
+    // 2.
+    await listState.addTaskToDateList(MyTask(title: 'Tap on me to edit me'));
+
+    // 1.`
+    await listState.addTaskToDateList(MyTask(title: 'Mark me as completed by tapping on the checkbox'));
   }
 
   Future<void> initialize() async {
