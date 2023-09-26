@@ -17,6 +17,7 @@ dependencies:
   firebase_core: ^2.15.1
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
   flutter_email_sender: ^6.0.1
   flutter_launcher_icons: ^0.13.1
   flutter_signin_button: ^2.0.0
@@ -28,6 +29,7 @@ dependencies:
   intl: ^0.18.1
   loading_more_list: ^5.0.3
   logger: ^1.1.0
+  mixpanel_flutter: ^2.1.1
   modal_bottom_sheet: ^3.0.0-pre
   package_info_plus: ^4.0.2
   rename: ^2.1.1
@@ -44,3 +46,4 @@ flutter:
 
   assets:
     - assets/images/3x/
+    - lib/.env

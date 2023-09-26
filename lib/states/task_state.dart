@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:today/services/mixpanel_service.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/states/list_state/list_state.dart';
@@ -51,6 +52,11 @@ class TaskState extends ChangeNotifier {
     task.isCompleted = !task.isCompleted;
     listState.selectedList.notifyListeners(); //so the phone screen reflects the state change
     await Future.delayed(const Duration(milliseconds: 900));
+
+    if (task.isCompleted) {
+      MixpanelService.mixpanel?.track('Complete Task');
+      MixpanelService.mixpanel?.getPeople().increment("completed tasks", 1);
+    }
 
     listState.updateListByTaskIsCompleted(task);
   }

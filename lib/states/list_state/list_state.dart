@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:today/services/mixpanel_service.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/models/my_task.dart';
@@ -30,7 +31,12 @@ class ListState {
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask) async => await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate.value);
+  Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true}) async {
+    if (trackInMixpanel) {
+      MixpanelService.mixpanel?.track('Add Task', properties: {'task title': newTask.title});
+    }
+    await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate.value);
+  }
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async => listService.removeTaskFromListInCloud(myTask, myList);
 
