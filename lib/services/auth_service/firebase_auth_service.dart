@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
 import 'package:today/services/auth_service/auth_service.dart';
@@ -26,7 +27,7 @@ class FirebaseAuthService extends AuthService {
   Future signInAnonymously() async {
     try {
       await auth.signInAnonymously();
-      print("Signed in with temporary account.");
+      debugPrint("Signed in with temporary account: ${auth.currentUser?.uid}");
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":

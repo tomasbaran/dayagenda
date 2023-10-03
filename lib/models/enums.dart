@@ -1,3 +1,5 @@
+import 'package:today/globals/constants.dart';
+
 enum NavBarSelection {
   unselected,
   calendar,
@@ -20,4 +22,12 @@ enum SheetType {
 enum SnackBarType {
   success,
   error,
+}
+
+enum FlavorType {
+  dev(baseUrlDev),
+  live(baseUrlLive);
+
+  const FlavorType(this.baseUrl);
+  final String baseUrl;
 }

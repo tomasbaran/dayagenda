@@ -12,7 +12,7 @@ void main() async {
   setupGetIt();
 
   final appState = getIt<AppState>();
-  await appState.initialize();
+  await appState.initializeSelectedFlavor();
 
   runApp(TodayApp());
 }

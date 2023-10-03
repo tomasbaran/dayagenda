@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:today/firebase_options.dart';
+import 'package:today/flavor.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
@@ -12,6 +12,9 @@ import 'package:today/services/mixpanel_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/list_state/list_state.dart';
 import 'package:today/style/style_constants.dart';
+
+import 'package:today/firebase_options_dev.dart' as dev;
+import 'package:today/firebase_options_live.dart' as live;
 
 class AppState {
   final isSignedIn = ValueNotifier<bool>(false);
@@ -124,10 +127,24 @@ class AppState {
     MixpanelService.mixpanel?.getPeople().setOnce('onboarding date', DateTime.now().toLocal().toUtc().toString());
   }
 
-  Future<void> initialize() async {
+  Future<void> initializeSelectedFlavor() async {
+    final selectedFlavor = await Flavor.selected();
+    debugPrint("Connecting to ${selectedFlavor.name} environment (${selectedFlavor.baseUrl})...");
+
     await dotenv.load(fileName: "lib/.env");
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    await MixpanelService.initMixpanel();
+    switch (selectedFlavor) {
+      case FlavorType.dev:
+        await Firebase.initializeApp(name: 'dev', options: dev.DefaultFirebaseOptions.currentPlatform);
+        await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_DEV'));
+        break;
+      case FlavorType.live:
+        await Firebase.initializeApp(name: 'live', options: live.DefaultFirebaseOptions.currentPlatform);
+        await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_LIVE'));
+
+        break;
+      default:
+        throw Exception("Unknown environment $selectedFlavor");
+    }
 
     listenToAuthChanges();
 
