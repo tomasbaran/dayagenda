@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:today/flavor.dart';
 import 'package:today/states/app_state.dart';
 import 'package:today/states/list_state/list_state.dart';
 import 'package:today/models/enums.dart';
@@ -29,7 +28,7 @@ class NavContainer extends StatelessWidget {
           // height: 400,
           width: floatingContainerWidth,
           decoration: BoxDecoration(
-            color: Flavor.selectedFlavor == FlavorType.live ? kThemeColor11 : Colors.blueGrey[100],
+            color: kThemeColor11,
             borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
           ),
           child: ValueListenableBuilder(
