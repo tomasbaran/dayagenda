@@ -12,7 +12,7 @@
                 "--flavor",
                 "dev",
                 "--dart-define",
-                "FLAVOR=dev"
+                "flavor=dev"
             ]
         },
         {
@@ -24,7 +24,7 @@
                 "--flavor",
                 "dev",
                 "--dart-define",
-                "FLAVOR=dev"
+                "flavor=dev"
             ]
         },
         {
@@ -36,7 +36,7 @@
                 "--flavor",
                 "dev",
                 "--dart-define",
-                "FLAVOR=dev"
+                "flavor=dev"
             ]
         },
         {
@@ -47,7 +47,7 @@
                 "--flavor",
                 "live",
                 "--dart-define",
-                "FLAVOR=live"
+                "flavor=live"
             ]
         },
         {
@@ -59,7 +59,7 @@
                 "--flavor",
                 "live",
                 "--dart-define",
-                "FLAVOR=live"
+                "flavor=live"
             ]
         },
         {
@@ -71,7 +71,7 @@
                 "--flavor",
                 "live",
                 "--dart-define",
-                "FLAVOR=live"
+                "flavor=live"
             ]
         },
     ]
