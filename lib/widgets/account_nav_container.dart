@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/app_state.dart';
+import 'package:today/states/auth_state.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/send_feedback.dart';
 import 'package:today/widgets/email_signup_form_container.dart';
@@ -11,6 +12,7 @@ class AccountNavContainer extends StatelessWidget {
   AccountNavContainer({super.key});
 
   final authService = getIt<AuthService>();
+  final authState = getIt<AuthState>();
   final appState = getIt<AppState>();
 
   @override
@@ -90,7 +92,7 @@ class AccountNavContainer extends StatelessWidget {
                 return Visibility(
                   visible: isSignedIn,
                   child: GestureDetector(
-                    onTap: () => authService.logout(),
+                    onTap: () => authState.logout(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(

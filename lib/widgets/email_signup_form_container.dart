@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:today/models/enums.dart';
-import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/app_state.dart';
+import 'package:today/states/auth_state.dart';
 import 'package:today/style/style_constants.dart';
 import 'package:today/utils/screen_utlis.dart';
 
@@ -22,7 +22,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final authState = getIt<AuthService>();
+  final authState = getIt<AuthState>();
   final appState = getIt<AppState>();
 
   @override

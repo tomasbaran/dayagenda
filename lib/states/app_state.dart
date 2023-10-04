@@ -11,6 +11,7 @@ import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/models/enums.dart';
 import 'package:today/services/mixpanel_service.dart';
 import 'package:today/services/service_locator.dart';
+import 'package:today/states/auth_state.dart';
 import 'package:today/states/list_state/list_state.dart';
 import 'package:today/style/style_constants.dart';
 
@@ -66,9 +67,10 @@ class AppState {
 
   checkWhetherToSignUpFirstTimeUserAnonymously() async {
     final authService = getIt<AuthService>();
+    final authState = getIt<AuthState>();
 
     if (authService.uid == null) {
-      await authService.signInAnonymously();
+      await authState.signInAnonymously();
       addDefaultTasks();
       log(
         time: DateTime.now(),
