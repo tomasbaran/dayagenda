@@ -48,7 +48,8 @@ class FirebaseAuthService extends AuthService {
       if (auth.currentUser == null) {
         throw "Please kill the app and try again.";
       } else {
-        await auth.currentUser?.linkWithCredential(credential);
+        await FirebaseAuth.instance.currentUser?.linkWithCredential(credential);
+        // await auth.currentUser?.linkWithCredential(credential);
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -59,7 +60,7 @@ class FirebaseAuthService extends AuthService {
         case "invalid-credential":
           throw "The provider's credential is not valid.";
         case "credential-already-in-use":
-          ("The account corresponding to the credential already exists, "
+          debugPrint("The account corresponding to the credential already exists, "
               "or is already linked to a Firebase User.");
           break;
         // See the API reference for the full list of error codes.
