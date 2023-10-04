@@ -12,7 +12,7 @@ class EmailFormContainer extends StatefulWidget {
   const EmailFormContainer.signup({super.key}) : isRegisterType = true;
   const EmailFormContainer.login({super.key}) : isRegisterType = false;
 
-  final isRegisterType;
+  final bool isRegisterType;
 
   @override
   State<EmailFormContainer> createState() => _EmailFormContainerState();
@@ -35,8 +35,8 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(8)),
         color: kThemeColor12,
       ),
@@ -51,7 +51,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
               controller: _emailController,
               decoration: InputDecoration(
                 // enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
-                icon: Icon(Icons.email, color: kThemeColor2),
+                icon: const Icon(Icons.email, color: kThemeColor2),
                 labelText: 'Email',
                 labelStyle: navBarAccountEmailInputLabelTextStyle,
               ),
@@ -66,7 +66,7 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
               style: navBarAccountEmailInputTextStyle,
               controller: _passwordController,
               decoration: InputDecoration(
-                icon: Icon(Icons.lock, color: kThemeColor2),
+                icon: const Icon(Icons.lock, color: kThemeColor2),
                 labelText: 'Password',
                 labelStyle: navBarAccountEmailInputLabelTextStyle,
               ),

@@ -31,10 +31,10 @@ class FirebaseAuthService extends AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
-          print("Anonymous auth hasn't been enabled for this project.");
+          debugPrint("Anonymous auth hasn't been enabled for this project.");
           break;
         default:
-          print("Unknown error.");
+          debugPrint("Unknown error.");
       }
     }
   }
