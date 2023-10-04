@@ -25,18 +25,6 @@ const kThemeColor11 = Color(0xFF152335); // blueGrey
 const kThemeColor12 = Color(0xFF041427); // blueGrey
 const kHighlightColor = kThemeColor11;
 
-// LoginScreen
-
-const TextStyle loginScreenTitle = TextStyle(
-  fontSize: 34,
-  fontWeight: FontWeight.bold,
-);
-TextStyle loginScreenSubtitle = const TextStyle(
-  color: kThemeColor7,
-  fontWeight: FontWeight.w500,
-  fontSize: 24,
-);
-
 // TaskScreenAppBar
 const TextStyle appBarTitleTextStyle = TextStyle(
   color: kThemeColor11,

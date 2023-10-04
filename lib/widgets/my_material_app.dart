@@ -18,7 +18,6 @@ class MyMaterialApp extends StatelessWidget {
       navigatorKey: appState.navigatorKey,
       theme: AppTheme.light,
       title: 'DayAgenda',
-      // home: Auth().uid == null ? LoginScreen() : const TasksScreen(),
       // onGenerateRoute (instead of home) is necessary for the showCupertinoModalBottomSheet to animate and shrink the background when adding a new task
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
