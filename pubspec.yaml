@@ -46,4 +46,4 @@ flutter:
 
   assets:
     - assets/images/3x/
-    - lib/.env
+    - lib/dotenv

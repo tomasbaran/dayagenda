@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:today/flavor.dart';
@@ -131,14 +132,14 @@ class AppState {
     final selectedFlavor = await Flavor.selected();
     debugPrint("Connecting to ${selectedFlavor.name} environment (${selectedFlavor.baseUrl})...");
 
-    await dotenv.load(fileName: "lib/.env");
+    await dotenv.load(fileName: "lib/dotenv");
     switch (selectedFlavor) {
       case FlavorType.dev:
-        await Firebase.initializeApp(name: 'dev', options: dev.DefaultFirebaseOptions.currentPlatform);
+        await Firebase.initializeApp(name: kIsWeb ? null : 'dev', options: dev.DefaultFirebaseOptions.currentPlatform);
         await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_DEV'));
         break;
       case FlavorType.live:
-        await Firebase.initializeApp(name: 'live', options: live.DefaultFirebaseOptions.currentPlatform);
+        await Firebase.initializeApp(name: kIsWeb ? null : 'live', options: live.DefaultFirebaseOptions.currentPlatform);
         await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_LIVE'));
 
         break;

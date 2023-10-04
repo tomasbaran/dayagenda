@@ -10,7 +10,9 @@
             "type": "dart",
             "args": [
                 "--flavor",
-                "dev"
+                "dev",
+                "--dart-define",
+                "FLAVOR=dev"
             ]
         },
         {
@@ -20,7 +22,9 @@
             "flutterMode": "profile",
             "args": [
                 "--flavor",
-                "dev"
+                "dev",
+                "--dart-define",
+                "FLAVOR=dev"
             ]
         },
         {
@@ -30,7 +34,9 @@
             "flutterMode": "release",
             "args": [
                 "--flavor",
-                "dev"
+                "dev",
+                "--dart-define",
+                "FLAVOR=dev"
             ]
         },
         {
@@ -39,7 +45,9 @@
             "type": "dart",
             "args": [
                 "--flavor",
-                "live"
+                "live",
+                "--dart-define",
+                "FLAVOR=live"
             ]
         },
         {
@@ -49,7 +57,9 @@
             "flutterMode": "profile",
             "args": [
                 "--flavor",
-                "live"
+                "live",
+                "--dart-define",
+                "FLAVOR=live"
             ]
         },
         {
@@ -59,7 +69,9 @@
             "flutterMode": "release",
             "args": [
                 "--flavor",
-                "live"
+                "live",
+                "--dart-define",
+                "FLAVOR=live"
             ]
         },
     ]
