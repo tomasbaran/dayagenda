@@ -21,7 +21,7 @@ class Flavor {
       selectedFlavor = FlavorType.live;
       // web
     } else if (kIsWeb) {
-      const environmentParameter = String.fromEnvironment('FLAVOR');
+      const environmentParameter = String.fromEnvironment('flavor');
       switch (environmentParameter) {
         case 'dev':
           selectedFlavor = FlavorType.dev;
