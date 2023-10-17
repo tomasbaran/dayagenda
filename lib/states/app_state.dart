@@ -82,7 +82,6 @@ class AppState {
         'signed in as: ${authService.uid}\x1B[0m',
       );
     }
-    MixpanelService.mixpanel?.identify(authService.uid!);
   }
 
   void addDefaultTasks() async {

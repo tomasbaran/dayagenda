@@ -7,6 +7,8 @@ class AuthState {
 
   Future loginWithEmailAndPassword(String email, String password) async {
     await authService.loginWithEmailAndPassword(email, password);
+    MixpanelService.mixpanel?.identify(authService.uid!);
+    MixpanelService.mixpanel?.getPeople().set('\$email', email);
     MixpanelService.mixpanel?.track('Login', properties: {'email': email});
   }
 
@@ -18,11 +20,13 @@ class AuthState {
 
   Future signInAnonymously() async {
     await authService.signInAnonymously();
+    MixpanelService.mixpanel?.identify(authService.uid!);
     MixpanelService.mixpanel?.track('Signup Anonymously');
   }
 
   Future logout() async {
     await authService.logout();
     MixpanelService.mixpanel?.track('Logout');
+    MixpanelService.mixpanel?.reset();
   }
 }
