@@ -57,7 +57,7 @@ class TaskState extends ChangeNotifier {
     if (task.isCompleted) {
       MixpanelService.mixpanel?.track('Complete Task');
       MixpanelService.mixpanel?.getPeople().increment("completed tasks", 1);
-      FirestoreAnalyticsService().trackUserStatOnCompleted(task);
+      await FirestoreAnalyticsService().updateUserStatOnCompleted(task);
     }
 
     listState.updateListByTaskIsCompleted(task);

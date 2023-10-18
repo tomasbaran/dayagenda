@@ -50,7 +50,7 @@ class AppState {
     final authService = getIt<AuthService>();
 
     authService.myAuthSubscription().onData((data) {
-      log('new data:$data ');
+      // log('new data:$data ');
       if (data == null) {
         // print('User is currently signed out!');
         isSignedIn.value = false;
