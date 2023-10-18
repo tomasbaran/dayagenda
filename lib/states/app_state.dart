@@ -9,6 +9,7 @@ import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/models/enums.dart';
+import 'package:today/services/firestore_analytics_service.dart';
 import 'package:today/services/mixpanel_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/auth_state.dart';
@@ -153,5 +154,6 @@ class AppState {
     listenToAuthChanges();
 
     await checkWhetherToSignUpFirstTimeUserAnonymously();
+    await FirestoreAnalyticsService().updateActivity();
   }
 }

@@ -33,7 +33,7 @@ class FirestoreAnalyticsService {
 
   Future updateTasksEventsRatio() async {
     final listDocRef = db.collection('user_stats').doc(uid);
-    listDocRef.get().then((value) {
+    await listDocRef.get().then((value) {
       final userStats = value.data() as Map;
       final completedTasks = userStats['completed_tasks_counter'] ?? 1;
       final completedEvents = userStats['completed_events_counter'] ?? 1;
@@ -75,6 +75,31 @@ class FirestoreAnalyticsService {
   Future writeSignupDate() async {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.set({'signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+  }
+
+  Future updateActivity() async {
+    final listDocRef = db.collection('user_stats').doc(uid);
+
+    await listDocRef.get().then((value) async {
+      final userStats = value.data() as Map;
+      final signupDate = userStats['signed_up'] as Timestamp?;
+      // log('signupDate:  ${signupDate}');
+      final now = DateTime.now();
+      final difference = now.difference(signupDate?.toDate() ?? now);
+      final activePeriod = difference.inDays;
+      await listDocRef.set({'active_period': activePeriod}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+        log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+        Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      });
+    }, onError: (e) {
+      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+
+    await listDocRef.set({'last_signed_in': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
