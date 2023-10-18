@@ -102,28 +102,30 @@ class AppState {
     // 7.
     await listState.addTaskToDateList(
         MyTask(
+            isDefault: true,
             title: 'Review today\'s tasks',
             startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 00, 00),
             endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 10, 00)),
         trackInMixpanel: false);
 
     // 6.
-    await listState.addTaskToDateList(MyTask(title: 'Add a new to-do by tapping on the + icon'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Add a new to-do by tapping on the + icon'), trackInMixpanel: false);
 
     // 5.
-    await listState.addTaskToDateList(MyTask(title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
 
     // 4.
-    await listState.addTaskToDateList(MyTask(title: 'Swipe to the left to see yesterday\'s unfinished tasks'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe to the left to see yesterday\'s unfinished tasks'),
+        trackInMixpanel: false);
 
     // 3.
-    await listState.addTaskToDateList(MyTask(title: 'Hold me to reorder me'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hold me to reorder me'), trackInMixpanel: false);
 
     // 2.
-    await listState.addTaskToDateList(MyTask(title: 'Tap on me to edit me'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on me to edit me'), trackInMixpanel: false);
 
     // 1.`
-    await listState.addTaskToDateList(MyTask(title: 'Mark me as completed by tapping on the checkbox'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Mark me as completed by tapping on the checkbox'), trackInMixpanel: false);
 
     MixpanelService.mixpanel?.track('Add Default Tasks');
     MixpanelService.mixpanel?.getPeople().setOnce('onboarding date', DateTime.now().toLocal().toUtc().toString());

@@ -3,8 +3,10 @@ class MyTask {
   DateTime? endTime;
   String title;
   bool isCompleted;
+  bool isDefault;
   int? key;
   MyTask({
+    this.isDefault = false,
     this.startTime,
     this.endTime,
     this.key,

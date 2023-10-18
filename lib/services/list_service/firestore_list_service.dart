@@ -99,12 +99,20 @@ class FirestoreListService extends ListService {
   }
 
   @override
-  Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => {
-        'title': myTask.title,
-        'completed': myTask.isCompleted,
-        'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
-        'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
-      };
+  Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => myTask.isDefault
+      ? {
+          'default_task': myTask.isDefault,
+          'title': myTask.title,
+          'completed': myTask.isCompleted,
+          'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
+          'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
+        }
+      : {
+          'title': myTask.title,
+          'completed': myTask.isCompleted,
+          'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
+          'end_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.endTime),
+        };
 
   @override
   Map<String, dynamic> formatMyListToFirebaseList(MyList myList) {
