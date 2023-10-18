@@ -71,4 +71,12 @@ class FirestoreAnalyticsService {
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
   }
+
+  Future writeSignupDate() async {
+    final listDocRef = db.collection('user_stats').doc(uid);
+    await listDocRef.set({'signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+  }
 }
