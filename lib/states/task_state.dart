@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:today/services/firestore_analytics_service.dart';
 import 'package:today/services/mixpanel_service.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/models/my_task.dart';
@@ -56,6 +57,7 @@ class TaskState extends ChangeNotifier {
     if (task.isCompleted) {
       MixpanelService.mixpanel?.track('Complete Task');
       MixpanelService.mixpanel?.getPeople().increment("completed tasks", 1);
+      FirestoreAnalyticsService().trackUserStatOnCompleted(task);
     }
 
     listState.updateListByTaskIsCompleted(task);

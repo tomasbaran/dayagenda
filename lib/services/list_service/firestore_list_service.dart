@@ -5,6 +5,7 @@ import 'package:today/models/my_list.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:logger/logger.dart';
+import 'package:today/services/firestore_analytics_service.dart';
 import 'package:today/services/list_service/list_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/utils/date_time_utils.dart';
@@ -95,6 +96,7 @@ class FirestoreListService extends ListService {
         log('\x1B[31mError #3[adding task]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding task]: $e\x1B[0m');
       });
+      FirestoreAnalyticsService().trackUserStatOnAdded(myTask);
     }
   }
 
@@ -145,6 +147,7 @@ class FirestoreListService extends ListService {
         (key, value) {
           MyTask myTask = MyTask(
             key: key,
+            isDefault: value['default_task'] ?? false,
             title: value['title'],
             isCompleted: value['completed'],
             startTime: DateTimeUtils.convertTimestampToDateTime(value['start_time']),

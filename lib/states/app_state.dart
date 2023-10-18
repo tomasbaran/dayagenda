@@ -89,12 +89,12 @@ class AppState {
 
     // Yesterday
     listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
-    await listState.addTaskToDateList(MyTask(title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
 
     // Today
     listState.selectDateListByDate(DateTime.now());
