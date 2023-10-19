@@ -120,7 +120,7 @@ class AppState {
         trackInMixpanel: false);
 
     // 3.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hold me to reorder me'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hold me (drag handles on the web) to reorder me'), trackInMixpanel: false);
 
     // 2.
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on me to edit me'), trackInMixpanel: false);
