@@ -29,6 +29,8 @@ class FirebaseAuthService extends AuthService {
     try {
       await auth.signInAnonymously();
       debugPrint("Signed in with temporary account: ${auth.currentUser?.uid}");
+
+      await AnalyticsService().writeSignupDate();
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
@@ -38,7 +40,6 @@ class FirebaseAuthService extends AuthService {
           debugPrint("Unknown error.");
       }
     }
-    await AnalyticsService().writeSignupDate();
   }
 
   @override
