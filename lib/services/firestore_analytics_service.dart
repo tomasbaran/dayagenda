@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/services/service_locator.dart';
@@ -81,9 +83,36 @@ class FirestoreAnalyticsService {
     });
   }
 
+  Future crawlFutureDays(int numberOfDays) async {
+    final listDocRef = db.collection('user_lists').doc(uid);
+    int crawledTodoes = 0;
+
+    for (int daysI = 0; daysI < numberOfDays; daysI++) {
+      final date = DateTime.now().add(Duration(days: daysI));
+      String listDateId = DateFormat('yyyy-MM-dd').format(date);
+      final dateDocRef = listDocRef.collection('date_lists').doc(listDateId);
+
+      await dateDocRef.get().then((value) {
+        final Map? dateList = value.data();
+        final tasks = dateList?['tasks'] as List? ?? [];
+        for (final task in tasks) {
+          if (task['default_task'] == null) {
+            log('task[$listDateId]: ${task['title']}');
+            crawledTodoes++;
+          }
+        }
+        log('crawledTodoes: $crawledTodoes');
+      }, onError: (e) {
+        log('\x1B[31mError #6[crawl next days]: $e\x1B[0m');
+        Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      });
+    }
+    return crawledTodoes;
+  }
+
   Future updateCompletionRate() async {
     final listDocRef = db.collection('user_stats').doc(uid);
-    await listDocRef.get().then((value) {
+    await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
       final completedTasks = userStats['completed_tasks_counter'] ?? 0;
       final completedEvents = userStats['completed_events_counter'] ?? 0;
@@ -92,7 +121,8 @@ class FirestoreAnalyticsService {
       if (allTodoes == 0) {
         completionRate = 0;
       } else {
-        completionRate = ((completedTasks + completedEvents) / allTodoes) * 100;
+        final notCompletedFutureTodoes = await crawlFutureDays(futureDaysToCrawl);
+        completionRate = ((completedTasks + completedEvents) / (allTodoes - notCompletedFutureTodoes)) * 100;
         completionRate = double.parse(completionRate.toStringAsFixed(0));
       }
 
