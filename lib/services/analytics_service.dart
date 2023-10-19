@@ -28,8 +28,10 @@ class AnalyticsService {
     } else {
       if (myTask.startTime != null) {
         await increaseUserStat('completed_events_counter');
+        MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'event'});
       } else {
         await increaseUserStat('completed_tasks_counter');
+        MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'task'});
       }
       await updateTasksEventsRatio();
       await updateCompletionRate();

@@ -57,7 +57,6 @@ class TaskState extends ChangeNotifier {
     await listState.updateListByTaskIsCompleted(task);
 
     if (task.isCompleted) {
-      MixpanelService.mixpanel?.track('Complete Task');
       await AnalyticsService().updateUserStatOnCompleted(task);
     }
   }
