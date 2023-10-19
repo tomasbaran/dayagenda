@@ -39,7 +39,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     listSubscription?.cancel();
   }
 
-  reorderList(int oldIndex, int newIndex) {
+  reorderList(int oldIndex, int newIndex) async {
     // print('0. before ordering List: ${selectedList.value}');
 
     if (newIndex < oldIndex) {
@@ -48,7 +48,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     final element = value.tasks.removeAt(oldIndex);
     value.tasks.insert(newIndex, element);
     log('\x1B[32m1. reordered List: $value \x1B[0m');
-    listService.updateDateListInCloud(value);
+    await listService.updateDateListInCloud(value);
   }
 
   Future updateListByTaskIsCompleted(MyTask updatedTask) async {
@@ -66,10 +66,10 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     await listService.updateDateListInCloud(value);
   }
 
-  updateSameDateListByTask(MyTask updatedTask) {
+  Future updateSameDateListByTask(MyTask updatedTask) async {
     // update the new task to the selectedList locally
     value.tasks[updatedTask.key!] = updatedTask;
     // update the updated list in the db
-    listService.updateDateListInCloud(value);
+    await listService.updateDateListInCloud(value);
   }
 }

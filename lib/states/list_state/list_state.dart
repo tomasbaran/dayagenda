@@ -14,9 +14,9 @@ class ListState {
   final selectedList = SelectedListNotifier();
   listenToDateList() => selectedList.listenToDateList();
   disposeSubscription() => selectedList.disposeSubscription();
-  reorderList(int oldIndex, int newIndex) => selectedList.reorderList(oldIndex, newIndex);
+  Future reorderList(int oldIndex, int newIndex) async => selectedList.reorderList(oldIndex, newIndex);
   Future updateListByTaskIsCompleted(MyTask updatedTask) async => selectedList.updateListByTaskIsCompleted(updatedTask);
-  updateSameDateListByTask(MyTask updatedTask) => selectedList.updateSameDateListByTask(updatedTask);
+  Future updateSameDateListByTask(MyTask updatedTask) async => selectedList.updateSameDateListByTask(updatedTask);
 
   final dateState = getIt<DateState>();
   final listService = getIt<ListService>();
@@ -33,7 +33,7 @@ class ListState {
 
   Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true}) async {
     if (trackInMixpanel) {
-      MixpanelService.mixpanel?.track('Add Task', properties: {'task title': newTask.title});
+      MixpanelService.mixpanel?.track('Add Todo', properties: {'todo title': newTask.title});
     }
     await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate.value);
   }
@@ -47,7 +47,7 @@ class ListState {
     // check whether the date of the updatedTask was changed
     if (DateTimeUtils.isSpecialDay(originalList.date!, dateState.selectedDate.value) == DayType.isToday) {
       // SAME DAY
-      updateSameDateListByTask(updatedTask);
+      await updateSameDateListByTask(updatedTask);
     } else {
       // DIFF DAY
       // delete the original task from the original date in the db
