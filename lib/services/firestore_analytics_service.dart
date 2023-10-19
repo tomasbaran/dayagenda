@@ -80,26 +80,27 @@ class FirestoreAnalyticsService {
     });
   }
 
-  Future updateActivity() async {
+  Future updateActivityStats() async {
     final listDocRef = db.collection('user_stats').doc(uid);
 
     await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
       final signupDate = userStats['signed_up'] as Timestamp?;
-      // log('signupDate:  ${signupDate}');
       final now = DateTime.now();
       final difference = now.difference(signupDate?.toDate() ?? now);
       final activePeriod = difference.inDays;
-      await listDocRef.set({'active_period': activePeriod}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+      final completedTodoes = userStats['todoes_counter'] ?? 0;
+      final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
+
+      await listDocRef.set({
+        'active_period': activePeriod,
+        'last_signed_in': DateTime.now(),
+        'completed_todoes_per_day': double.parse(completedTodoesPerDay.toStringAsFixed(0)),
+      }, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       });
     }, onError: (e) {
-      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
-      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
-    });
-
-    await listDocRef.set({'last_signed_in': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
