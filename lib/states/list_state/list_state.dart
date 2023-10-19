@@ -15,7 +15,7 @@ class ListState {
   listenToDateList() => selectedList.listenToDateList();
   disposeSubscription() => selectedList.disposeSubscription();
   reorderList(int oldIndex, int newIndex) => selectedList.reorderList(oldIndex, newIndex);
-  updateListByTaskIsCompleted(MyTask updatedTask) => selectedList.updateListByTaskIsCompleted(updatedTask);
+  Future updateListByTaskIsCompleted(MyTask updatedTask) async => selectedList.updateListByTaskIsCompleted(updatedTask);
   updateSameDateListByTask(MyTask updatedTask) => selectedList.updateSameDateListByTask(updatedTask);
 
   final dateState = getIt<DateState>();

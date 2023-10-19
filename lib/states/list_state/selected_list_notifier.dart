@@ -51,7 +51,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     listService.updateDateListInCloud(value);
   }
 
-  updateListByTaskIsCompleted(MyTask updatedTask) {
+  Future updateListByTaskIsCompleted(MyTask updatedTask) async {
     // MyList tmpMyList = listState.selectedList.value.clone();
     if (updatedTask.isCompleted) {
       // ALT: tmpMyList.tasks.removeAt(task.key!);
@@ -63,7 +63,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
       value.tasks.add(updatedTask);
     }
 
-    listService.updateDateListInCloud(value);
+    await listService.updateDateListInCloud(value);
   }
 
   updateSameDateListByTask(MyTask updatedTask) {

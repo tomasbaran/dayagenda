@@ -49,17 +49,17 @@ class TaskState extends ChangeNotifier {
     }
   }
 
-  toggleTaskCompleted(MyTask task) async {
+  Future toggleTaskCompleted(MyTask task) async {
     task.isCompleted = !task.isCompleted;
     listState.selectedList.notifyListeners(); //so the phone screen reflects the state change
     await Future.delayed(const Duration(milliseconds: 900));
+
+    await listState.updateListByTaskIsCompleted(task);
 
     if (task.isCompleted) {
       MixpanelService.mixpanel?.track('Complete Task');
       MixpanelService.mixpanel?.getPeople().increment("completed tasks", 1);
       await FirestoreAnalyticsService().updateUserStatOnCompleted(task);
     }
-
-    listState.updateListByTaskIsCompleted(task);
   }
 }
