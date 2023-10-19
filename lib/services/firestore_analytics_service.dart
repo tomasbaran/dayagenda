@@ -28,6 +28,7 @@ class FirestoreAnalyticsService {
         await increaseUserStat('completed_tasks_counter');
       }
       await updateTasksEventsRatio();
+      await updateCompletionRate();
     }
   }
 
@@ -76,6 +77,36 @@ class FirestoreAnalyticsService {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.set({'signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+  }
+
+  Future updateCompletionRate() async {
+    final listDocRef = db.collection('user_stats').doc(uid);
+    await listDocRef.get().then((value) {
+      final userStats = value.data() as Map;
+      final completedTasks = userStats['completed_tasks_counter'] ?? 0;
+      final completedEvents = userStats['completed_events_counter'] ?? 0;
+      final allTodoes = userStats['todoes_counter'] ?? 0;
+      double completionRate;
+      if (allTodoes == 0) {
+        completionRate = 0;
+      } else {
+        completionRate = ((completedTasks + completedEvents) / allTodoes) * 100;
+        completionRate = double.parse(completionRate.toStringAsFixed(0));
+      }
+
+      log('completedTasks: $completedTasks');
+      log('completedEvents: $completedEvents');
+      log('allTodoes: $allTodoes');
+      log('rate: $completionRate');
+
+      listDocRef.set({'completion_rate': completionRate}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+        log('\x1B[31mError calcCompletionRate: $e\x1B[0m');
+        Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      });
+    }, onError: (e) {
+      log('\x1B[31mError #3[adding stat][calcCompletionRate]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
   }
