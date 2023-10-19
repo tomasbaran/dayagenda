@@ -6,9 +6,11 @@ import 'package:logger/logger.dart';
 import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
+import 'package:today/services/mixpanel_service.dart';
 import 'package:today/services/service_locator.dart';
+import 'package:today/utils/date_time_utils.dart';
 
-class FirestoreAnalyticsService {
+class AnalyticsService {
   final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
@@ -44,6 +46,9 @@ class FirestoreAnalyticsService {
       // log('completedTasks: $completedTasks');
       // log('completedEvents: $completedEvents');
       // log('ratio: $ratio');
+
+      MixpanelService.mixpanel?.getPeople().set('ratio_tasks-events(completed)', double.parse(ratio.toStringAsFixed(1)));
+
       listDocRef.set({'ratio_tasks-events(completed)': double.parse(ratio.toStringAsFixed(1))}, SetOptions(merge: true)).then((value) {},
           onError: (e) {
         log('\x1B[31mError #4[updateTasksEventsRation]: $e\x1B[0m');
@@ -63,6 +68,7 @@ class FirestoreAnalyticsService {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
+    MixpanelService.mixpanel?.getPeople().increment(statTitle, 1);
   }
 
   Future decreaseUserStat(String statTitle) async {
@@ -73,11 +79,14 @@ class FirestoreAnalyticsService {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
+    MixpanelService.mixpanel?.getPeople().increment(statTitle, -1);
   }
 
   Future writeSignupDate() async {
     final listDocRef = db.collection('user_stats').doc(uid);
-    await listDocRef.set({'signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+    MixpanelService.mixpanel?.getPeople().setOnce('anonymously_signed_up', DateTimeUtils.mixpanelNow());
+
+    await listDocRef.set({'anonymously_signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
@@ -126,10 +135,12 @@ class FirestoreAnalyticsService {
         completionRate = double.parse(completionRate.toStringAsFixed(0));
       }
 
-      log('completedTasks: $completedTasks');
-      log('completedEvents: $completedEvents');
-      log('allTodoes: $allTodoes');
-      log('rate: $completionRate');
+      // log('completedTasks: $completedTasks');
+      // log('completedEvents: $completedEvents');
+      // log('allTodoes: $allTodoes');
+      // log('rate: $completionRate');
+
+      MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
 
       listDocRef.set({'completion_rate': completionRate}, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError calcCompletionRate: $e\x1B[0m');
@@ -146,12 +157,16 @@ class FirestoreAnalyticsService {
 
     await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
-      final signupDate = userStats['signed_up'] as Timestamp?;
+      final signupDate = userStats['anonymously_signed_up'] as Timestamp?;
       final now = DateTime.now();
       final difference = now.difference(signupDate?.toDate() ?? now);
       final activePeriod = difference.inDays;
       final completedTodoes = userStats['todoes_counter'] ?? 0;
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
+
+      MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
+      MixpanelService.mixpanel?.getPeople().set('last_signed_in', DateTimeUtils.mixpanelNow());
+      MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
 
       await listDocRef.set({
         'active_period': activePeriod,

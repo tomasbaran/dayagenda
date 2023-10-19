@@ -6,6 +6,7 @@ class DateTimeUtils {
   static String? formatTime(DateTime? dateTime) => dateTime == null ? null : '${dateTime.hour} : ${formatMinutes(dateTime)}';
   static String formatMinutes(DateTime dateTime) => dateTime.minute.toString().padLeft(2, '0');
 
+  static String mixpanelNow() => DateTime.now().toLocal().toUtc().toString();
   static DayType? isSpecialDay(DateTime defaultDateTime, DateTime? checkingDateTime) {
     const Duration oneDay = Duration(hours: 24);
     if (checkingDateTime == null) {

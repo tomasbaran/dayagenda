@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
 import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/services/firestore_analytics_service.dart';
+import 'package:today/services/analytics_service.dart';
 
 class FirebaseAuthService extends AuthService {
   // creating firebase instance
@@ -38,7 +38,7 @@ class FirebaseAuthService extends AuthService {
           debugPrint("Unknown error.");
       }
     }
-    await FirestoreAnalyticsService().writeSignupDate();
+    await AnalyticsService().writeSignupDate();
   }
 
   @override

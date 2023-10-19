@@ -9,7 +9,7 @@ import 'package:today/globals/constants.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/services/auth_service/auth_service.dart';
 import 'package:today/models/enums.dart';
-import 'package:today/services/firestore_analytics_service.dart';
+import 'package:today/services/analytics_service.dart';
 import 'package:today/services/mixpanel_service.dart';
 import 'package:today/services/service_locator.dart';
 import 'package:today/states/auth_state.dart';
@@ -129,7 +129,6 @@ class AppState {
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Mark me as completed by tapping on the checkbox'), trackInMixpanel: false);
 
     MixpanelService.mixpanel?.track('Add Default Tasks');
-    MixpanelService.mixpanel?.getPeople().setOnce('onboarding date', DateTime.now().toLocal().toUtc().toString());
   }
 
   Future<void> initializeSelectedFlavor() async {
@@ -156,7 +155,7 @@ class AppState {
     await checkWhetherToSignUpFirstTimeUserAnonymously();
 
     try {
-      await FirestoreAnalyticsService().updateActivityStats();
+      await AnalyticsService().updateActivityStats();
     } catch (e) {
       log('Error firestore analytics: $e');
     }
