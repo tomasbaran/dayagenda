@@ -79,6 +79,18 @@ class AnalyticsService {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
+
+    await listDocRef.get().then((value) {
+      final userStats = value.data() as Map;
+      final defaultTodoesCounter = userStats['default_todoes_counter'] ?? 100;
+      if (defaultTodoesCounter == 0) {
+        MixpanelService.mixpanel?.track('Default Tasks Completed');
+      }
+    }, onError: (e) {
+      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+
     MixpanelService.mixpanel?.getPeople().increment(statTitle, -1);
   }
 

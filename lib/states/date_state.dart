@@ -13,6 +13,7 @@ class DateState {
 
     if (isSelectedDateToday.value) {
       MixpanelService.mixpanel?.track('Today View');
+      MixpanelService.mixpanel?.getPeople().increment('viewed_today_counter', 1);
     }
   }
 
