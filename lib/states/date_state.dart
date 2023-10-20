@@ -4,11 +4,11 @@ import 'package:today/services/mixpanel_service.dart';
 import 'package:today/utils/date_time_utils.dart';
 
 class DateState {
-  final selectedDate = ValueNotifier<DateTime>(DateTime.now());
+  final selectedDate = ValueNotifier<DateTime>(DateTimeUtils.resetTimeToZero(DateTime.now()));
   final isSelectedDateToday = ValueNotifier<bool>(true);
 
   selecteNewDate(DateTime newDateTime) {
-    selectedDate.value = newDateTime;
+    selectedDate.value = DateTimeUtils.resetTimeToZero(newDateTime);
     isSelectedDateToday.value = checkIfSelectedDateIsToday();
 
     if (isSelectedDateToday.value) {
