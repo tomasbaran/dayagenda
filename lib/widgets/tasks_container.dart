@@ -33,7 +33,7 @@ class TasksContainer extends StatelessWidget {
               valueListenable: listState.selectedList,
               builder: (_, pageList, __) {
                 int tasksCount = pageList.tasks.length - 1; // includes 0, e.g. taskCount 3 = 0,1,2,3
-                log('\x1B[34mupdate pageList [${pageList.title} | ${pageList.date}]: $tasksCount $pageList\x1B[0m');
+                // log('\x1B[34mupdate pageList [${pageList.title} | ${pageList.date}]: $tasksCount $pageList\x1B[0m');
                 return ReorderableListView.builder(
                     footer: CompletedTasksColumn(),
                     itemCount: pageList.tasks.length, // +1 is the new last item: Column of FillInHeight + COMPLETED:

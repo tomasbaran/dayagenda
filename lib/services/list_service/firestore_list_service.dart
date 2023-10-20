@@ -74,7 +74,8 @@ class FirestoreListService extends ListService {
         log('\x1B[31mError #6[updating task]: $error\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('Error #6[updating task]: $error');
       });
-      log(' \x1B[33m3. updatedList\x1B[0m');
+      // log('\x1B[33m3. updatedList\x1B[0m');
+      // debugPrint(formattedUpdatedList.toString());
     }
   }
 
@@ -91,7 +92,7 @@ class FirestoreListService extends ListService {
       await listDocRef.set({
         'tasks': FieldValue.arrayUnion([formattedTask])
       }, SetOptions(merge: true)).then((value) {
-        log('\x1B[33madded a new task: $formattedTask\x1B[0m');
+        // log('\x1B[33madded a new task: $formattedTask\x1B[0m');
       }, onError: (e) {
         log('\x1B[31mError #3[adding task]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding task]: $e\x1B[0m');
@@ -134,7 +135,7 @@ class FirestoreListService extends ListService {
       'tasks': firebaseTasks,
       'completed_tasks': firebaseCompletedTasks,
     };
-    log('\x1B[37m2. formattedList: $firebaseList  \x1B[0m');
+    // log('\x1B[37m2. formattedList: $firebaseList  \x1B[0m');
 
     return firebaseList;
   }

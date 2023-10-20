@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:today/services/analytics_service.dart';
-import 'package:today/services/mixpanel_service.dart';
 import 'package:today/states/date_state.dart';
 import 'package:today/models/my_task.dart';
 import 'package:today/states/list_state/list_state.dart';

@@ -120,11 +120,9 @@ class AnalyticsService {
         final tasks = dateList?['tasks'] as List? ?? [];
         for (final task in tasks) {
           if (task['default_task'] == null) {
-            log('task[$listDateId]: ${task['title']}');
             crawledTodoes++;
           }
         }
-        log('crawledTodoes: $crawledTodoes');
       }, onError: (e) {
         log('\x1B[31mError #6[crawl next days]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
