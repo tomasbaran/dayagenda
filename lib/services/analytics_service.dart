@@ -173,7 +173,9 @@ class AnalyticsService {
       final now = DateTime.now();
       final difference = now.difference(signupDate?.toDate() ?? now);
       final activePeriod = difference.inDays;
-      final completedTodoes = userStats['todoes_counter'] ?? 0;
+      final completedTasks = userStats['completed_tasks_counter'] ?? 0;
+      final completedEvents = userStats['completed_events_counter'] ?? 0;
+      final completedTodoes = completedTasks + completedEvents;
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
 
       MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
