@@ -60,7 +60,7 @@ class _TasksScreenState extends State<TasksScreen> {
                 )),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: NavContainer(),
         body: TasksContainer(),
       ),
