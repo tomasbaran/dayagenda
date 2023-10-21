@@ -117,9 +117,9 @@ class AnalyticsService {
 
       await dateDocRef.get().then((value) {
         final Map? dateList = value.data();
-        final tasks = dateList?['tasks'] as List? ?? [];
+        final tasks = dateList?['todoes'] as List? ?? [];
         for (final task in tasks) {
-          if (task['default_task'] == null) {
+          if (task['default_todo'] == null) {
             crawledTodoes++;
           }
         }
