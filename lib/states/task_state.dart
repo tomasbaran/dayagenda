@@ -51,7 +51,7 @@ class TaskState extends ChangeNotifier {
   Future toggleTaskCompleted(MyTask task) async {
     task.isCompleted = !task.isCompleted;
     listState.selectedList.notifyListeners(); //so the phone screen reflects the state change
-    await Future.delayed(const Duration(milliseconds: 900));
+    await Future.delayed(const Duration(milliseconds: 250));
 
     await listState.updateListByTaskIsCompleted(task);
 
