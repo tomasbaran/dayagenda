@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:today/style/style_constants.dart';
+import 'package:dayagenda/style/style_constants.dart';
 
 class ListsNavContainer extends StatelessWidget {
   const ListsNavContainer({super.key});

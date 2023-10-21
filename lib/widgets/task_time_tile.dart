@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:today/style/style_constants.dart';
+import 'package:dayagenda/style/style_constants.dart';
 
 class TaskTimeTile extends StatelessWidget {
   const TaskTimeTile({

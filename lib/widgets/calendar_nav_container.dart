@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
 
 class CalendarNavContainer extends StatelessWidget {
   CalendarNavContainer({super.key});

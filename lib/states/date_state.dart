@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/mixpanel_service.dart';
-import 'package:today/utils/date_time_utils.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/mixpanel_service.dart';
+import 'package:dayagenda/utils/date_time_utils.dart';
 
 class DateState {
   final selectedDate = ValueNotifier<DateTime>(DateTimeUtils.resetTimeToZero(DateTime.now()));

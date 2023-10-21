@@ -1,6 +1,6 @@
-import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/services/mixpanel_service.dart';
-import 'package:today/services/service_locator.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/services/mixpanel_service.dart';
+import 'package:dayagenda/services/service_locator.dart';
 
 class AuthState {
   final AuthService authService = getIt<AuthService>();

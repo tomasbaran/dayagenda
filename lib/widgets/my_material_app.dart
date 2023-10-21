@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/screens/tasks_screen.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/style/theme.dart';
+import 'package:dayagenda/screens/tasks_screen.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/style/theme.dart';
 
 class MyMaterialApp extends StatelessWidget {
   MyMaterialApp({

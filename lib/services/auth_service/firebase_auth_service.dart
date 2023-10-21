@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
-import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/services/analytics_service.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/services/analytics_service.dart';
 
 class FirebaseAuthService extends AuthService {
   // creating firebase instance

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/utils/date_time_utils.dart';
-import 'package:today/widgets/tasks_container.dart';
-import 'package:today/widgets/nav_container.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/utils/date_time_utils.dart';
+import 'package:dayagenda/widgets/tasks_container.dart';
+import 'package:dayagenda/widgets/nav_container.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);

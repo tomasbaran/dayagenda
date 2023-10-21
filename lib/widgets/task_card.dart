@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/states/task_state.dart';
-import 'package:today/models/my_task.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/task_detail_sheet.dart';
-import 'package:today/widgets/time_card.dart';
+import 'package:dayagenda/states/task_state.dart';
+import 'package:dayagenda/models/my_task.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/widgets/task_detail_sheet.dart';
+import 'package:dayagenda/widgets/time_card.dart';
 
 class TaskCard extends StatelessWidget {
   final double elevation;

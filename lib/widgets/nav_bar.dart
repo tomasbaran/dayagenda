@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/task_detail_sheet.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/widgets/task_detail_sheet.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavBar extends StatelessWidget {

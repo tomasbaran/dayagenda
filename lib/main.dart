@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:today/flavor.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/widgets/my_material_app.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/app_state.dart';
+import 'package:dayagenda/flavor.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/widgets/my_material_app.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

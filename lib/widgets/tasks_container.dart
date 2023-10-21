@@ -1,13 +1,13 @@
 import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/models/my_list.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/widgets/completed_tasks_column.dart';
-import 'package:today/widgets/task_card.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/models/my_list.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/widgets/completed_tasks_column.dart';
+import 'package:dayagenda/widgets/task_card.dart';
 
 import '../globals/constants.dart';
 

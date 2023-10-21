@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/auth_state.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/utils/screen_utlis.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/auth_state.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/utils/screen_utlis.dart';
 
 class EmailFormContainer extends StatefulWidget {
   const EmailFormContainer.signup({super.key}) : isRegisterType = true;

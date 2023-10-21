@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:today/services/mixpanel_service.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/models/my_task.dart';
-import 'package:today/models/my_list.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/services/list_service/list_service.dart';
-import 'package:today/utils/date_time_utils.dart';
+import 'package:dayagenda/services/mixpanel_service.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/models/my_task.dart';
+import 'package:dayagenda/models/my_list.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/services/list_service/list_service.dart';
+import 'package:dayagenda/utils/date_time_utils.dart';
 import 'selected_list_notifier.dart';
 
 class ListState {

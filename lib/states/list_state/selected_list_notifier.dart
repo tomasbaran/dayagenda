@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:today/models/my_list.dart';
-import 'package:today/models/my_task.dart';
-import 'package:today/services/list_service/list_service.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/utils/date_time_utils.dart';
+import 'package:dayagenda/models/my_list.dart';
+import 'package:dayagenda/models/my_task.dart';
+import 'package:dayagenda/services/list_service/list_service.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/utils/date_time_utils.dart';
 
 class SelectedListNotifier extends ValueNotifier<MyList> {
   SelectedListNotifier() : super(MyList());

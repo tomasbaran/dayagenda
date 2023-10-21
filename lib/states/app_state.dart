@@ -4,20 +4,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:today/flavor.dart';
-import 'package:today/globals/constants.dart';
-import 'package:today/models/my_task.dart';
-import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/analytics_service.dart';
-import 'package:today/services/mixpanel_service.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/auth_state.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/style/style_constants.dart';
+import 'package:dayagenda/flavor.dart';
+import 'package:dayagenda/globals/constants.dart';
+import 'package:dayagenda/models/my_task.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/analytics_service.dart';
+import 'package:dayagenda/services/mixpanel_service.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/auth_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/style/style_constants.dart';
 
-import 'package:today/firebase_options_dev.dart' as dev;
-import 'package:today/firebase_options_live.dart' as live;
+import 'package:dayagenda/firebase_options_dev.dart' as dev;
+import 'package:dayagenda/firebase_options_live.dart' as live;
 
 class AppState {
   final isSignedIn = ValueNotifier<bool>(false);

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/auth_state.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/utils/send_feedback.dart';
-import 'package:today/widgets/email_signup_form_container.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/auth_state.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/utils/send_feedback.dart';
+import 'package:dayagenda/widgets/email_signup_form_container.dart';
 
 class AccountNavContainer extends StatelessWidget {
   AccountNavContainer({super.key});

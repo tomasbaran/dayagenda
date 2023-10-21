@@ -1,4 +1,4 @@
-import 'package:today/globals/constants.dart';
+import 'package:dayagenda/globals/constants.dart';
 
 enum NavBarSelection {
   unselected,

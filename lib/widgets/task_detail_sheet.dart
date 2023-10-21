@@ -2,17 +2,17 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:today/states/date_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/models/my_list.dart';
-import 'package:today/models/my_task.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/utils/date_time_utils.dart';
-import 'package:today/states/task_state.dart';
-import 'package:today/widgets/task_time_tile.dart';
-import 'package:today/utils/screen_utlis.dart';
+import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/models/my_list.dart';
+import 'package:dayagenda/models/my_task.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/utils/date_time_utils.dart';
+import 'package:dayagenda/states/task_state.dart';
+import 'package:dayagenda/widgets/task_time_tile.dart';
+import 'package:dayagenda/utils/screen_utlis.dart';
 
 class TaskDetailSheet extends StatefulWidget {
   final SheetType sheetType;

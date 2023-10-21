@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:today/states/app_state.dart';
-import 'package:today/states/list_state/list_state.dart';
-import 'package:today/models/enums.dart';
-import 'package:today/services/service_locator.dart';
-import 'package:today/style/style_constants.dart';
-import 'package:today/widgets/calendar_nav_container.dart';
-import 'package:today/widgets/nav_bar.dart';
-import 'package:today/widgets/lists_nav_container.dart';
-import 'package:today/widgets/account_nav_container.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/models/enums.dart';
+import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/style/style_constants.dart';
+import 'package:dayagenda/widgets/calendar_nav_container.dart';
+import 'package:dayagenda/widgets/nav_bar.dart';
+import 'package:dayagenda/widgets/lists_nav_container.dart';
+import 'package:dayagenda/widgets/account_nav_container.dart';
 
 class NavContainer extends StatelessWidget {
   NavContainer({

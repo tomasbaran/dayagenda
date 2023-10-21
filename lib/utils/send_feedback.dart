@@ -1,12 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:today/globals/constants.dart';
-import 'package:today/services/auth_service/auth_service.dart';
-import 'package:today/services/service_locator.dart';
+import 'package:dayagenda/globals/constants.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/services/service_locator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:today/style/style_constants.dart';
+import 'package:dayagenda/style/style_constants.dart';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';

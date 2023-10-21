@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:today/models/my_list.dart';
-import 'package:today/models/my_task.dart';
+import 'package:dayagenda/models/my_list.dart';
+import 'package:dayagenda/models/my_task.dart';
 
 abstract class ListService {
   Future<DocumentSnapshot<Map<String, dynamic>>> getDateListSnapshot(DateTime date);

@@ -1,6 +1,6 @@
 import 'package:googleapis/calendar/v3.dart';
 import 'package:googleapis/tasks/v1.dart';
-import 'package:today/models/my_list.dart';
+import 'package:dayagenda/models/my_list.dart';
 
 class CalendarService {
   // GoogleSignIn googleSignIn = GoogleSignIn(

@@ -1,4 +1,4 @@
-import 'package:today/models/my_task.dart';
+import 'package:dayagenda/models/my_task.dart';
 
 class MyList {
   DateTime? date;

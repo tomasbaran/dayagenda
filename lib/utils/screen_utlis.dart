@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-import 'package:today/models/enums.dart';
+import 'package:dayagenda/models/enums.dart';
 
 class ScreenUtils {
   static void showPlatformAlertDialog({
