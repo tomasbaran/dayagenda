@@ -90,7 +90,7 @@ class FirestoreListService extends ListService {
       final formattedTask = formatMyTaskToFirebaseTask(myTask);
 
       await listDocRef.set({
-        'tasks': FieldValue.arrayUnion([formattedTask])
+        'todoes': FieldValue.arrayUnion([formattedTask])
       }, SetOptions(merge: true)).then((value) {
         // log('\x1B[33madded a new task: $formattedTask\x1B[0m');
       }, onError: (e) {
@@ -104,7 +104,7 @@ class FirestoreListService extends ListService {
   @override
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask) => myTask.isDefault
       ? {
-          'default_task': myTask.isDefault,
+          'default_todo': myTask.isDefault,
           'title': myTask.title,
           'completed': myTask.isCompleted,
           'start_time': DateTimeUtils.convertDateTimeToTimestamp(myTask.startTime),
@@ -132,8 +132,8 @@ class FirestoreListService extends ListService {
     }
 
     Map<String, dynamic> firebaseList = {
-      'tasks': firebaseTasks,
-      'completed_tasks': firebaseCompletedTasks,
+      'todoes': firebaseTasks,
+      'completed_todoes': firebaseCompletedTasks,
     };
     // log('\x1B[37m2. formattedList: $firebaseList  \x1B[0m');
 
@@ -148,7 +148,7 @@ class FirestoreListService extends ListService {
         (key, value) {
           MyTask myTask = MyTask(
             key: key,
-            isDefault: value['default_task'] ?? false,
+            isDefault: value['default_todo'] ?? false,
             title: value['title'],
             isCompleted: value['completed'],
             startTime: DateTimeUtils.convertTimestampToDateTime(value['start_time']),
@@ -179,8 +179,8 @@ class FirestoreListService extends ListService {
       // there are no tasks for that day assigned (yet)
       return myList;
     } else {
-      myList.tasks = convertFirebaseTasksToMyListItems(firebaseList['tasks']);
-      myList.completedTasks = convertFirebaseTasksToMyListItems(firebaseList['completed_tasks']);
+      myList.tasks = convertFirebaseTasksToMyListItems(firebaseList['todoes']);
+      myList.completedTasks = convertFirebaseTasksToMyListItems(firebaseList['completed_todoes']);
       return myList;
     }
   }
