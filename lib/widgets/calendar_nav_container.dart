@@ -28,7 +28,7 @@ class CalendarNavContainer extends StatelessWidget {
           CalendarDatePicker2(
               config: CalendarDatePicker2Config(
                 // cancelButton: ,
-                firstDayOfWeek: 1,
+                firstDayOfWeek: 0,
                 dayTextStyle: const TextStyle(color: kThemeColor2),
                 disableModePicker: true,
                 controlsTextStyle: const TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),

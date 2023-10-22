@@ -167,7 +167,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                             ),
                             buttonPadding: const EdgeInsets.all(16),
                             cancelButtonTextStyle: const TextStyle(fontWeight: FontWeight.w500, color: kThemeColor9),
-                            firstDayOfWeek: 1,
+                            firstDayOfWeek: 0,
                             dayTextStyle: const TextStyle(color: kThemeColor2),
                             disableModePicker: true,
                             controlsTextStyle: const TextStyle(color: kThemeColor9, fontWeight: FontWeight.w800),
