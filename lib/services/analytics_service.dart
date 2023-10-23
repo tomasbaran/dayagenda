@@ -179,7 +179,7 @@ class AnalyticsService {
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
 
       MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
-      MixpanelService.mixpanel?.getPeople().set('last_signed_in', DateTimeUtils.mixpanelNow());
+      MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
       MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
 
       await listDocRef.set({
