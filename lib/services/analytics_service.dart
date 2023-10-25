@@ -34,7 +34,6 @@ class AnalyticsService {
         await increaseUserStat('completed_tasks_counter');
         MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'task'});
       }
-      await updateTasksEventsRatio();
       await updateCompletionRate();
     }
   }
@@ -197,5 +196,7 @@ class AnalyticsService {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
+
+    await updateTasksEventsRatio();
   }
 }
