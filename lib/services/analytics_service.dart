@@ -14,7 +14,7 @@ class AnalyticsService {
   final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
-  Future updateUserStatOnAdded(MyTask myTask) async {
+  Future updateUserStatOnAddedTodo(MyTask myTask) async {
     if (myTask.isDefault) {
       await increaseUserStat('default_todoes_counter');
     } else {
@@ -22,10 +22,11 @@ class AnalyticsService {
     }
   }
 
-  Future updateUserStatOnCompleted(MyTask myTask) async {
+  Future updateUserStatOnCompletedTodo(MyTask myTask) async {
     if (myTask.isDefault) {
       await decreaseUserStat('default_todoes_counter');
     } else {
+      await increaseUserStat('completed_todoes_counter');
       if (myTask.startTime != null) {
         await increaseUserStat('completed_events_counter');
         MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'event'});
@@ -135,15 +136,14 @@ class AnalyticsService {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
-      final completedTasks = userStats['completed_tasks_counter'] ?? 0;
-      final completedEvents = userStats['completed_events_counter'] ?? 0;
+      final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final allTodoes = userStats['todoes_counter'] ?? 0;
       double completionRate;
       if (allTodoes == 0) {
         completionRate = 0;
       } else {
         final notCompletedFutureTodoes = await crawlFutureDays(futureDaysToCrawl);
-        completionRate = ((completedTasks + completedEvents) / (allTodoes - notCompletedFutureTodoes)) * 100;
+        completionRate = (completedTodoes / (allTodoes - notCompletedFutureTodoes)) * 100;
         completionRate = double.parse(completionRate.toStringAsFixed(0));
       }
 
@@ -164,27 +164,30 @@ class AnalyticsService {
     });
   }
 
-  Future updateActivityStats() async {
+  Future updateActivityStatsOnAppLaunch() async {
     final listDocRef = db.collection('user_stats').doc(uid);
 
     await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
       final signupDate = userStats['anonymously_signed_up'] as Timestamp?;
+      // last_used
       final now = DateTime.now();
+
+      // active_period
       final difference = now.difference(signupDate?.toDate() ?? now);
       final activePeriod = difference.inDays;
-      final completedTasks = userStats['completed_tasks_counter'] ?? 0;
-      final completedEvents = userStats['completed_events_counter'] ?? 0;
-      final completedTodoes = completedTasks + completedEvents;
+
+      // completed_todoes_per_day
+      final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
 
-      MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
       MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
+      MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
       MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
 
       await listDocRef.set({
+        'last_used': now,
         'active_period': activePeriod,
-        'last_signed_in': DateTime.now(),
         'completed_todoes_per_day': double.parse(completedTodoesPerDay.toStringAsFixed(0)),
       }, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError #3[adding stat]: $e\x1B[0m');

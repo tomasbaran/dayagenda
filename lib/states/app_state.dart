@@ -155,7 +155,7 @@ class AppState {
     await checkWhetherToSignUpFirstTimeUserAnonymously();
 
     try {
-      await AnalyticsService().updateActivityStats();
+      await AnalyticsService().updateActivityStatsOnAppLaunch();
     } catch (e) {
       log('Error firestore analytics: $e');
     }
