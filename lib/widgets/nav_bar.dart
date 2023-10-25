@@ -32,40 +32,39 @@ class NavBar extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           child: Padding(
             padding: const EdgeInsets.only(left: 28, top: 16, bottom: 16, right: 16),
-            child: Transform.rotate(
-              angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
+            child: Transform.translate(
+              // angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
+              // angle: 0 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
+              offset: Offset(0, 0),
               child: ValueListenableBuilder(
                   valueListenable: dateState.isSelectedDateToday,
                   builder: (_, isSelectedToday, __) {
                     return Icon(
-                      isSelectedToday ? Icons.push_pin : Icons.push_pin_outlined,
-                      size: 28,
+                      // Icons.public,
+
+                      // Icons.watch_later_outlined,
+                      // Icons.history_toggle_off,
+                      // Icons.rotate_left_outlined,
+                      // isSelectedToday ? CupertinoIcons.clock_fill : CupertinoIcons.clock,
+                      // Icons.history,
+
+                      // isSelectedToday ? Icons.description : Icons.description_outlined,
+                      // isSelectedToday ? CupertinoIcons.doc_text_fill : CupertinoIcons.doc_text,
+                      // CupertinoIcons.doc_plaintext,
+                      // Icons.insert_drive_file_outlined,
+
+                      isSelectedToday ? CupertinoIcons.sunrise_fill : CupertinoIcons.sunrise,
+                      // isSelectedToday ? Icons.wb_sunny : Icons.wb_sunny_outlined,
+                      // isSelectedToday ? CupertinoIcons.sun_max_fill : CupertinoIcons.sun_max,
+                      // isSelectedToday ? CupertinoIcons.sun_haze_fill : CupertinoIcons.sun_haze,
+
+                      // size: 28,
+                      size: 31,
                       color: kIconColor,
                     );
                   }),
             ),
           ),
-          // child: Icon(
-          // Icons.blur_circular,
-          // Icons.radio_button_on_rounded,
-          // Icons.view_timeline_outlined,
-          // Icons.format_list_bulleted,
-          // CupertinoIcons.line_horizontal_3_decrease,
-          // Icons.center_focus_strong_outlined,
-          // Icons.picture_in_picture,
-          // Icons.public_sharp,
-          // Icons.spa_outlined,
-
-          //  Icons.push_pin_outlined,
-          // Icons.notes_rounded,
-          // CupertinoIcons.doc_plaintext,
-          // Icons.note_outlined,
-          // Icons.fullscreen_rounded,
-          // Icons.wb_sunny_outlined,
-          // CupertinoIcons.house,
-          //   size: 28,
-          //   color: kIconColor,
-          // ),
         ),
         GestureDetector(
           onTap: () => appState.updateNavBarSelection(NavBarSelection.calendar),
