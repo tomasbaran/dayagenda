@@ -10,7 +10,7 @@ dependencies:
   calendar_date_picker2: ^0.5.2
   cloud_firestore: ^4.8.5
   cupertino_icons: ^1.0.5
-  device_info_plus: ^10.0.0
+  device_info_plus: ^9.1.0
   extended_nested_scroll_view: ^6.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.9
   firebase_auth: ^4.7.3
@@ -31,7 +31,7 @@ dependencies:
   logger: ^2.0.2+1
   mixpanel_flutter: ^2.1.1
   modal_bottom_sheet: ^3.0.0-pre
-  package_info_plus: ^5.0.0
+  package_info_plus: ^4.2.0
   rename: ^3.0.0
   table_calendar: ^3.0.8
   url_launcher: ^6.1.10
@@ -39,7 +39,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
 
 flutter:
   uses-material-design: true
