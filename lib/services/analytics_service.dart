@@ -144,12 +144,11 @@ class AnalyticsService {
         final notCompletedFutureTodoes = await crawlFutureDays(futureDaysToCrawl);
         completionRate = (completedTodoes / (allTodoes - notCompletedFutureTodoes)) * 100;
         completionRate = double.parse(completionRate.toStringAsFixed(0));
-      }
 
-      // log('completedTasks: $completedTasks');
-      // log('completedEvents: $completedEvents');
-      // log('allTodoes: $allTodoes');
-      // log('rate: $completionRate');
+        log('allTodoes: $allTodoes');
+        log('notCompletedFutureTodoes: $notCompletedFutureTodoes');
+        log('rate: $completionRate');
+      }
 
       MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
 
@@ -180,9 +179,19 @@ class AnalyticsService {
       final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
 
-      MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
-      MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
-      MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
+      log('activePeriod: $activePeriod');
+      log('last_used: ${DateTimeUtils.mixpanelNow()}');
+      log('completed_todoes_per_day: ${completedTodoesPerDay.toStringAsFixed(0)}');
+
+      try {
+        MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
+        MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
+        MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
+        log('mixpanel updated: ${DateTimeUtils.mixpanelNow()}, $activePeriod, ${completedTodoesPerDay.toStringAsFixed(0)}');
+      } catch (e) {
+        log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+        Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[updating mixpanel]: $e\x1B[0m');
+      }
 
       await listDocRef.set({
         'last_used': now,
