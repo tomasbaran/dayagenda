@@ -14,19 +14,28 @@ class AnalyticsService {
   final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
-  Future updateUserStatOnAddedTodo(MyTask myTask) async {
+  Future updateUserStatOnAddedTodo(MyTask myTask, DateTime taskDate) async {
     if (myTask.isDefault) {
       await increaseUserStat('default_todoes_counter');
     } else {
       await increaseUserStat('todoes_counter');
+      // if the task is today+, increase the not completed future todoes counter (needed for completion rate purpose)
+      if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
+        await increaseUserStat('not_completed_future_todoes_counter');
+      }
     }
   }
 
-  Future updateUserStatOnCompletedTodo(MyTask myTask) async {
+  Future updateUserStatOnCompletedTodo(MyTask myTask, DateTime taskDate) async {
     if (myTask.isDefault) {
       await decreaseUserStat('default_todoes_counter');
     } else {
       await increaseUserStat('completed_todoes_counter');
+      // if the task is today+, increase the not completed future todoes counter (needed for completion rate purpose)
+      if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
+        await decreaseUserStat('not_completed_future_todoes_counter');
+      }
+
       if (myTask.startTime != null) {
         await increaseUserStat('completed_events_counter');
         MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'event'});
