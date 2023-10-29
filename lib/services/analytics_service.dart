@@ -197,9 +197,9 @@ class AnalyticsService {
       final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final completedTodoesPerDay = completedTodoes / (activePeriod == 0 ? 1 : activePeriod);
 
-      log('activePeriod: $activePeriod', name: 'firebase update');
-      log('last_used: ${DateTimeUtils.mixpanelNow()}', name: 'firebase update');
-      log('completed_todoes_per_day: ${completedTodoesPerDay.toStringAsFixed(0)}\x1B[0m', name: 'firebase update');
+      log(name: 'firebase update', 'activePeriod: $activePeriod');
+      log(name: 'firebase update', 'last_used: ${DateTimeUtils.mixpanelNow()}');
+      log(name: 'firebase update', 'completed_todoes_per_day: ${completedTodoesPerDay.toStringAsFixed(0)}\x1B[0m');
 
       try {
         MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
