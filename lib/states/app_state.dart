@@ -80,7 +80,8 @@ class AppState {
     } else {
       log(
         time: DateTime.now(),
-        'signed in as: ${authService.uid}\x1B[0m',
+        '\x1B[33m${authService.uid}\x1B[0m',
+        name: 'signed in as',
       );
     }
   }
