@@ -55,8 +55,6 @@ class TaskState extends ChangeNotifier {
 
     await listState.updateListByTaskIsCompleted(task);
 
-    if (task.isCompleted) {
-      AnalyticsService().updateUserStatOnCompletedTodo(task, dateState.selectedDate.value);
-    }
+    AnalyticsService().updateUserStatOnCompletedTodo(task, dateState.selectedDate.value);
   }
 }
