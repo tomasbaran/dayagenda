@@ -144,8 +144,8 @@ class AnalyticsService {
     await userStatsDocRef.get().then((value) async {
       final userStats = value.data() as Map;
 
-      final lastUsedTimestamp = userStats['last_used'] as Timestamp;
-      final lastUsed = DateTimeUtils.resetTimeToZero(lastUsedTimestamp.toDate());
+      final lastUsedTimestamp = userStats['last_used'] as Timestamp?;
+      final lastUsed = DateTimeUtils.resetTimeToZero(lastUsedTimestamp?.toDate() ?? DateTime.now());
       final now = DateTimeUtils.resetTimeToZero(DateTime.now());
       final differenceInDays = now.difference(lastUsed).inDays;
 
