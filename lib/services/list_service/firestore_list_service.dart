@@ -97,7 +97,6 @@ class FirestoreListService extends ListService {
         log('\x1B[31mError #3[adding task]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding task]: $e\x1B[0m');
       });
-      await AnalyticsService().updateUserStatOnAddedTodo(myTask, date);
     }
   }
 

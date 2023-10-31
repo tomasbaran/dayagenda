@@ -26,7 +26,19 @@ class AnalyticsService {
     }
   }
 
-  Future updateUserStatOnCompletedTodo(MyTask myTask, DateTime taskDate) async {
+  Future updateUserStatOnDeletedTodo(MyTask myTask, DateTime taskDate) async {
+    if (myTask.isDefault) {
+      await increaseUserStat('default_todoes_counter', -1);
+    } else {
+      await increaseUserStat('todoes_counter', -1);
+      // if the task is today+, increase the not completed future todoes counter (needed for completion rate purpose)
+      if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
+        await increaseUserStat('not_completed_future_todoes_counter', -1);
+      }
+    }
+  }
+
+  Future updateUserStatOnToggleTodoCompletion(MyTask myTask, DateTime taskDate) async {
     if (myTask.isDefault) {
       await increaseUserStat('default_todoes_counter', myTask.isCompleted ? -1 : 1);
     } else {
