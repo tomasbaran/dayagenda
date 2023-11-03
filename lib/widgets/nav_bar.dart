@@ -1,3 +1,4 @@
+import 'package:dayagenda/widgets/custom_icon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -39,6 +40,11 @@ class NavBar extends StatelessWidget {
               child: ValueListenableBuilder(
                   valueListenable: dateState.isSelectedDateToday,
                   builder: (_, isSelectedToday, __) {
+                    return CustomIcon(
+                      imagePath: isSelectedToday ? 'assets/icons/hummingbird-filled.png' : 'assets/icons/hummingbird-outlined.png',
+                      size: 48,
+                      color: Colors.blue,
+                    );
                     return Icon(
                       // Icons.public,
 
@@ -74,8 +80,8 @@ class NavBar extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(bottom: 2),
               child: Icon(
-                // CupertinoIcons.calendar,
-                Icons.calendar_today_outlined,
+                CupertinoIcons.calendar,
+                // Icons.calendar_today_outlined,
                 color: kIconColor,
                 size: 28,
               ),

@@ -5,7 +5,6 @@ import 'package:dayagenda/models/my_list.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:logger/logger.dart';
-import 'package:dayagenda/services/analytics_service.dart';
 import 'package:dayagenda/services/list_service/list_service.dart';
 import 'package:dayagenda/services/service_locator.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
