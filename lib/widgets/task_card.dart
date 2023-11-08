@@ -22,84 +22,97 @@ class TaskCard extends StatelessWidget {
   final taskState = getIt<TaskState>();
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
-          value: task.isCompleted,
-          onChanged: (newValue) {
-            taskState.toggleTaskCompleted(task);
-          },
-        ),
-        GestureDetector(
-          onTap: () {
-            log('open edit sheet [${task.title}]');
-            showCupertinoModalBottomSheet(
-              context: context,
-              builder: (context) => Scaffold(
-                body: TaskDetailSheet.updateTask(task),
-              ),
-            );
-          },
-          child: Card(
-            elevation: elevation,
-            color: task.isCompleted ? kThemeColor3 : null,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(cardRadius)),
-            child: Row(
-              children: [
-                TimeCard(
-                  taskStartTime: task.startTime,
-                  taskEndTime: task.endTime,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    height: 68,
-                    child: Stack(children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(cardRadius, cardRadius, 36, cardRadius),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  task.title,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: taskCardTitleTextStyle.copyWith(
-                                    color: task.isCompleted ? kThemeColor10 : null,
-                                    decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Align(
-                      //   alignment: Alignment.topLeft,
-                      //   child: ,
-                      // ),
-                      const Padding(
-                        padding: EdgeInsets.all(cardRadius),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          // This is where the listTitle will go.
-                          // E.g. #Family, #Health, #Project
-                          // child: Text(
-                          //   task.listTitle ?? '',
-                          // ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ),
-              ],
+    return Card(
+      elevation: elevation,
+      // color: task.isCompleted ? kThemeColor3 : null,
+      color: kBackgroundColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(cardRadius)),
+      child: Row(
+        children: [
+          Theme(
+            data: Theme.of(context).copyWith(
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            child: Checkbox(
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4))),
+              value: task.isCompleted,
+              onChanged: (newValue) {
+                taskState.toggleTaskCompleted(task);
+              },
             ),
           ),
-        ),
-        Icon(CupertinoIcons.arrow_right_circle),
-      ],
+          TimeCard(
+            taskStartTime: task.startTime,
+            taskEndTime: task.endTime,
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                log('open edit sheet [${task.title}]');
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  builder: (context) => Scaffold(
+                    body: TaskDetailSheet.updateTask(task),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: task.isCompleted ? kThemeColor3 : Colors.white,
+                  borderRadius: const BorderRadius.all(Radius.circular(cardRadius)),
+                ),
+                height: 68,
+                child: Stack(children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(cardRadius, cardRadius, 36, cardRadius),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              task.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: taskCardTitleTextStyle.copyWith(
+                                color: task.isCompleted ? kThemeColor10 : null,
+                                decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Align(
+                  //   alignment: Alignment.topLeft,
+                  //   child: ,
+                  // ),
+                  const Padding(
+                    padding: EdgeInsets.all(cardRadius),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      // This is where the listTitle will go.
+                      // E.g. #Family, #Health, #Project
+                      // child: Text(
+                      //   task.listTitle ?? '',
+                      // ),
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+          ),
+          task.isCompleted
+              ? const SizedBox()
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    CupertinoIcons.arrow_right,
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }
