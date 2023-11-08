@@ -42,7 +42,7 @@ class NavBar extends StatelessWidget {
                   builder: (_, isSelectedToday, __) {
                     return CustomIcon(
                       imagePath: isSelectedToday ? 'assets/icons/hummingbird-filled.png' : 'assets/icons/hummingbird-outlined.png',
-                      size: 48,
+                      size: 30,
                       color: Colors.blue,
                     );
                     return Icon(
