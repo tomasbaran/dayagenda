@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dayagenda/states/date_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -18,8 +19,9 @@ class TaskCard extends StatelessWidget {
     super.key,
     this.elevation = 0,
   });
-
+  final dateState = getIt<DateState>();
   final taskState = getIt<TaskState>();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -70,15 +72,23 @@ class TaskCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Text(
-                              task.title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: taskCardTitleTextStyle.copyWith(
-                                color: task.isCompleted ? kThemeColor10 : null,
-                                decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-                              ),
-                            ),
+                            child: ValueListenableBuilder(
+                                valueListenable: dateState.isSelectedDateToday,
+                                builder: (_, isSelectedToday, __) {
+                                  return Text(
+                                    task.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: taskCardTitleTextStyle.copyWith(
+                                      color: task.isCompleted
+                                          ? kThemeColor10
+                                          : isSelectedToday
+                                              ? kTodayColor
+                                              : null,
+                                      decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+                                    ),
+                                  );
+                                }),
                           ),
                         ],
                       ),

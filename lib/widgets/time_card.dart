@@ -25,34 +25,38 @@ class TimeCard extends StatelessWidget {
 
     return Visibility(
       visible: taskStartTime != null,
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.horizontal(left: Radius.circular(cardRadius)),
-          color: kHighlightColor,
-        ),
-        height: 68,
-        width: 64,
-        child: Padding(
-          padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateState.selectedDate.value, taskStartTime) == DayType.isToday ? 6 : 2),
-          child: Column(
-            mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(startTimeString, style: timeCardTextStyle),
-              Visibility(
-                visible: taskEndTime != null,
-                child: Text(
-                  DateTimeUtils.isSpecialDay(dateState.selectedDate.value, taskStartTime) == DayType.isToday ? '' : dateString,
-                  style: timeCardTextStyle,
+      child: ValueListenableBuilder(
+          valueListenable: dateState.isSelectedDateToday,
+          builder: (_, isSelectedToday, __) {
+            return Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.horizontal(left: Radius.circular(cardRadius)),
+                color: isSelectedToday ? kTodayColor : kHighlightColor,
+              ),
+              height: 68,
+              width: 64,
+              child: Padding(
+                padding: EdgeInsets.all(DateTimeUtils.isSpecialDay(dateState.selectedDate.value, taskStartTime) == DayType.isToday ? 6 : 2),
+                child: Column(
+                  mainAxisAlignment: taskEndTime == null ? MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(startTimeString, style: timeCardTextStyle),
+                    Visibility(
+                      visible: taskEndTime != null,
+                      child: Text(
+                        DateTimeUtils.isSpecialDay(dateState.selectedDate.value, taskStartTime) == DayType.isToday ? '' : dateString,
+                        style: timeCardTextStyle,
+                      ),
+                    ),
+                    Visibility(
+                      visible: taskEndTime != null,
+                      child: Text(endTimeString, style: timeCardTextStyle),
+                    ),
+                  ],
                 ),
               ),
-              Visibility(
-                visible: taskEndTime != null,
-                child: Text(endTimeString, style: timeCardTextStyle),
-              ),
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 }
