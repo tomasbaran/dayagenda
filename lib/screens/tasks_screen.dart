@@ -43,22 +43,26 @@ class _TasksScreenState extends State<TasksScreen> {
           backgroundColor: kBackgroundColor,
           shadowColor: Colors.transparent,
           title: ValueListenableBuilder(
-            valueListenable: dateState.selectedDate,
-            builder: ((_, selectedDate, __) => Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      DateTimeUtils.specialDateTimeString(selectedDate),
-                      style: appBarTitleTextStyle,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      DateFormat.MMMMd('en_US').format(selectedDate),
-                      style: appBarSubtitleTextStyle,
-                    ),
-                  ],
-                )),
-          ),
+              valueListenable: dateState.isSelectedDateToday,
+              builder: (_, isSelectedToday, __) {
+                return ValueListenableBuilder(
+                  valueListenable: dateState.selectedDate,
+                  builder: ((_, selectedDate, __) => Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateTimeUtils.specialDateTimeString(selectedDate),
+                            style: appBarTitleTextStyle.copyWith(color: isSelectedToday ? kTodayColor : null),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            DateFormat.MMMMd('en_US').format(selectedDate),
+                            style: appBarSubtitleTextStyle.copyWith(color: isSelectedToday ? kTodayColor : null),
+                          ),
+                        ],
+                      )),
+                );
+              }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: NavContainer(),
