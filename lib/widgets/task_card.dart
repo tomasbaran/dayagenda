@@ -61,7 +61,10 @@ class TaskCard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: task.isCompleted ? kThemeColor3 : Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(cardRadius)),
+                  borderRadius: BorderRadius.horizontal(
+                    right: Radius.circular(cardRadius),
+                    left: task.startTime != null ? Radius.zero : Radius.circular(cardRadius),
+                  ),
                 ),
                 height: 68,
                 child: Stack(children: [
@@ -119,6 +122,8 @@ class TaskCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     CupertinoIcons.arrow_right,
+                    color: Theme.of(context).unselectedWidgetColor,
+                    // color: Colors.red,
                   ),
                 ),
         ],
