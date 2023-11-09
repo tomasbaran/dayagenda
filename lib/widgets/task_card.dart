@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dayagenda/states/date_state.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -21,6 +22,7 @@ class TaskCard extends StatelessWidget {
   });
   final dateState = getIt<DateState>();
   final taskState = getIt<TaskState>();
+  final listState = getIt<ListState>();
 
   @override
   Widget build(BuildContext context) {
@@ -118,12 +120,15 @@ class TaskCard extends StatelessWidget {
           ),
           task.isCompleted
               ? const SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    CupertinoIcons.arrow_right,
-                    color: Theme.of(context).unselectedWidgetColor,
-                    // color: Colors.red,
+              : GestureDetector(
+                  onTap: () => listState.snoozeTodoToTomorrow(task),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      CupertinoIcons.arrow_right,
+                      color: Theme.of(context).unselectedWidgetColor,
+                      // color: Colors.red,
+                    ),
                   ),
                 ),
         ],

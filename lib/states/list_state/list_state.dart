@@ -32,13 +32,13 @@ class ListState {
     listenToDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true}) async {
+  Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
     await AnalyticsService().updateUserStatOnAddedTodo(newTask, dateState.selectedDate.value);
     if (trackInMixpanel) {
       MixpanelService.mixpanel?.track('Add Todo', properties: {'todo title': newTask.title});
     }
 
-    await listService.addTaskToDateListInCloud(newTask, dateState.selectedDate.value);
+    await listService.addTaskToDateListInCloud(newTask, dateList ?? dateState.selectedDate.value);
   }
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
@@ -62,5 +62,19 @@ class ListState {
       // add task to list in the db
       addTaskToDateList(updatedTask);
     }
+  }
+
+  Future snoozeTodoToTomorrow(MyTask myTask) async {
+    MyTask updatedTask = myTask.clone();
+    if (updatedTask.startTime != null) {
+      updatedTask.startTime = updatedTask.startTime!.add(const Duration(days: 1));
+    }
+    if (updatedTask.endTime != null) {
+      updatedTask.endTime = updatedTask.startTime!.add(const Duration(days: 1));
+    }
+    // delete the original task from the original date in the db
+    await removeTaskFromList(updatedTask, selectedList.value);
+    // add task to list in the db
+    await addTaskToDateList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)));
   }
 }
