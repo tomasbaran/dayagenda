@@ -34,15 +34,23 @@ class TasksContainer extends StatelessWidget {
                 int tasksCount = pageList.tasks.length - 1; // includes 0, e.g. taskCount 3 = 0,1,2,3
                 // log('\x1B[34mupdate pageList [${pageList.title} | ${pageList.date}]: $tasksCount $pageList\x1B[0m');
                 return ReorderableListView.builder(
+                    buildDefaultDragHandles: false,
                     footer: CompletedTasksColumn(),
                     itemCount: pageList.tasks.length, // +1 is the new last item: Column of FillInHeight + COMPLETED:
                     itemBuilder: ((___, taskIndex) {
                       // reversedIndex is to show the newest task on top of the list
                       int reversedIndex = tasksCount - taskIndex;
-                      return TaskCard(
+
+                      Widget listItem = ReorderableDragStartListener(
                         key: Key(reversedIndex.toString()),
-                        task: pageList.tasks[reversedIndex],
+                        index: taskIndex,
+                        child: TaskCard(
+                          key: Key(reversedIndex.toString()),
+                          task: pageList.tasks[reversedIndex],
+                        ),
                       );
+
+                      return listItem;
                     }),
                     // possible bugfix of scrollbug#2 by utilizing the below scrollController instead of using PageView's NotificationListener
                     // scrollController: ,
@@ -54,7 +62,7 @@ class TasksContainer extends StatelessWidget {
                         animation: animation,
                         builder: (_, __) {
                           final double animValue = Curves.easeOut.transform(animation.value);
-                          final double elevation = lerpDouble(1, 6, animValue)!;
+                          final double elevation = lerpDouble(1, 8, animValue)!;
                           final scale = lerpDouble(1, 1.02, animValue)!;
                           return Transform.scale(
                             scale: scale,

@@ -114,6 +114,18 @@ class TaskCard extends StatelessWidget {
                       // ),
                     ),
                   ),
+                  Padding(
+                    padding: EdgeInsets.all(cardRadius),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      // This is where the listTitle will go.
+                      // E.g. #Family, #Health, #Project
+                      child: Icon(
+                        Icons.drag_handle,
+                        color: Theme.of(context).unselectedWidgetColor,
+                      ),
+                    ),
+                  ),
                 ]),
               ),
             ),
