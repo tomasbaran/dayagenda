@@ -45,7 +45,7 @@ class AppState {
 
   double get floatingBottomSafeArea => safeArea.bottom + floatingNavBarContainerHeight + 4;
 
-  final datePageController = PageController(initialPage: todayIndex, viewportFraction: 0.95);
+  final datePageController = PageController(initialPage: todayIndex, viewportFraction: 1);
 
   listenToAuthChanges() {
     final authService = getIt<AuthService>();

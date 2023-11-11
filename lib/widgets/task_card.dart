@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
+import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -114,15 +115,19 @@ class TaskCard extends StatelessWidget {
                       // ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(cardRadius),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      // This is where the listTitle will go.
-                      // E.g. #Family, #Health, #Project
-                      child: Icon(
-                        Icons.drag_handle,
-                        color: Theme.of(context).unselectedWidgetColor,
+
+                  Visibility(
+                    visible: !ScreenUtils.isMobile(context),
+                    child: Padding(
+                      padding: EdgeInsets.all(cardRadius),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        // This is where the listTitle will go.
+                        // E.g. #Family, #Health, #Project
+                        child: Icon(
+                          Icons.drag_handle,
+                          color: Theme.of(context).unselectedWidgetColor,
+                        ),
                       ),
                     ),
                   ),

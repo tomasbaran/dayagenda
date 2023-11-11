@@ -4,6 +4,10 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:dayagenda/models/enums.dart';
 
 class ScreenUtils {
+  static hasSmallScreen(BuildContext context) => MediaQuery.of(context).size.width < 600;
+  static hasSafeArea(BuildContext context) => MediaQuery.of(context).padding.top > 0;
+  static isMobile(BuildContext context) => hasSmallScreen(context) || hasSafeArea(context);
+
   static void showPlatformAlertDialog({
     required BuildContext context,
     required String title,

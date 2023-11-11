@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/date_state.dart';
@@ -41,14 +42,23 @@ class TasksContainer extends StatelessWidget {
                       // reversedIndex is to show the newest task on top of the list
                       int reversedIndex = tasksCount - taskIndex;
 
-                      Widget listItem = ReorderableDragStartListener(
-                        key: Key(reversedIndex.toString()),
-                        index: taskIndex,
-                        child: TaskCard(
-                          key: Key(reversedIndex.toString()),
-                          task: pageList.tasks[reversedIndex],
-                        ),
-                      );
+                      Widget listItem = ScreenUtils.isMobile(context)
+                          ? ReorderableDelayedDragStartListener(
+                              key: Key(reversedIndex.toString()),
+                              index: taskIndex,
+                              child: TaskCard(
+                                key: Key(reversedIndex.toString()),
+                                task: pageList.tasks[reversedIndex],
+                              ),
+                            )
+                          : ReorderableDragStartListener(
+                              key: Key(reversedIndex.toString()),
+                              index: taskIndex,
+                              child: TaskCard(
+                                key: Key(reversedIndex.toString()),
+                                task: pageList.tasks[reversedIndex],
+                              ),
+                            );
 
                       return listItem;
                     }),
