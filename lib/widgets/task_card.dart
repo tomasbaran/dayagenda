@@ -135,19 +135,20 @@ class TaskCard extends StatelessWidget {
               ),
             ),
           ),
-          task.isCompleted
-              ? const SizedBox()
-              : GestureDetector(
-                  onTap: () => listState.snoozeTodoToTomorrow(task),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      CupertinoIcons.arrow_right,
-                      color: Theme.of(context).unselectedWidgetColor,
-                      // color: Colors.red,
-                    ),
-                  ),
+          Visibility(
+            visible: !task.isCompleted,
+            child: GestureDetector(
+              onTap: () => listState.snoozeTodoToTomorrow(task),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(
+                  CupertinoIcons.arrow_right,
+                  color: Theme.of(context).unselectedWidgetColor,
+                  // color: Colors.red,
                 ),
+              ),
+            ),
+          ),
         ],
       ),
     );
