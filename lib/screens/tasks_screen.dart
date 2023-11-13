@@ -1,3 +1,4 @@
+import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -64,7 +65,8 @@ class _TasksScreenState extends State<TasksScreen> {
                 );
               }),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation:
+            ScreenUtils.isMobile(context) ? FloatingActionButtonLocation.centerDocked : FloatingActionButtonLocation.centerFloat,
         floatingActionButton: NavContainer(),
         body: TasksContainer(),
       ),

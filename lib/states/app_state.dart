@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +35,13 @@ class AppState {
     safeArea = MediaQuery.of(context).padding;
   }
 
-  double emptySpaceHeight(int taskCount) =>
+  double emptySpaceHeight(int taskCount, BuildContext context) =>
       screenHeight -
       safeArea.top - //iOS status bar
       AppBar().preferredSize.height - //appBar's height
       (taskCount * taskCardHeight) -
       completedTitleHeight -
-      completedTitleBottomPadding -
+      (ScreenUtils.isMobile(context) ? mobileCompletedTitleBottomPadding : desktopCompletedTitleBottomPadding) -
       floatingBottomSafeArea;
 
   double get floatingBottomSafeArea => safeArea.bottom + floatingNavBarContainerHeight + 4;

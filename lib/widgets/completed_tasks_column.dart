@@ -1,3 +1,4 @@
+import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
@@ -12,14 +13,14 @@ class CompletedTasksColumn extends StatelessWidget {
     super.key,
   });
 
-  List<Widget> children() {
+  List<Widget> children(BuildContext context) {
     List<Widget> output = [];
     output.add(
       Padding(
         padding: EdgeInsets.only(
-            top: appState.emptySpaceHeight(listState.selectedList.value.tasks.length) < minEmptySpaceHeight
+            top: appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context) < minEmptySpaceHeight
                 ? minEmptySpaceHeight
-                : appState.emptySpaceHeight(listState.selectedList.value.tasks.length)),
+                : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context)),
         child: Center(
           child: Text(
             'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
@@ -28,13 +29,14 @@ class CompletedTasksColumn extends StatelessWidget {
       ),
     );
     if (listState.selectedList.value.completedTasks.isNotEmpty) {
-      output.add(const SizedBox(height: completedTitleBottomPadding));
+      output.add(SizedBox(height: ScreenUtils.isMobile(context) ? mobileCompletedTitleBottomPadding : desktopCompletedTitleBottomPadding));
     }
     for (var completedTask in listState.selectedList.value.completedTasks) {
       output.add(TaskCard(
         task: completedTask,
       ));
     }
+    output.add(SizedBox(height: ScreenUtils.isMobile(context) ? (mobileCompletedTitleBottomPadding - 4) : (desktopCompletedTitleBottomPadding - 8)));
     return output;
   }
 
@@ -47,7 +49,7 @@ class CompletedTasksColumn extends StatelessWidget {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: children(),
+        children: children(context),
       ),
     );
   }
