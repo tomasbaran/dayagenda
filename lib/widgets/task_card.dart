@@ -124,7 +124,7 @@ class TaskCard extends StatelessWidget {
                         ),
 
                         Visibility(
-                          visible: !ScreenUtils.isMobile(context),
+                          visible: !ScreenUtils.isMobile(context) && !task.isCompleted,
                           child: Padding(
                             padding: EdgeInsets.all(cardRadius),
                             child: Align(
