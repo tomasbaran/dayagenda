@@ -110,7 +110,7 @@ class AnalyticsService {
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
 
-    MixpanelService.mixpanel?.getPeople().increment(statTitle, -1);
+    MixpanelService.mixpanel?.getPeople().increment(statTitle, increaseBy.toDouble());
   }
 
   Future writeSignupDate() async {
