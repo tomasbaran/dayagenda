@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:dayagenda/models/my_task.dart';
@@ -111,9 +113,10 @@ class AnalyticsService {
     });
     try {
       MixpanelService.mixpanel?.getPeople().increment(statTitle, increaseBy.toDouble());
-      log('mixpanel success! $statTitle, $increaseBy');
+      MixpanelService.mixpanel?.getDistinctId().then((value) => debugPrint(value));
+      debugPrint('mixpanel success! $statTitle, $increaseBy');
     } catch (e) {
-      log('mixpanel increment ($statTitle, $increaseBy) error: $e');
+      debugPrint('mixpanel increment ($statTitle, $increaseBy) error: $e');
     }
   }
 
@@ -133,20 +136,29 @@ class AnalyticsService {
       final userStats = value.data() as Map;
       final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final allTodoes = userStats['todoes_counter'] ?? 0;
-      double completionRate;
+      int completionRate;
       if (allTodoes == 0) {
         completionRate = 0;
       } else {
         final notCompletedFutureTodoes = userStats['not_completed_future_todoes_counter'];
         completionRate = (completedTodoes / (allTodoes - notCompletedFutureTodoes)) * 100;
-        completionRate = double.parse(completionRate.toStringAsFixed(0));
+        completionRate = int.parse(completionRate.toStringAsFixed(0));
 
         log('allTodoes: $allTodoes');
         log('notCompletedFutureTodoes: $notCompletedFutureTodoes');
         log('rate: $completionRate');
       }
 
-      MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
+      MixpanelService.mixpanel?.getPeople().set("completion_rate", completionRate);
+
+      try {
+        MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
+
+        MixpanelService.mixpanel?.getDistinctId().then((value) => debugPrint(value));
+        debugPrint('mixpanel success! [completion_rate], $completionRate');
+      } catch (e) {
+        debugPrint('mixpanel increment ([completion_rate], $completionRate) error: $e');
+      }
 
       listDocRef.set({'completion_rate': completionRate}, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError calcCompletionRate: $e\x1B[0m');
