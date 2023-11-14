@@ -109,8 +109,12 @@ class AnalyticsService {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
-
-    MixpanelService.mixpanel?.getPeople().increment(statTitle, increaseBy.toDouble());
+    try {
+      MixpanelService.mixpanel?.getPeople().increment(statTitle, increaseBy.toDouble());
+      log('mixpanel success! $statTitle, $increaseBy');
+    } catch (e) {
+      log('mixpanel increment ($statTitle, $increaseBy) error: $e');
+    }
   }
 
   Future writeSignupDate() async {
