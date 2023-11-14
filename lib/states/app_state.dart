@@ -75,10 +75,6 @@ class AppState {
     if (authService.uid == null) {
       await authState.signInAnonymously();
       addDefaultTasks();
-      log(
-        time: DateTime.now(),
-        'signed up anonymously as: ${authService.uid}\x1B[0m',
-      );
     } else {
       log(
         time: DateTime.now(),

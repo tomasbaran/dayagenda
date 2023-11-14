@@ -28,7 +28,6 @@ class FirebaseAuthService extends AuthService {
   Future signInAnonymously() async {
     try {
       await auth.signInAnonymously();
-      debugPrint("Signed in with temporary account: ${auth.currentUser?.uid}");
 
       await AnalyticsService().writeSignupDate();
     } on FirebaseAuthException catch (e) {
