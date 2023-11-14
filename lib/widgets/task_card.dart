@@ -147,8 +147,10 @@ class TaskCard extends StatelessWidget {
             visible: !task.isCompleted,
             child: GestureDetector(
               onTap: () async => await listState.snoozeTodoToTomorrow(task),
-              child: Padding(
+              child: Container(
                 padding: const EdgeInsets.all(8.0),
+                height: 68,
+                width: 34,
                 child: Icon(
                   CupertinoIcons.arrow_right,
                   color: Theme.of(context).unselectedWidgetColor,
