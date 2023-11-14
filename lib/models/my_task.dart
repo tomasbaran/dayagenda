@@ -1,8 +1,11 @@
+import 'package:flutter/material.dart';
+
 class MyTask {
   DateTime? startTime;
   DateTime? endTime;
   String title;
   bool isCompleted;
+  ValueNotifier isBeingSnoozed = ValueNotifier<bool>(false);
   bool isDefault;
   int? key;
   MyTask({

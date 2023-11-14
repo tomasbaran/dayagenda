@@ -61,84 +61,92 @@ class TaskCard extends StatelessWidget {
                   ),
                 );
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: task.isCompleted ? kThemeColor3 : Colors.white,
-                  borderRadius: BorderRadius.horizontal(
-                    right: Radius.circular(cardRadius),
-                    left: task.startTime != null ? Radius.zero : Radius.circular(cardRadius),
-                  ),
-                ),
-                height: 68,
-                child: Stack(children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(cardRadius, cardRadius, 36, cardRadius),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ValueListenableBuilder(
-                                valueListenable: dateState.isSelectedDateToday,
-                                builder: (_, isSelectedToday, __) {
-                                  return Text(
-                                    task.title,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: taskCardTitleTextStyle.copyWith(
-                                      color: task.isCompleted
-                                          ? kThemeColor10
-                                          : isSelectedToday
-                                              ? kTodayColor
-                                              : null,
-                                      decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-                                    ),
-                                  );
-                                }),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // Align(
-                  //   alignment: Alignment.topLeft,
-                  //   child: ,
-                  // ),
-                  const Padding(
-                    padding: EdgeInsets.all(cardRadius),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      // This is where the listTitle will go.
-                      // E.g. #Family, #Health, #Project
-                      // child: Text(
-                      //   task.listTitle ?? '',
-                      // ),
-                    ),
-                  ),
-
-                  Visibility(
-                    visible: !ScreenUtils.isMobile(context),
-                    child: Padding(
-                      padding: EdgeInsets.all(cardRadius),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        // This is where the listTitle will go.
-                        // E.g. #Family, #Health, #Project
-                        child: Icon(
-                          Icons.drag_handle,
-                          color: Theme.of(context).unselectedWidgetColor,
+              child: ValueListenableBuilder(
+                  valueListenable: task.isBeingSnoozed,
+                  builder: (context, isBeingSnoozed, child) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: task.isCompleted
+                            ? kThemeColor3
+                            : isBeingSnoozed
+                                ? kThemeColor3
+                                : Colors.white,
+                        borderRadius: BorderRadius.horizontal(
+                          right: Radius.circular(cardRadius),
+                          left: task.startTime != null ? Radius.zero : Radius.circular(cardRadius),
                         ),
                       ),
-                    ),
-                  ),
-                ]),
-              ),
+                      height: 68,
+                      child: Stack(children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(cardRadius, cardRadius, 36, cardRadius),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: ValueListenableBuilder(
+                                      valueListenable: dateState.isSelectedDateToday,
+                                      builder: (_, isSelectedToday, __) {
+                                        return Text(
+                                          task.title,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: taskCardTitleTextStyle.copyWith(
+                                            color: task.isCompleted
+                                                ? kThemeColor10
+                                                : isSelectedToday
+                                                    ? kTodayColor
+                                                    : null,
+                                            decoration: task.isCompleted ? TextDecoration.lineThrough : null,
+                                          ),
+                                        );
+                                      }),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        // Align(
+                        //   alignment: Alignment.topLeft,
+                        //   child: ,
+                        // ),
+                        const Padding(
+                          padding: EdgeInsets.all(cardRadius),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            // This is where the listTitle will go.
+                            // E.g. #Family, #Health, #Project
+                            // child: Text(
+                            //   task.listTitle ?? '',
+                            // ),
+                          ),
+                        ),
+
+                        Visibility(
+                          visible: !ScreenUtils.isMobile(context),
+                          child: Padding(
+                            padding: EdgeInsets.all(cardRadius),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              // This is where the listTitle will go.
+                              // E.g. #Family, #Health, #Project
+                              child: Icon(
+                                Icons.drag_handle,
+                                color: Theme.of(context).unselectedWidgetColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                    );
+                  }),
             ),
           ),
           Visibility(
             visible: !task.isCompleted,
             child: GestureDetector(
-              onTap: () => listState.snoozeTodoToTomorrow(task),
+              onTap: () async => await listState.snoozeTodoToTomorrow(task),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(

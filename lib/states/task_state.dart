@@ -11,6 +11,10 @@ class TaskState extends ChangeNotifier {
   final listState = getIt<ListState>();
   final dateState = getIt<DateState>();
 
+  updateMyTaskStateWhenBeingSnoozed(MyTask myTask, bool isBeingSnoozed) {
+    myTask.isBeingSnoozed.value = isBeingSnoozed;
+  }
+
   set selectTask(MyTask task) => selectedTask.value = task;
   unselectTask() {
     selectedTask.value = MyTask(title: '');

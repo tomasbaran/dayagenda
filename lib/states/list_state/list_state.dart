@@ -8,6 +8,7 @@ import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/models/my_list.dart';
 import 'package:dayagenda/services/service_locator.dart';
 import 'package:dayagenda/services/list_service/list_service.dart';
+import 'package:dayagenda/states/task_state.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 import 'selected_list_notifier.dart';
 
@@ -65,6 +66,9 @@ class ListState {
   }
 
   Future snoozeTodoToTomorrow(MyTask myTask) async {
+    final taskState = getIt<TaskState>();
+    taskState.updateMyTaskStateWhenBeingSnoozed(myTask, true);
+
     MyTask updatedTask = myTask.clone();
     if (updatedTask.startTime != null) {
       updatedTask.startTime = updatedTask.startTime!.add(const Duration(days: 1));
@@ -76,5 +80,6 @@ class ListState {
     await removeTaskFromList(updatedTask, selectedList.value);
     // add task to list in the db
     await addTaskToDateList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)));
+    taskState.updateMyTaskStateWhenBeingSnoozed(myTask, false);
   }
 }
