@@ -72,8 +72,8 @@ class TaskCard extends StatelessWidget {
                                 ? kThemeColor3
                                 : Colors.white,
                         borderRadius: BorderRadius.horizontal(
-                          right: Radius.circular(cardRadius),
-                          left: task.startTime != null ? Radius.zero : Radius.circular(cardRadius),
+                          right: const Radius.circular(cardRadius),
+                          left: task.startTime != null ? Radius.zero : const Radius.circular(cardRadius),
                         ),
                       ),
                       height: 68,
@@ -145,7 +145,9 @@ class TaskCard extends StatelessWidget {
           ),
           Visibility(
             visible: !task.isCompleted,
-            child: GestureDetector(
+            child: InkWell(
+              borderRadius: BorderRadius.circular(cardRadius),
+              highlightColor: kThemeColor3,
               onTap: () async => await listState.snoozeTodoToTomorrow(task),
               child: Container(
                 padding: const EdgeInsets.all(8.0),
