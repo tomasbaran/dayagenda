@@ -49,8 +49,9 @@ const TextStyle taskCardTitleTextStyle = TextStyle(
 
 // CompletedContainer
 const double completedTitleHeight = 16;
-const double mobileCompletedTitleBottomPadding = 8; // COULD BE CHANGED (VARIABLE)
-const double desktopCompletedTitleBottomPadding = 24; // COULD BE CHANGED (VARIABLE)
+const double mobileCompletedTitleBottomPadding =
+    12; // COULD BE CHANGED (VARIABLE) +16 (diff btw -8 and 8 nav_container.dart line 24)=desktopCompletedTitleBottomPadding
+const double desktopCompletedTitleBottomPadding = 28; // COULD BE CHANGED (VARIABLE)
 const double minEmptySpaceHeight = 60;
 double floatingNavBarContainerHeight = 62; // FIXED HEIGHT: bottom padding under the title: COMPLETE: 0
 
