@@ -10,6 +10,7 @@ import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:dayagenda/widgets/tasks_container.dart';
 import 'package:dayagenda/widgets/nav_container.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -65,8 +66,9 @@ class _TasksScreenState extends State<TasksScreen> {
                 );
               }),
         ),
-        floatingActionButtonLocation:
-            ScreenUtils.isMobile(context) ? FloatingActionButtonLocation.centerDocked : FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: (UniversalPlatform.isAndroid || UniversalPlatform.isIOS)
+            ? FloatingActionButtonLocation.centerDocked
+            : FloatingActionButtonLocation.centerFloat,
         floatingActionButton: NavContainer(),
         body: TasksContainer(),
       ),

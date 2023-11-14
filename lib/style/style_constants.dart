@@ -49,10 +49,10 @@ const TextStyle taskCardTitleTextStyle = TextStyle(
 
 // CompletedContainer
 const double completedTitleHeight = 16;
-const double mobileCompletedTitleBottomPadding = 4; // COULD BE CHANGED (VARIABLE)
-const double desktopCompletedTitleBottomPadding = 20; // COULD BE CHANGED (VARIABLE)
+const double mobileCompletedTitleBottomPadding = 8; // COULD BE CHANGED (VARIABLE)
+const double desktopCompletedTitleBottomPadding = 24; // COULD BE CHANGED (VARIABLE)
 const double minEmptySpaceHeight = 60;
-double floatingNavBarContainerHeight = 62; // FIXED HEIGHT
+double floatingNavBarContainerHeight = 62; // FIXED HEIGHT: bottom padding under the title: COMPLETE: 0
 
 // TimeCard
 const TextStyle timeCardTextStyle = TextStyle(

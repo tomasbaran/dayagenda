@@ -8,6 +8,7 @@ import 'package:dayagenda/widgets/calendar_nav_container.dart';
 import 'package:dayagenda/widgets/nav_bar.dart';
 import 'package:dayagenda/widgets/lists_nav_container.dart';
 import 'package:dayagenda/widgets/account_nav_container.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class NavContainer extends StatelessWidget {
   NavContainer({
@@ -19,32 +20,35 @@ class NavContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => appState.updateNavBarSelection(NavBarSelection.unselected),
-      child: Material(
-        borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
-        elevation: 10,
-        child: Container(
-          // height: 400,
-          width: floatingContainerWidth,
-          decoration: BoxDecoration(
-            color: kThemeColor11,
-            borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
-          ),
-          child: ValueListenableBuilder(
-            valueListenable: appState.navBar,
-            builder: (context, navBarSelection, child) {
-              switch (navBarSelection) {
-                case NavBarSelection.account:
-                  return AccountNavContainer();
-                case NavBarSelection.list:
-                  return const ListsNavContainer();
-                case NavBarSelection.calendar:
-                  return CalendarNavContainer();
-                default:
-                  return NavBar();
-              }
-            },
+    return Transform.translate(
+      offset: Offset(0, UniversalPlatform.isAndroid || UniversalPlatform.isIOS ? 8 : -8),
+      child: GestureDetector(
+        onTap: () => appState.updateNavBarSelection(NavBarSelection.unselected),
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
+          elevation: 10,
+          child: Container(
+            // height: 400,
+            width: floatingContainerWidth,
+            decoration: BoxDecoration(
+              color: kThemeColor11,
+              borderRadius: BorderRadius.all(Radius.circular(floatingBarRadius)),
+            ),
+            child: ValueListenableBuilder(
+              valueListenable: appState.navBar,
+              builder: (context, navBarSelection, child) {
+                switch (navBarSelection) {
+                  case NavBarSelection.account:
+                    return AccountNavContainer();
+                  case NavBarSelection.list:
+                    return const ListsNavContainer();
+                  case NavBarSelection.calendar:
+                    return CalendarNavContainer();
+                  default:
+                    return NavBar();
+                }
+              },
+            ),
           ),
         ),
       ),

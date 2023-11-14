@@ -19,6 +19,7 @@ import 'package:dayagenda/style/style_constants.dart';
 
 import 'package:dayagenda/firebase_options_dev.dart' as dev;
 import 'package:dayagenda/firebase_options_live.dart' as live;
+import 'package:universal_platform/universal_platform.dart';
 
 class AppState {
   final isSignedIn = ValueNotifier<bool>(false);
@@ -41,7 +42,7 @@ class AppState {
       AppBar().preferredSize.height - //appBar's height
       (taskCount * taskCardHeight) -
       completedTitleHeight -
-      (ScreenUtils.isMobile(context) ? mobileCompletedTitleBottomPadding : desktopCompletedTitleBottomPadding) -
+      ((UniversalPlatform.isIOS || UniversalPlatform.isAndroid) ? mobileCompletedTitleBottomPadding : desktopCompletedTitleBottomPadding) -
       floatingBottomSafeArea;
 
   double get floatingBottomSafeArea => safeArea.bottom + floatingNavBarContainerHeight + 4;
