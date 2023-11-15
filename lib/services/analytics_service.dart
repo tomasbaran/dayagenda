@@ -23,7 +23,7 @@ class AnalyticsService {
       await increaseUserStat('todoes_counter', 1);
       // if the task is today+, increase the not completed future todoes counter (needed for completion rate purpose)
       if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
-        await increaseUserStat('not_completed_future_todoes_counter', 1);
+        await increaseUserStat('undone_future_todoes', 1);
       }
     }
   }
@@ -42,7 +42,7 @@ class AnalyticsService {
           await increaseUserStat('completed_tasks_counter', -1);
         }
       } else if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
-        await increaseUserStat('not_completed_future_todoes_counter', -1);
+        await increaseUserStat('undone_future_todoes', -1);
       }
     }
   }
@@ -54,7 +54,7 @@ class AnalyticsService {
       await increaseUserStat('completed_todoes_counter', myTask.isCompleted ? 1 : -1);
       // if the task is today+, increase the not completed future todoes counter (needed for completion rate purpose)
       if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
-        await increaseUserStat('not_completed_future_todoes_counter', myTask.isCompleted ? -1 : 1);
+        await increaseUserStat('undone_future_todoes', myTask.isCompleted ? -1 : 1);
       }
 
       if (myTask.startTime != null) {
@@ -80,11 +80,10 @@ class AnalyticsService {
       // log('completedTasks: $completedTasks');
       // log('completedEvents: $completedEvents');
       // log('ratio: $ratio');
-      FirebaseAnalyticsService.analytics.setUserProperty(name: 'ratio_tasks-events(completed)', value: ratio.toStringAsFixed(1));
-      MixpanelService.mixpanel?.getPeople().set('ratio_tasks-events(completed)', double.parse(ratio.toStringAsFixed(1)));
+      FirebaseAnalyticsService.analytics.setUserProperty(name: 'done_tasks_events_ratio', value: ratio.toStringAsFixed(1));
+      MixpanelService.mixpanel?.getPeople().set('done_tasks_events_ratio', double.parse(ratio.toStringAsFixed(1)));
 
-      listDocRef.set({'ratio_tasks-events(completed)': double.parse(ratio.toStringAsFixed(1))}, SetOptions(merge: true)).then((value) {},
-          onError: (e) {
+      listDocRef.set({'done_tasks_events_ratio': double.parse(ratio.toStringAsFixed(1))}, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError #4[updateTasksEventsRation]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       });
@@ -140,7 +139,7 @@ class AnalyticsService {
       if (allTodoes == 0) {
         completionRate = 0;
       } else {
-        final notCompletedFutureTodoes = userStats['not_completed_future_todoes_counter'];
+        final notCompletedFutureTodoes = userStats['undone_future_todoes'];
         completionRate = (completedTodoes / (allTodoes - notCompletedFutureTodoes)) * 100;
         completionRate = int.parse(completionRate.toStringAsFixed(0));
 
@@ -214,8 +213,8 @@ class AnalyticsService {
     await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
 
-      // update not_completed_future_todoes_counter by substracting the number of not completed PAST todoes
-      await increaseUserStat('not_completed_future_todoes_counter', await countNotCompletedPastTodoes());
+      // update undone_future_todoes by substracting the number of not completed PAST todoes
+      await increaseUserStat('undone_future_todoes', await countNotCompletedPastTodoes());
 
       final signupDate = userStats['anonymously_signed_up'] as Timestamp?;
       // last_used
