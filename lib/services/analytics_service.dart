@@ -92,7 +92,7 @@ class AnalyticsService {
     });
   }
 
-  Future increaseUserStat(String statTitle, int increaseBy) async {
+  Future increaseUserStat(String statTitle, double increaseBy) async {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.set({statTitle: FieldValue.increment(increaseBy)}, SetOptions(merge: true)).then((value) {
       log('$statTitle: $increaseBy', name: 'firebase increase update');
@@ -107,17 +107,12 @@ class AnalyticsService {
       if (defaultTodoesCounter == 0) {
         MixpanelService.mixpanel?.track('Default Tasks Completed');
       }
+      final updatedIncrement = userStats[statTitle];
+      MixpanelService.mixpanel?.getPeople().set(statTitle, updatedIncrement);
     }, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
-    try {
-      MixpanelService.mixpanel?.getPeople().increment(statTitle, increaseBy.toDouble());
-      MixpanelService.mixpanel?.getDistinctId().then((value) => debugPrint(value));
-      debugPrint('mixpanel success! $statTitle, $increaseBy');
-    } catch (e) {
-      debugPrint('mixpanel increment ($statTitle, $increaseBy) error: $e');
-    }
   }
 
   Future writeSignupDate() async {
@@ -149,15 +144,11 @@ class AnalyticsService {
         log('rate: $completionRate');
       }
 
-      MixpanelService.mixpanel?.getPeople().set("completion_rate", completionRate);
-
       try {
         MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
-
-        MixpanelService.mixpanel?.getDistinctId().then((value) => debugPrint(value));
         debugPrint('mixpanel success! [completion_rate], $completionRate');
       } catch (e) {
-        debugPrint('mixpanel increment ([completion_rate], $completionRate) error: $e');
+        debugPrint('mixpanel completion_rate of [$completionRate] error: $e');
       }
 
       listDocRef.set({'completion_rate': completionRate}, SetOptions(merge: true)).then((value) {}, onError: (e) {
@@ -170,8 +161,8 @@ class AnalyticsService {
     });
   }
 
-  Future<int> countNotCompletedPastTodoes() async {
-    int notCompletedPastTodoes = 0;
+  Future<double> countNotCompletedPastTodoes() async {
+    double notCompletedPastTodoes = 0;
 
     final userStatsDocRef = db.collection('user_stats').doc(uid);
     final userListsDocRef = db.collection('user_lists').doc(uid);
