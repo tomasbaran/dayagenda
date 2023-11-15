@@ -76,6 +76,8 @@ class AppState {
       await authState.signInAnonymously();
       addDefaultTasks();
     } else {
+      MixpanelService.mixpanel?.identify(authService.uid!);
+
       log(
         time: DateTime.now(),
         '\x1B[33m${authService.uid}\x1B[0m',
