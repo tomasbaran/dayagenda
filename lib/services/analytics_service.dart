@@ -135,13 +135,13 @@ class AnalyticsService {
       final userStats = value.data() as Map;
       final completedTodoes = userStats['completed_todoes_counter'] ?? 0;
       final allTodoes = userStats['todoes_counter'] ?? 0;
-      int completionRate;
+      double completionRate;
       if (allTodoes == 0) {
         completionRate = 0;
       } else {
         final notCompletedFutureTodoes = userStats['undone_future_todoes'];
         completionRate = (completedTodoes / (allTodoes - notCompletedFutureTodoes)) * 100;
-        completionRate = int.parse(completionRate.toStringAsFixed(0));
+        completionRate = double.parse(completionRate.toStringAsFixed(0));
 
         log('allTodoes: $allTodoes');
         log('notCompletedFutureTodoes: $notCompletedFutureTodoes');
