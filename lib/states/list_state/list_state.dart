@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dayagenda/services/analytics_service.dart';
+import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/models/enums.dart';
@@ -36,6 +37,7 @@ class ListState {
   Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
     await AnalyticsService().updateUserStatOnAddedTodo(newTask, dateState.selectedDate.value);
     if (trackInMixpanel) {
+      FirebaseAnalyticsService.analytics.logEvent(name: 'add_todo', parameters: {'todo title': newTask.title});
       MixpanelService.mixpanel?.track('Add Todo', properties: {'todo title': newTask.title});
     }
 

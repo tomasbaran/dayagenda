@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:dayagenda/utils/screen_utlis.dart';
+import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +76,7 @@ class AppState {
       await authState.signInAnonymously();
       addDefaultTasks();
     } else {
+      FirebaseAnalyticsService.analytics.setUserId(id: authService.uid);
       MixpanelService.mixpanel?.identify(authService.uid!);
 
       log(
@@ -129,6 +130,7 @@ class AppState {
     // 1.`
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Mark me as completed by tapping on the checkbox'), trackInMixpanel: false);
 
+    FirebaseAnalyticsService.analytics.logEvent(name: 'add_default_tasks');
     MixpanelService.mixpanel?.track('Add Default Tasks');
   }
 

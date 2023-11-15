@@ -1,3 +1,4 @@
+import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
@@ -12,6 +13,7 @@ class DateState {
     isSelectedDateToday.value = checkIfSelectedDateIsToday();
 
     if (isSelectedDateToday.value) {
+      FirebaseAnalyticsService.analytics.logScreenView(screenName: 'today_view');
       MixpanelService.mixpanel?.track('Today View');
       MixpanelService.mixpanel?.getPeople().increment('viewed_today_counter', 1);
     }

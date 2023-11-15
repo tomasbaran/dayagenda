@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -59,9 +59,11 @@ class AnalyticsService {
 
       if (myTask.startTime != null) {
         await increaseUserStat('completed_events_counter', myTask.isCompleted ? 1 : -1);
+        FirebaseAnalyticsService.analytics.logEvent(name: 'complete_todo', parameters: {'type': 'event'});
         MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'event'});
       } else {
         await increaseUserStat('completed_tasks_counter', myTask.isCompleted ? 1 : -1);
+        FirebaseAnalyticsService.analytics.logEvent(name: 'complete_todo', parameters: {'type': 'task'});
         MixpanelService.mixpanel?.track('Complete Todo', properties: {'type': 'task'});
       }
       await updateCompletionRate();
@@ -78,7 +80,7 @@ class AnalyticsService {
       // log('completedTasks: $completedTasks');
       // log('completedEvents: $completedEvents');
       // log('ratio: $ratio');
-
+      FirebaseAnalyticsService.analytics.setUserProperty(name: 'ratio_tasks-events(completed)', value: ratio.toStringAsFixed(1));
       MixpanelService.mixpanel?.getPeople().set('ratio_tasks-events(completed)', double.parse(ratio.toStringAsFixed(1)));
 
       listDocRef.set({'ratio_tasks-events(completed)': double.parse(ratio.toStringAsFixed(1))}, SetOptions(merge: true)).then((value) {},
@@ -105,9 +107,11 @@ class AnalyticsService {
       final userStats = value.data() as Map;
       final defaultTodoesCounter = userStats['default_todoes_counter'] ?? 100;
       if (defaultTodoesCounter == 0) {
+        FirebaseAnalyticsService.analytics.logEvent(name: 'default_tasks_completed');
         MixpanelService.mixpanel?.track('Default Tasks Completed');
       }
       final updatedIncrement = userStats[statTitle];
+      FirebaseAnalyticsService.analytics.setUserProperty(name: statTitle, value: updatedIncrement.toString());
       MixpanelService.mixpanel?.getPeople().set(statTitle, updatedIncrement);
     }, onError: (e) {
       log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
@@ -117,6 +121,7 @@ class AnalyticsService {
 
   Future writeSignupDate() async {
     final listDocRef = db.collection('user_stats').doc(uid);
+    FirebaseAnalyticsService.analytics.setUserProperty(name: 'anonymously_signed_up', value: DateTime.now().toString());
     MixpanelService.mixpanel?.getPeople().setOnce('anonymously_signed_up', DateTimeUtils.mixpanelNow());
 
     await listDocRef.set({'anonymously_signed_up': DateTime.now()}, SetOptions(merge: true)).then((value) {}, onError: (e) {
@@ -145,6 +150,7 @@ class AnalyticsService {
       }
 
       try {
+        FirebaseAnalyticsService.analytics.setUserProperty(name: 'completion_rate', value: completionRate.toString());
         MixpanelService.mixpanel?.getPeople().set('completion_rate', completionRate);
         debugPrint('mixpanel success! [completion_rate], $completionRate');
       } catch (e) {
@@ -228,6 +234,10 @@ class AnalyticsService {
       log(name: 'firebase update', 'completed_todoes_per_day: ${completedTodoesPerDay.toStringAsFixed(0)}\x1B[0m');
 
       try {
+        FirebaseAnalyticsService.analytics.setUserProperty(name: 'last_used', value: DateTime.now().toString());
+        FirebaseAnalyticsService.analytics.setUserProperty(name: 'active_period', value: activePeriod.toString());
+        FirebaseAnalyticsService.analytics.setUserProperty(name: 'completed_todoes_per_day', value: completedTodoesPerDay.toStringAsFixed(0));
+
         MixpanelService.mixpanel?.getPeople().set('last_used', DateTimeUtils.mixpanelNow());
         MixpanelService.mixpanel?.getPeople().set('active_period', activePeriod);
         MixpanelService.mixpanel?.getPeople().set('completed_todoes_per_day', double.parse(completedTodoesPerDay.toStringAsFixed(0)));
