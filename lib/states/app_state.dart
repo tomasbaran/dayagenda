@@ -142,6 +142,7 @@ class AppState {
     switch (selectedFlavor) {
       case FlavorType.dev:
         await Firebase.initializeApp(name: kIsWeb ? null : 'dev', options: dev.DefaultFirebaseOptions.currentPlatform);
+        FirebaseAnalyticsService.analytics.setAnalyticsCollectionEnabled(true);
         await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_DEV'));
         break;
       case FlavorType.live:
