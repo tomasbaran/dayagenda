@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyTask {
+  bool isDefault;
   DateTime? startTime;
   DateTime? endTime;
   String title;
   bool isCompleted;
   ValueNotifier isBeingSnoozed = ValueNotifier<bool>(false);
-  bool isDefault;
   int? key;
   MyTask({
     this.isDefault = false,
@@ -24,6 +24,7 @@ class MyTask {
 
   MyTask clone() {
     return MyTask(
+      isDefault: isDefault,
       title: title, // String is immutable
       isCompleted: isCompleted, // Bool is immutable
       startTime: startTime,
