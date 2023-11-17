@@ -85,20 +85,29 @@ class AnalyticsService {
     }
   }
 
-  Future updateTasksEventsRatio() async {
+  Future updateRatioStats() async {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.get().then((value) {
       final userStats = value.data() as Map;
-      final completedTasks = userStats['completed_tasks_counter'] ?? 1;
-      final completedEvents = userStats['completed_events_counter'] ?? 1;
-      final ratio = completedTasks / completedEvents;
+      final completedTasksCounter = userStats['completed_tasks_counter'] ?? 1;
+      final completedEventsCounter = userStats['completed_events_counter'] ?? 1;
+      final completedTodoesCounter = userStats['completed_todoes_counter'] ?? 1;
+      final snoozeCounter = userStats['snooze_counter'] ?? 1;
+      final doneSnoozeRatio = completedTodoesCounter / snoozeCounter;
+      final tasksEventsRatio = completedTasksCounter / completedEventsCounter;
       // log('completedTasks: $completedTasks');
       // log('completedEvents: $completedEvents');
       // log('ratio: $ratio');
-      FirebaseAnalyticsService.analytics.setUserProperty(name: 'done_tasks_events_ratio', value: ratio.toStringAsFixed(1));
-      MixpanelService.mixpanel?.getPeople().set('done_tasks_events_ratio', double.parse(ratio.toStringAsFixed(1)));
+      FirebaseAnalyticsService.analytics.setUserProperty(name: 'done_tasks_events_ratio', value: tasksEventsRatio.toStringAsFixed(1));
+      MixpanelService.mixpanel?.getPeople().set('done_tasks_events_ratio', double.parse(tasksEventsRatio.toStringAsFixed(1)));
 
-      listDocRef.set({'done_tasks_events_ratio': double.parse(ratio.toStringAsFixed(1))}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+      FirebaseAnalyticsService.analytics.setUserProperty(name: 'done_snooze_ratio', value: doneSnoozeRatio.toStringAsFixed(1));
+      MixpanelService.mixpanel?.getPeople().set('done_snooze_ratio', double.parse(doneSnoozeRatio.toStringAsFixed(1)));
+
+      listDocRef.set({
+        'done_tasks_events_ratio': double.parse(tasksEventsRatio.toStringAsFixed(1)),
+        'done_snooze_ratio': double.parse(doneSnoozeRatio.toStringAsFixed(1)),
+      }, SetOptions(merge: true)).then((value) {}, onError: (e) {
         log('\x1B[31mError #4[updateTasksEventsRation]: $e\x1B[0m');
         Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
       });
@@ -274,6 +283,6 @@ class AnalyticsService {
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
 
-    await updateTasksEventsRatio();
+    await updateRatioStats();
   }
 }
