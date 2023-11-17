@@ -91,44 +91,51 @@ class AppState {
     final listState = getIt<ListState>();
 
     // Yesterday
-    listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
+    // listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like document icon on the bottom bar for today\'s list'),
+        trackInMixpanel: false);
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
 
     // Today
     listState.selectDateListByDate(DateTime.now());
 
-    // 7.
+    // 8.
     await listState.addTaskToDateList(
         MyTask(
             isDefault: true,
-            title: 'Review today\'s tasks',
-            startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 00, 00),
-            endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 20, 10, 00)),
+            title: 'Tap the Share icon on desktop Safari & select Add to Dock to install on mac',
+            startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, DateTime.now().minute, 00),
+            endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour,
+                DateTime.now().minute + 5 > 60 ? 55 : DateTime.now().minute + 5, 59)),
+        trackInMixpanel: false);
+
+    // 7.
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the iOS Share icon at the bottom & select Add to Home Screen to install'),
         trackInMixpanel: false);
 
     // 6.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Add a new to-do by tapping on the + icon'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hit the plus icon to create a new task'), trackInMixpanel: false);
 
     // 5.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
 
     // 4.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe to the left to see yesterday\'s unfinished tasks'),
-        trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Long-press and drag to organize your tasks'), trackInMixpanel: false);
 
     // 3.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hold me (drag handles on the web) to reorder me'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'), trackInMixpanel: false);
 
     // 2.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on me to edit me'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the right arrow to move my task to tomorrow'), trackInMixpanel: false);
 
     // 1.`
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Mark me as completed by tapping on the checkbox'), trackInMixpanel: false);
+
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Check the box to mark my task as complete'), trackInMixpanel: false);
 
     FirebaseAnalyticsService.analytics.logEvent(name: 'add_default_tasks');
     MixpanelService.mixpanel?.track('Add Default Tasks');
