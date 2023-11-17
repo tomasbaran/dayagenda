@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
+import 'package:dayagenda/states/date_state.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -52,6 +54,12 @@ class AnalyticsService {
     FirebaseAnalyticsService.analytics.logEvent(name: 'snooze_todo', parameters: {'todo_title': myTask.title});
     MixpanelService.mixpanel?.track('Snooze Todo', properties: {'todo_title': myTask.title});
     increaseUserStat('snooze_counter', 1);
+    final dateState = getIt<DateState>();
+
+    if (DateTimeUtils.isSpecialDay(DateTime.now(), dateState.selectedDate.value) == DayType.isYesterday) {
+      // debugPrint('yesterday');
+      increaseUserStat('undone_future_todoes', 1);
+    }
   }
 
   Future updateUserStatOnToggleTodoCompletion(MyTask myTask, DateTime taskDate) async {
