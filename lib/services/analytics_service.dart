@@ -17,6 +17,7 @@ class AnalyticsService {
   String? get uid => getIt<AuthService>().uid;
 
   Future updateUserStatOnAddedTodo(MyTask myTask, DateTime taskDate) async {
+    debugPrint('here');
     if (myTask.isDefault) {
       await increaseUserStat('default_todoes_counter', 1);
     } else {
@@ -45,6 +46,12 @@ class AnalyticsService {
         await increaseUserStat('undone_future_todoes', -1);
       }
     }
+  }
+
+  Future trackSnooze(MyTask myTask) async {
+    FirebaseAnalyticsService.analytics.logEvent(name: 'snooze_todo', parameters: {'todo_title': myTask.title});
+    MixpanelService.mixpanel?.track('Snooze Todo', properties: {'todo_title': myTask.title});
+    increaseUserStat('snooze_counter', 1);
   }
 
   Future updateUserStatOnToggleTodoCompletion(MyTask myTask, DateTime taskDate) async {

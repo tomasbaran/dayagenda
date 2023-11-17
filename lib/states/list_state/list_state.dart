@@ -68,6 +68,7 @@ class ListState {
   }
 
   Future snoozeTodoToTomorrow(MyTask myTask) async {
+    AnalyticsService().trackSnooze(myTask);
     final taskState = getIt<TaskState>();
     taskState.updateMyTaskStateWhenBeingSnoozed(myTask, true);
 
