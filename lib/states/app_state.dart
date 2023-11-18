@@ -96,8 +96,7 @@ class AppState {
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like document icon on the bottom bar for today\'s list'),
-        trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the document icon below to see today\'s tasks'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
 
