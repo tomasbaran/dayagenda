@@ -117,6 +117,19 @@ class AnalyticsService {
     });
   }
 
+  Future completeDefaultTasks() async {
+    final listDocRef = db.collection('user_stats').doc(uid);
+
+    await listDocRef.set({'default_todoes_counter': 'completed'}, SetOptions(merge: true)).then((value) {}, onError: (e) {
+      log('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
+    });
+    MixpanelService.mixpanel?.getPeople().set('default_todoes_counter', 'completed');
+
+    FirebaseAnalyticsService.analytics.logEvent(name: 'default_todoes_completed');
+    MixpanelService.mixpanel?.track('Default Todoes Completed');
+  }
+
   Future increaseUserStat(String statTitle, double increaseBy) async {
     final listDocRef = db.collection('user_stats').doc(uid);
     await listDocRef.set({statTitle: FieldValue.increment(increaseBy)}, SetOptions(merge: true)).then((value) {
@@ -126,13 +139,15 @@ class AnalyticsService {
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding stat]: $e\x1B[0m');
     });
 
-    await listDocRef.get().then((value) {
+    await listDocRef.get().then((value) async {
       final userStats = value.data() as Map;
-      final defaultTodoesCounter = userStats['default_todoes_counter'] ?? 100;
-      if (defaultTodoesCounter == 0) {
-        FirebaseAnalyticsService.analytics.logEvent(name: 'default_tasks_completed');
-        MixpanelService.mixpanel?.track('Default Tasks Completed');
+      final defaultTodoesCounter = userStats['default_todoes_counter'];
+      if (defaultTodoesCounter != null) {
+        if (defaultTodoesCounter == 0) {
+          completeDefaultTasks();
+        }
       }
+
       final updatedIncrement = userStats[statTitle];
       FirebaseAnalyticsService.analytics.setUserProperty(name: statTitle, value: updatedIncrement.toString());
       MixpanelService.mixpanel?.getPeople().set(statTitle, updatedIncrement);

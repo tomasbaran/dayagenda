@@ -137,7 +137,7 @@ class AppState {
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Check the box to mark my task as complete'), trackInMixpanel: false);
 
     FirebaseAnalyticsService.analytics.logEvent(name: 'add_default_tasks');
-    MixpanelService.mixpanel?.track('Add Default Tasks');
+    MixpanelService.mixpanel?.track('Add Default Todoes');
   }
 
   Future<void> initializeSelectedFlavor() async {
