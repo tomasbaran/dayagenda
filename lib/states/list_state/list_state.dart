@@ -77,12 +77,12 @@ class ListState {
       updatedTask.startTime = updatedTask.startTime!.add(const Duration(days: 1));
     }
     if (updatedTask.endTime != null) {
-      updatedTask.endTime = updatedTask.startTime!.add(const Duration(days: 1));
+      updatedTask.endTime = updatedTask.endTime!.add(const Duration(days: 1));
     }
     // delete the original task from the original date in the db
-    await removeTaskFromList(updatedTask, selectedList.value);
+    await removeTaskFromList(myTask, selectedList.value);
     // add task to list in the db
-    await addTaskToDateList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)));
+    await addTaskToDateList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)), trackInMixpanel: false);
     taskState.updateMyTaskStateWhenBeingSnoozed(myTask, false);
   }
 }
