@@ -1,3 +1,4 @@
+import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
@@ -18,9 +19,13 @@ class CompletedTasksColumn extends StatelessWidget {
     output.add(
       Padding(
         padding: EdgeInsets.only(
-            top: appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context) < minEmptySpaceHeight
-                ? minEmptySpaceHeight
-                : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context)),
+            top:
+                // if the selected list is before today, don't show the completedTasksColumn top padding
+                listState.dateState.selectedDate.value.isBefore(DateTimeUtils.resetTimeToZero(DateTime.now()))
+                    ? 8
+                    : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context) < minEmptySpaceHeight
+                        ? minEmptySpaceHeight
+                        : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context)),
         child: Center(
           child: Text(
             'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
@@ -30,7 +35,12 @@ class CompletedTasksColumn extends StatelessWidget {
     );
     if (listState.selectedList.value.completedTasks.isNotEmpty) {
       output.add(SizedBox(
-          height: UniversalPlatform.isAndroid || UniversalPlatform.isIOS ? mobileCompletedTitleBottomPadding : desktopCompletedTitleBottomPadding));
+          height: // if the selected list is before today, don't show the completedTasksColumn top padding
+              listState.dateState.selectedDate.value.isBefore(DateTimeUtils.resetTimeToZero(DateTime.now()))
+                  ? 8
+                  : UniversalPlatform.isAndroid || UniversalPlatform.isIOS
+                      ? mobileCompletedTitleBottomPadding
+                      : desktopCompletedTitleBottomPadding));
     }
     for (var completedTask in listState.selectedList.value.completedTasks) {
       output.add(TaskCard(
