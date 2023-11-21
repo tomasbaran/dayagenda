@@ -143,24 +143,26 @@ class TaskCard extends StatelessWidget {
                   }),
             ),
           ),
-          Visibility(
-            visible: !task.isCompleted,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(cardRadius),
-              highlightColor: kThemeColor3,
-              onTap: () async => await listState.snoozeTodoToTomorrow(task),
-              child: Container(
-                padding: const EdgeInsets.all(8.0),
-                height: 68,
-                width: 34,
-                child: Icon(
-                  CupertinoIcons.arrow_right,
-                  color: Theme.of(context).unselectedWidgetColor,
-                  // color: Colors.red,
+          task.isCompleted
+              ? const SizedBox(
+                  height: 68,
+                  width: 34,
+                )
+              : InkWell(
+                  borderRadius: BorderRadius.circular(cardRadius),
+                  highlightColor: kThemeColor3,
+                  onTap: () async => await listState.snoozeTodoToTomorrow(task),
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    height: 68,
+                    width: 34,
+                    child: Icon(
+                      CupertinoIcons.arrow_right,
+                      color: Theme.of(context).unselectedWidgetColor,
+                      // color: Colors.red,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );
