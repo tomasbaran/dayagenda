@@ -17,18 +17,21 @@ class CompletedTasksColumn extends StatelessWidget {
   List<Widget> children(BuildContext context) {
     List<Widget> output = [];
     output.add(
-      Padding(
-        padding: EdgeInsets.only(
-            top:
-                // if the selected list is before today, don't show the completedTasksColumn top padding
-                listState.dateState.selectedDate.value.isBefore(DateTimeUtils.resetTimeToZero(DateTime.now()))
-                    ? 8
-                    : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context) < minEmptySpaceHeight
-                        ? minEmptySpaceHeight
-                        : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context)),
-        child: Center(
-          child: Text(
-            'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
+      Visibility(
+        visible: !listState.dateState.selectedDate.value.isBefore(DateTimeUtils.resetTimeToZero(DateTime.now())),
+        child: Padding(
+          padding: EdgeInsets.only(
+              top:
+                  // if the selected list is before today, don't show the completedTasksColumn top padding
+                  listState.dateState.selectedDate.value.isBefore(DateTimeUtils.resetTimeToZero(DateTime.now()))
+                      ? 8
+                      : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context) < minEmptySpaceHeight
+                          ? minEmptySpaceHeight
+                          : appState.emptySpaceHeight(listState.selectedList.value.tasks.length, context)),
+          child: Center(
+            child: Text(
+              'COMPLETED: ${listState.selectedList.value.completedTasks.length}',
+            ),
           ),
         ),
       ),
