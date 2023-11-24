@@ -153,7 +153,7 @@ TextStyle navBarAccountEmailInputLabelTextStyle = const TextStyle(
 TextStyle navBarAccountEmailInputTextStyle = const TextStyle(
   color: kThemeColor2,
   fontSize: 18,
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.w500,
 );
 
 TextStyle navBarAccountEmailSubmitButtonTextStyle = const TextStyle(
