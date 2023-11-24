@@ -96,7 +96,7 @@ class AppState {
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the document icon below to see today\'s tasks'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like icon below to see TODAY\'s tasks'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
 
@@ -104,18 +104,18 @@ class AppState {
     listState.selectDateListByDate(DateTime.now());
 
     // 8.
-    await listState.addTaskToDateList(
-        MyTask(
-            isDefault: true,
-            title: 'Tap the Share icon on desktop Safari & select Add to Dock to install on mac',
-            startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, DateTime.now().minute, 00),
-            endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour,
-                DateTime.now().minute + 5 > 60 ? 55 : DateTime.now().minute + 5, 59)),
-        trackInMixpanel: false);
+    // await listState.addTaskToDateList(
+    //     MyTask(
+    //         isDefault: true,
+    //         title: 'Tap the Share icon on desktop Safari & select Add to Dock to install on mac',
+    //         startTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour, DateTime.now().minute, 00),
+    //         endTime: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour,
+    //             DateTime.now().minute + 5 > 60 ? 55 : DateTime.now().minute + 5, 59)),
+    //     trackInMixpanel: false);
 
     // 7.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the iOS Share icon at the bottom & select Add to Home Screen to install'),
-        trackInMixpanel: false);
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the iOS Share icon at the bottom & select Add to Home Screen to install'),
+    //     trackInMixpanel: false);
 
     // 6.
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hit the plus icon to create a new task'), trackInMixpanel: false);
@@ -124,17 +124,19 @@ class AppState {
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
 
     // 4.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Long-press and drag to organize your tasks'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Long-press & drag up or down to organize my tasks'), trackInMixpanel: false);
 
     // 3.
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'), trackInMixpanel: false);
 
     // 2.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the right arrow to move my task to tomorrow'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the right arrow to move this instruction to the next day'),
+        trackInMixpanel: false);
 
     // 1.`
 
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Check the box to mark my task as complete'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Check the box on the left to mark this instruction as complete'),
+        trackInMixpanel: false);
 
     FirebaseAnalyticsService.analytics.logEvent(name: 'add_default_tasks');
     MixpanelService.mixpanel?.track('Add Default Todoes');
