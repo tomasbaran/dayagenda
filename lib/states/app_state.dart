@@ -118,7 +118,7 @@ class AppState {
     //     trackInMixpanel: false);
 
     // 6.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hit the plus icon to create a new task'), trackInMixpanel: false);
+    // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Hit the plus icon to create a new task'), trackInMixpanel: false);
 
     // 5.
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
@@ -130,7 +130,7 @@ class AppState {
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'), trackInMixpanel: false);
 
     // 2.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the right arrow to move this instruction to the next day'),
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the moon icon on the right to move this instruction to the next day'),
         trackInMixpanel: false);
 
     // 1.`

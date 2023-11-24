@@ -69,7 +69,7 @@ class TaskCard extends StatelessWidget {
                         color: task.isCompleted
                             ? kThemeColor3
                             : isBeingSnoozed
-                                ? kThemeColor3
+                                ? kThemeColor10
                                 : Colors.white,
                         borderRadius: BorderRadius.horizontal(
                           right: const Radius.circular(cardRadius),
@@ -89,7 +89,7 @@ class TaskCard extends StatelessWidget {
                                       valueListenable: dateState.isSelectedDateToday,
                                       builder: (_, isSelectedToday, __) {
                                         return Text(
-                                          task.title,
+                                          isBeingSnoozed ? '' : task.title,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: taskCardTitleTextStyle.copyWith(
@@ -156,11 +156,15 @@ class TaskCard extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     height: 68,
                     width: 34,
-                    child: Icon(
-                      CupertinoIcons.arrow_right,
-                      color: Theme.of(context).unselectedWidgetColor,
-                      // color: Colors.red,
-                    ),
+                    child: ValueListenableBuilder(
+                        valueListenable: task.isBeingSnoozed,
+                        builder: (context, isBeingSnoozed, child) {
+                          return Icon(
+                            isBeingSnoozed ? Icons.dark_mode : Icons.dark_mode_outlined,
+                            color: isBeingSnoozed ? kThemeColor10 : Theme.of(context).unselectedWidgetColor,
+                            // color: Colors.red,
+                          );
+                        }),
                   ),
                 ),
         ],
