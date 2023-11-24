@@ -51,8 +51,8 @@ class AnalyticsService {
   }
 
   Future trackSnooze(MyTask myTask) async {
-    FirebaseAnalyticsService.analytics.logEvent(name: 'snooze_todo', parameters: {'todo_title': myTask.title});
-    MixpanelService.mixpanel?.track('Snooze Todo', properties: {'todo_title': myTask.title});
+    FirebaseAnalyticsService.analytics.logEvent(name: 'snooze_todo');
+    MixpanelService.mixpanel?.track('Snooze Todo');
     increaseUserStat('snooze_counter', 1);
     final dateState = getIt<DateState>();
 

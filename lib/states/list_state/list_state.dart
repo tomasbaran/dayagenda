@@ -37,8 +37,8 @@ class ListState {
   Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
     await AnalyticsService().updateUserStatOnAddedTodo(newTask, dateState.selectedDate.value);
     if (trackInMixpanel) {
-      FirebaseAnalyticsService.analytics.logEvent(name: 'add_todo', parameters: {'todo_title': newTask.title});
-      MixpanelService.mixpanel?.track('Add Todo', properties: {'todo_title': newTask.title});
+      FirebaseAnalyticsService.analytics.logEvent(name: 'add_todo', parameters: {'type': newTask.startTime == null ? 'task' : 'event'});
+      MixpanelService.mixpanel?.track('Add Todo', properties: {'type': newTask.startTime == null ? 'task' : 'event'});
     }
 
     await listService.addTaskToDateListInCloud(newTask, dateList ?? dateState.selectedDate.value);
