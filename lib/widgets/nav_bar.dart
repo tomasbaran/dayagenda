@@ -72,11 +72,12 @@ class NavBar extends StatelessWidget {
           GestureDetector(
             onTap: () => appState.updateNavBarSelection(NavBarSelection.calendar),
             behavior: HitTestBehavior.translucent,
-            child: Padding(
+            child: const Padding(
               padding: EdgeInsets.only(bottom: 2.0),
               child: Icon(
                 // CupertinoIcons.calendar,
-                Icons.calendar_month_outlined,
+                // Icons.calendar_month_outlined,
+                Icons.event_outlined,
                 color: kIconColor,
                 size: 32,
               ),
