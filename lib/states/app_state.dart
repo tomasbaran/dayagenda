@@ -96,7 +96,8 @@ class AppState {
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like icon below to see TODAY\'s tasks'), trackInMixpanel: false);
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like icon below to return and see TODAY\'s tasks'),
+        trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);
 
@@ -124,14 +125,14 @@ class AppState {
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
 
     // 4.
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Long-press & drag up or down to organize my tasks'), trackInMixpanel: false);
-
-    // 3.
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'), trackInMixpanel: false);
 
-    // 2.
+    // 3.
     await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the moon icon on the right to move this instruction to the next day'),
         trackInMixpanel: false);
+
+    // 2.
+    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Long-press & drag down to deprioritize'), trackInMixpanel: false);
 
     // 1.`
 
