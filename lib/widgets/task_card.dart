@@ -160,9 +160,8 @@ class TaskCard extends StatelessWidget {
                         valueListenable: task.isBeingSnoozed,
                         builder: (context, isBeingSnoozed, child) {
                           return Icon(
-                            isBeingSnoozed ? Icons.dark_mode : Icons.dark_mode_outlined,
+                            Icons.keyboard_double_arrow_right_rounded,
                             color: isBeingSnoozed ? kThemeColor10 : Theme.of(context).unselectedWidgetColor,
-                            // color: Colors.red,
                           );
                         }),
                   ),
