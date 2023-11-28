@@ -160,7 +160,9 @@ class TaskCard extends StatelessWidget {
                         valueListenable: task.isBeingSnoozed,
                         builder: (context, isBeingSnoozed, child) {
                           return Icon(
-                            Icons.keyboard_double_arrow_right_rounded,
+                            // Icons.keyboard_double_arrow_right_outlined,
+                            Icons.double_arrow_rounded,
+                            // CupertinoIcons.square_arrow_right,
                             color: isBeingSnoozed ? kThemeColor10 : Theme.of(context).unselectedWidgetColor,
                           );
                         }),
