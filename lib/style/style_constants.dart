@@ -43,7 +43,7 @@ const double cardRadius = 12;
 const double taskCardHeight = 76;
 
 const TextStyle taskCardTitleTextStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 15,
   fontWeight: FontWeight.w500,
 );
 
