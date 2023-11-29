@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyTask {
   bool isDefault;
+  String? listId;
   DateTime? startTime;
   DateTime? endTime;
   String title;
@@ -9,6 +10,7 @@ class MyTask {
   ValueNotifier isBeingSnoozed = ValueNotifier<bool>(false);
   int? key;
   MyTask({
+    this.listId,
     this.isDefault = false,
     this.startTime,
     this.endTime,

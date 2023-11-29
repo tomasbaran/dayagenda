@@ -14,7 +14,7 @@ abstract class ListService {
 
   Future updateDateListInCloud(MyList updatedList);
 
-  Future createIdList(String title);
+  Future<DocumentReference> createIdList(String title);
 
   Future addTaskToDateListInCloud(MyTask myTask, DateTime date);
 

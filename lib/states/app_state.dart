@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -91,14 +92,20 @@ class AppState {
     final listState = getIt<ListState>();
 
     // create id list called Instructions
-    listState.createNewIdList(title: 'Instructions');
+    final DocumentReference instructionsList = await listState.createNewIdList(title: 'Instructions');
+    log('instructionsList: ${instructionsList.id}');
     // Yesterday
     // listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
-    await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap the paper-like icon below to return and see TODAY\'s tasks'),
+    await listState.addTaskToDateList(
+        MyTask(
+          listId: instructionsList.id,
+          isDefault: true,
+          title: 'Tap the paper-like icon below to return and see TODAY\'s tasks',
+        ),
         trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Send feedback by going into my account tab'), trackInMixpanel: false);
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Sign up to have all my tasks synced on the web'), trackInMixpanel: false);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/services/analytics_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
@@ -63,7 +64,7 @@ class ListState {
     });
   }
 
-  createNewIdList({required String title}) => listService.createIdList(title);
+  Future<DocumentReference> createNewIdList({required String title}) async => await listService.createIdList(title);
 
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
     dateState.selecteNewDate(dateState.selectedDate.value.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));

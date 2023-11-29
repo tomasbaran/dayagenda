@@ -103,15 +103,17 @@ class FirestoreListService extends ListService {
   }
 
   @override
-  Future createIdList(String title) {
+  Future<DocumentReference> createIdList(String title) async {
     final listCollectionRef = db.collection("user_lists").doc(uid).collection('id_lists');
     return listCollectionRef.add({
       'title': title,
     }).then((value) {
       log('\x1B[33madded a new list: $title\x1B[0m');
+      return value;
     }, onError: (e) {
       log('\x1B[31mError #3[adding list]: $e\x1B[0m');
       Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding list]: $e\x1B[0m');
+      throw ('\x1B[31mError #3[adding list]: $e\x1B[0m');
     });
   }
 
