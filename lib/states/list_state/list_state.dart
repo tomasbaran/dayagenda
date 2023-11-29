@@ -76,14 +76,18 @@ class ListState {
     selectDateList();
   }
 
-  Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
+  Future addTaskToList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
     await AnalyticsService().updateUserStatOnAddedTodo(newTask, dateState.selectedDate.value);
     if (trackInMixpanel) {
       FirebaseAnalyticsService.analytics.logEvent(name: 'add_todo', parameters: {'type': newTask.startTime == null ? 'task' : 'event'});
       MixpanelService.mixpanel?.track('Add Todo', properties: {'type': newTask.startTime == null ? 'task' : 'event'});
     }
-
-    await listService.addTaskToDateListInCloud(newTask, dateList ?? dateState.selectedDate.value);
+    if (dateList != null) {
+      await listService.addTaskToDateListInCloud(newTask, dateList);
+    }
+    if (newTask.idList != null) {
+      //TODO:
+    }
   }
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
@@ -105,7 +109,7 @@ class ListState {
       // delete the original task from the original date in the db
       removeTaskFromList(updatedTask, originalList);
       // add task to list in the db
-      addTaskToDateList(updatedTask);
+      addTaskToList(updatedTask);
     }
   }
 
@@ -124,7 +128,7 @@ class ListState {
     // delete the original task from the original date in the db
     await removeTaskFromList(myTask, selectedList.value);
     // add task to list in the db
-    await addTaskToDateList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)), trackInMixpanel: false);
+    await addTaskToList(updatedTask, dateList: dateState.selectedDate.value.add(const Duration(days: 1)), trackInMixpanel: false);
     taskState.updateMyTaskStateWhenBeingSnoozed(myTask, false);
   }
 }

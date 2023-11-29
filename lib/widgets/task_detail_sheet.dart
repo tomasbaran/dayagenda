@@ -68,7 +68,7 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
               ),
               onPressed: () {
                 widget.sheetType == SheetType.newTask
-                    ? listState.addTaskToDateList(taskState.selectedTask.value)
+                    ? listState.addTaskToList(taskState.selectedTask.value)
                     : listState.updateListByTask(
                         updatedTask: taskState.selectedTask.value,
                         originalList: originalList,
