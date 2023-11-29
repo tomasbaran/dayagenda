@@ -14,20 +14,14 @@ class FirestoreListService extends ListService {
   final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
-  // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
   @override
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({DateTime? date, String? listId}) {
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({required DateTime date, String? listId}) {
     if (uid == null) {
       throw ('Error #2[getting list]: User not signed in.');
     } else {
       final DocumentReference<Map<String, dynamic>> listDocRef;
-      // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
-      if (date != null) {
-        String listDateId = DateFormat('yyyy-MM-dd').format(date);
-        listDocRef = db.collection("user_lists").doc(uid).collection('date_lists').doc(listDateId);
-      } else {
-        listDocRef = db.collection("user_lists").doc(uid).collection('named_lists').doc(listId);
-      }
+      String listDate = DateFormat('yyyy-MM-dd').format(date);
+      listDocRef = db.collection("user_lists").doc(uid).collection('date_lists').doc(listDate);
 
       return listDocRef.snapshots().listen(
         (event) {
