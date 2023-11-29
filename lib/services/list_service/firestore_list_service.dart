@@ -14,13 +14,6 @@ class FirestoreListService extends ListService {
   final db = FirebaseFirestore.instance;
   String? get uid => getIt<AuthService>().uid;
 
-  @override
-  Future<DocumentSnapshot<Map<String, dynamic>>> getDateListSnapshot(DateTime date) {
-    String listDateId = DateFormat('yyyy-MM-dd').format(date);
-    final DocumentReference<Map<String, dynamic>> listDocRef = db.collection("user_lists").doc(uid).collection('date_lists').doc(listDateId);
-    return listDocRef.get();
-  }
-
   // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
   @override
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId}) {
