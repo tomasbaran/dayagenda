@@ -14,6 +14,8 @@ abstract class ListService {
 
   Future updateDateListInCloud(MyList updatedList);
 
+  Future createIdList(String title);
+
   Future addTaskToDateListInCloud(MyTask myTask, DateTime date);
 
   Map<String, dynamic> formatMyTaskToFirebaseTask(MyTask myTask);

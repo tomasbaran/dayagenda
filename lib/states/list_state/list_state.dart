@@ -63,6 +63,8 @@ class ListState {
     });
   }
 
+  createNewIdList({required String title}) => listService.createIdList(title);
+
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
     dateState.selecteNewDate(dateState.selectedDate.value.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
     selectDateList();

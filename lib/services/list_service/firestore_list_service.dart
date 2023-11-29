@@ -103,6 +103,19 @@ class FirestoreListService extends ListService {
   }
 
   @override
+  Future createIdList(String title) {
+    final listCollectionRef = db.collection("user_lists").doc(uid).collection('id_lists');
+    return listCollectionRef.add({
+      'title': title,
+    }).then((value) {
+      log('\x1B[33madded a new list: $title\x1B[0m');
+    }, onError: (e) {
+      log('\x1B[31mError #3[adding list]: $e\x1B[0m');
+      Logger(printer: PrettyPrinter(colors: false)).e('\x1B[31mError #3[adding list]: $e\x1B[0m');
+    });
+  }
+
+  @override
   Future addTaskToDateListInCloud(MyTask myTask, DateTime date) async {
     if (uid == null) {
       throw ('Error #1[adding task]: User not signed in.');

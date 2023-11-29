@@ -90,6 +90,8 @@ class AppState {
   void addDefaultTasks() async {
     final listState = getIt<ListState>();
 
+    // create id list called Instructions
+    listState.createNewIdList(title: 'Instructions');
     // Yesterday
     // listState.selectDateListByDate(DateTime.now().subtract(const Duration(days: 1)));
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the pushpin icon to go back to today'), trackInMixpanel: false);
