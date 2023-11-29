@@ -20,7 +20,7 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
   listenToDateList() {
     listSubscription?.cancel();
 
-    listSubscription = listService.listenToDateListSnapshot(date: dateState.selectedDate.value);
+    listSubscription = listService.streamDateList(date: dateState.selectedDate.value);
     listSubscription?.onData((data) {
       try {
         log(name: 'got data', '${dateState.selectedDate.value}');

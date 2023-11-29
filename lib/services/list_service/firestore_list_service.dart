@@ -16,7 +16,7 @@ class FirestoreListService extends ListService {
 
   // REFACTOR #100: ? maybe better have two seperate functions: getListByDate, getListById
   @override
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId}) {
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({DateTime? date, String? listId}) {
     if (uid == null) {
       throw ('Error #2[getting list]: User not signed in.');
     } else {

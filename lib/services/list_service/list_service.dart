@@ -5,7 +5,7 @@ import 'package:dayagenda/models/my_list.dart';
 import 'package:dayagenda/models/my_task.dart';
 
 abstract class ListService {
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? listenToDateListSnapshot({DateTime? date, String? listId});
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({DateTime? date, String? listId});
 
   Future removeTaskFromListInCloud(MyTask myTask, MyList myList);
 
