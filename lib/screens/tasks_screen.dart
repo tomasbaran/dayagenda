@@ -26,12 +26,14 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   void initState() {
     super.initState();
-    listState.listenToDateList();
+    listState.selectDateList();
+    listState.streamUserIdLists();
   }
 
   @override
   void dispose() {
-    listState.disposeSubscription();
+    listState.disposeSelectedListSubscription();
+    listState.disposeStreamUserIdLists();
     super.dispose();
   }
 

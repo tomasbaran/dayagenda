@@ -15,13 +15,32 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
   final listService = getIt<ListService>();
   final dateState = getIt<DateState>();
 
-  StreamSubscription? listSubscription;
+  StreamSubscription? selecetdListSubscription;
 
-  listenToDateList() {
-    listSubscription?.cancel();
+  selectIdList(String id) {
+    selecetdListSubscription?.cancel();
 
-    listSubscription = listService.streamDateList(date: dateState.selectedDate.value);
-    listSubscription?.onData((data) {
+    selecetdListSubscription = listService.streamIdList(id: id);
+    selecetdListSubscription?.onData((data) {
+      try {
+        log(name: 'got data from id list', '$id');
+        value = listService.convertFirebaseSnapshotToMyList(
+          firebaseSnapshot: data,
+          myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate.value),
+        );
+        debugPrint('\x1B[3m\x1B[33m[!updated list] ${value.date}: $value\x1B[0m---');
+        debugPrint('\x1B[3m\x1B[33m[-------------updated list finish----------------] \x1B[0m\n\n');
+      } catch (e) {
+        throw 'Error #12: $e';
+      }
+    });
+  }
+
+  selectDateList() {
+    selecetdListSubscription?.cancel();
+
+    selecetdListSubscription = listService.streamDateList(date: dateState.selectedDate.value);
+    selecetdListSubscription?.onData((data) {
       try {
         log(name: 'got data', '${dateState.selectedDate.value}');
         value = listService.convertFirebaseSnapshotToMyList(
@@ -37,8 +56,8 @@ class SelectedListNotifier extends ValueNotifier<MyList> {
     });
   }
 
-  disposeSubscription() {
-    listSubscription?.cancel();
+  disposeSelectedListSubscription() {
+    selecetdListSubscription?.cancel();
   }
 
   reorderList(int oldIndex, int newIndex) async {

@@ -15,13 +15,50 @@ class FirestoreListService extends ListService {
   String? get uid => getIt<AuthService>().uid;
 
   @override
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({required DateTime date, String? listId}) {
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? streamUserIdLists() {
+    if (uid == null) {
+      throw ('Error #2[getting list]: User not signed in.');
+    } else {
+      return db.collection("user_lists").doc(uid).collection('id_lists').snapshots().listen(
+        (event) {
+          log('event: $event;${event.docs}');
+        },
+        onError: (error) {
+          log('\x1B[31mError #4: Listen failed: $error \x1B[0m');
+          throw '\x1B[31mError #4: Listen failed: $error \x1B[0m';
+        },
+      );
+    }
+  }
+
+  @override
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({required DateTime date}) {
     if (uid == null) {
       throw ('Error #2[getting list]: User not signed in.');
     } else {
       final DocumentReference<Map<String, dynamic>> listDocRef;
       String listDate = DateFormat('yyyy-MM-dd').format(date);
       listDocRef = db.collection("user_lists").doc(uid).collection('date_lists').doc(listDate);
+
+      return listDocRef.snapshots().listen(
+        (event) {
+          log('event: $event;${event.data()}');
+        },
+        onError: (error) {
+          log('\x1B[31mError #4: Listen failed: $error \x1B[0m');
+          throw '\x1B[31mError #4: Listen failed: $error \x1B[0m';
+        },
+      );
+    }
+  }
+
+  @override
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamIdList({required String id}) {
+    if (uid == null) {
+      throw ('Error #2[getting list]: User not signed in.');
+    } else {
+      final DocumentReference<Map<String, dynamic>> listDocRef;
+      listDocRef = db.collection("user_lists").doc(uid).collection('id_lists').doc(id);
 
       return listDocRef.snapshots().listen(
         (event) {

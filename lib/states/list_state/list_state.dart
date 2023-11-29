@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dayagenda/services/analytics_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
@@ -15,8 +16,13 @@ import 'selected_list_notifier.dart';
 
 class ListState {
   final selectedList = SelectedListNotifier();
-  listenToDateList() => selectedList.listenToDateList();
-  disposeSubscription() => selectedList.disposeSubscription();
+
+  final List<String> idLists = [];
+
+  selectDateList() => selectedList.selectDateList();
+  selectIdList(String id) => selectedList.selectIdList(id);
+
+  disposeSelectedListSubscription() => selectedList.disposeSelectedListSubscription();
   Future reorderList(int oldIndex, int newIndex) async => selectedList.reorderList(oldIndex, newIndex);
   Future updateListByTaskIsCompleted(MyTask updatedTask) async => selectedList.updateListByTaskIsCompleted(updatedTask);
   Future updateSameDateListByTask(MyTask updatedTask) async => selectedList.updateSameDateListByTask(updatedTask);
@@ -24,14 +30,42 @@ class ListState {
   final dateState = getIt<DateState>();
   final listService = getIt<ListService>();
 
+  StreamSubscription? idListsSubscription;
+
+  disposeStreamUserIdLists() => idListsSubscription?.cancel();
+
+  streamUserIdLists() {
+    idListsSubscription?.cancel();
+
+    idListsSubscription = listService.streamUserIdLists();
+    idListsSubscription?.onData((data) {
+      try {
+        for (var doc in data.docs) {
+          final idList = doc.data();
+          // log(name: 'doc', '$idList');
+          idLists.add(idList['title']);
+          // log(name: 'idLists', '$idLists');
+        }
+
+        // value = listService.convertFirebaseSnapshotToMyList(
+        //   firebaseSnapshot: data,
+        //   myListTitle: DateTimeUtils.specialDateTimeString(dateState.selectedDate.value),
+        //   listDate: dateState.selectedDate.value,
+        // );
+      } catch (e) {
+        throw 'Error #12: $e';
+      }
+    });
+  }
+
   selectDateListByPage(double oldPageIndex, int newPageIndex) {
     dateState.selecteNewDate(dateState.selectedDate.value.add(Duration(days: newPageIndex.toDouble() > oldPageIndex ? 1 : -1)));
-    listenToDateList();
+    selectDateList();
   }
 
   selectDateListByDate(DateTime newDate) {
     dateState.selecteNewDate(newDate);
-    listenToDateList();
+    selectDateList();
   }
 
   Future addTaskToDateList(MyTask newTask, {bool trackInMixpanel = true, DateTime? dateList}) async {
