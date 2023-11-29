@@ -24,7 +24,7 @@ class ListsNavContainer extends StatelessWidget {
           ListView.builder(
             itemBuilder: (context, index) => ListTile(
               title: Text(
-                listState.idLists[index],
+                listState.idLists[index].title.toString(),
                 style: navBarListTextStyle,
                 textAlign: TextAlign.center,
               ),

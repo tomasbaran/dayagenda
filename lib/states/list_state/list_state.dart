@@ -17,7 +17,7 @@ import 'selected_list_notifier.dart';
 class ListState {
   final selectedList = SelectedListNotifier();
 
-  final List<String> idLists = [];
+  final List<MyList> idLists = [];
 
   selectDateList() => selectedList.selectDateList();
   selectIdList(String id) => selectedList.selectIdList(id);
@@ -40,10 +40,15 @@ class ListState {
     idListsSubscription = listService.streamUserIdLists();
     idListsSubscription?.onData((data) {
       try {
+        MyList foundList;
         for (var doc in data.docs) {
           final idList = doc.data();
           // log(name: 'doc', '$idList');
-          idLists.add(idList['title']);
+          foundList = MyList(
+            title: idList['title'],
+            id: doc.id,
+          );
+          idLists.add(foundList);
           // log(name: 'idLists', '$idLists');
         }
 
