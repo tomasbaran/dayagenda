@@ -100,6 +100,7 @@ class AppState {
 
     // Tomorrow
     listState.selectDateListByDate(DateTime.now().add(const Duration(days: 1)));
+    log('listState.dateState.selectedDate.value:${listState.dateState.selectedDate.value.toString().substring(0, 10)}');
     await listState.addTaskToList(
         MyTask(
           idList: instructionsList.id,
