@@ -1,10 +1,14 @@
 # DayAgenda
 
 ## FIREBASE CONFIG
-1. Install Firebase CLI `curl -sL https://firebase.tools | bash`
-2. `firebase login`
-3. `dart pub global activate flutterfire_cli`
-4. Add `firebase_options_dev`:
+0. Open Xcode project:
+1. Create firebase_flavors/dev & firebase_flavors/live folders  under Runner folder and put corresponding GoogleService-Info.plist in them:
+   a. firebase_flavors/dev/GoogleService-Info.plist
+   b. firebase_flavors/live/GoogleService-Info.plist
+2. Install Firebase CLI `curl -sL https://firebase.tools | bash`
+3. `firebase login`
+4. `dart pub global activate flutterfire_cli`
+5. Add `firebase_options_dev`:
 ```
 flutterfire config \
   --project=dayagenda-dev \
