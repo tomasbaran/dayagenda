@@ -1,10 +1,7 @@
 # DayAgenda Installation
 
-## Firebase Config (iOS)
-0. Open Xcode project:
-1. Create `firebase_flavors/dev` & `firebase_flavors/live` folders under `Runner` folder
-2. Add `firebase_flavors/dev/GoogleService-Info.plist`
-3. Add `firebase_flavors/live/GoogleService-Info.plist`
+## iOS Installation of Missing Files
+0. `flutter create .`
 
 ## Firebase Config (web)
 0. Install Firebase CLI `curl -sL https://firebase.tools | bash`
