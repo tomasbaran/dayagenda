@@ -2,9 +2,9 @@
 
 ## Firebase Config (iOS)
 0. Open Xcode project:
-1. Create firebase_flavors/dev & firebase_flavors/live folders  under Runner folder and put corresponding GoogleService-Info.plist in them:
-   a. firebase_flavors/dev/GoogleService-Info.plist
-   b. firebase_flavors/live/GoogleService-Info.plist
+1. Create `firebase_flavors/dev` & `firebase_flavors/live` folders under `Runner` folder
+2. Add `firebase_flavors/dev/GoogleService-Info.plist`
+3. Add `firebase_flavors/live/GoogleService-Info.plist`
 
 ## Firebase Config (web)
 0. Install Firebase CLI `curl -sL https://firebase.tools | bash`
