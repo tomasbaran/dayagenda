@@ -15,9 +15,12 @@ flutterfire config \
   --macos-bundle-id=com.ambee.dayagenda.dev \
   --android-package-name=com.ambee.dayagenda.dev
 ```
-2. `mv ios/firebase_app_id_file.json ios/firebase_app_id_file_dev.json`
-3. `mv macos/firebase_app_id_file.json macos/firebase_app_id_file_dev.json`
-4. `mv android/app/google-services.json android/app/google-services_dev.json`
+2. 
+```
+mv ios/firebase_app_id_file.json ios/firebase_app_id_file_dev.json && \
+mv macos/firebase_app_id_file.json macos/firebase_app_id_file_dev.json && \
+mv android/app/google-services.json android/app/google-services_dev.json
+```
 
 #### LIVE: 
 1. 
@@ -29,13 +32,20 @@ flutterfire config \
   --macos-bundle-id=com.ambee.dayagenda \
   --android-package-name=com.ambee.dayagenda
 ```
-2. `mv ios/firebase_app_id_file.json ios/firebase_app_id_file_live.json`
-3. `mv macos/firebase_app_id_file.json macos/firebase_app_id_file_live.json`
-4. `mv android/app/google-services.json android/app/google-services_live.json`
+2. 
+```
+mv ios/firebase_app_id_file.json ios/firebase_app_id_file_live.json && \
+mv macos/firebase_app_id_file.json macos/firebase_app_id_file_live.json && \
+mv android/app/google-services.json android/app/google-services_live.json
+```
 
 ## Deploying 
 #### DEV firebase hosting:
-`flutter build web --dart-define flavor=dev && firebase deploy --project dayagenda-dev`
+```
+flutter build web --dart-define flavor=dev && firebase deploy --project dayagenda-dev
+```
 
 #### LIVE firebase hosting:
-`flutter build web --dart-define flavor=live && firebase deploy --project dayagenda-live`
+```
+flutter build web --dart-define flavor=live && firebase deploy --project dayagenda-live
+```
