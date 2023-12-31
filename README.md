@@ -3,11 +3,12 @@
 ## iOS Installation of Missing Files
 0. `flutter create .`
 
-## Firebase Config (web)
+## Firebase Flavors Config
 0. Install Firebase CLI `curl -sL https://firebase.tools | bash`
 1. `firebase login`
 2. `dart pub global activate flutterfire_cli`
-3. Add `firebase_options_dev`:
+
+`firebase_options_dev`:
 ```
 flutterfire config \
   --project=dayagenda-dev \
@@ -16,7 +17,7 @@ flutterfire config \
   --macos-bundle-id=com.ambee.dayagenda.dev \
   --android-package-name=com.ambee.dayagenda.dev
 ```
-4.  Add `firebase_options_live`:
+`firebase_options_live`:
 ```
 flutterfire config \
   --project=dayagenda-live \
@@ -25,13 +26,9 @@ flutterfire config \
   --macos-bundle-id=com.ambee.dayagenda \
   --android-package-name=com.ambee.dayagenda
 ```
-## Uploading 
-#### to dev firebase hosting:
-1. `flutter build web --dart-define FLAVOR=dev`
-2. `firebase use dev`
-3. `firebase deploy`
+## Deploying 
+#### DEV firebase hosting:
+`flutter build web --dart-define flavor=dev && firebase deploy --project dayagenda-dev`
 
-#### to live firebase hosting:
-1. `flutter build web --dart-define FLAVOR=live`
-2. `firebase use live`
-3. `firebase deploy`
+#### LIVE firebase hosting:
+`flutter build web --dart-define flavor=live && firebase deploy --project dayagenda-live`
