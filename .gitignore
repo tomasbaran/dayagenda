@@ -1,8 +1,8 @@
 # Firebase
 firebase_options*.dart 
-*.plist
-*google-services.json
-*firebase_app_id_file.json
+GoogleService-Info.plist
+*google-services*
+*firebase_app_id_file*
 *firebaserc
 *.env
 
