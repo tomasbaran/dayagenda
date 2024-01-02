@@ -38,6 +38,12 @@ const TextStyle appBarSubtitleTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
+const TextStyle taskCardSubtitleTextStyle = TextStyle(
+  color: kThemeColor11,
+  fontSize: 14,
+  fontWeight: FontWeight.w600,
+);
+
 // TaskCard
 const double cardRadius = 12;
 const double taskCardHeight = 76;

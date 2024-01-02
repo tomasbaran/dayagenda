@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -36,6 +37,13 @@ class TasksContainer extends StatelessWidget {
                 // log('\x1B[34mupdate pageList [${pageList.title} | ${pageList.date}]: $tasksCount $pageList\x1B[0m');
                 return ReorderableListView.builder(
                     buildDefaultDragHandles: false,
+                    header: Padding(
+                      padding: EdgeInsets.only(bottom: 8, left: 16, right: 16),
+                      child: Text(
+                        'PENDING: ${listState.selectedList.value.tasks.length}',
+                        style: taskCardSubtitleTextStyle,
+                      ),
+                    ),
                     footer: CompletedTasksColumn(),
                     itemCount: pageList.tasks.length, // +1 is the new last item: Column of FillInHeight + COMPLETED:
                     itemBuilder: ((___, taskIndex) {
