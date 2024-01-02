@@ -56,12 +56,12 @@ class _TasksScreenState extends State<TasksScreen> {
                         children: [
                           Text(
                             DateTimeUtils.specialDateTimeString(selectedDate),
-                            style: appBarTitleTextStyle.copyWith(color: isSelectedToday ? kTodayColor : null),
+                            style: appBarTitleTextStyle,
                           ),
                           const SizedBox(width: 8),
                           Text(
                             DateFormat.MMMMd('en_US').format(selectedDate),
-                            style: appBarSubtitleTextStyle.copyWith(color: isSelectedToday ? kTodayColor : null),
+                            style: appBarSubtitleTextStyle,
                           ),
                         ],
                       )),

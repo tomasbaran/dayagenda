@@ -17,7 +17,7 @@ const kThemeColor7 = Colors.blueGrey; // blueGrey
 Color kThemeColor8 = Colors.blueGrey.shade600; // blueGrey
 const kThemeColor9 = Color(0xFF496370);
 const kIconColor = Color(0xFF5E6678);
-Color kTodayColor = Colors.blue.shade600;
+// Color kTodayColor = Colors.blue.shade600;
 
 // 496370
 // dark ones
