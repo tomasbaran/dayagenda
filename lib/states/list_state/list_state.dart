@@ -109,7 +109,7 @@ class ListState {
       // delete the original task from the original date in the db
       removeTaskFromList(updatedTask, originalList);
       // add task to list in the db
-      addTaskToList(updatedTask);
+      addTaskToList(updatedTask, dateList: dateState.selectedDate.value);
     }
   }
 

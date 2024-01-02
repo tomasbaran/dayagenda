@@ -136,19 +136,32 @@ class AppState {
     // await listState.addTaskToDateList(MyTask(isDefault: true, title: 'Tap on the calendar icon to switch to tomorrow'), trackInMixpanel: false);
 
     // 4.
-    await listState.addTaskToList(MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'), trackInMixpanel: false);
+    await listState.addTaskToList(
+      MyTask(isDefault: true, title: 'Swipe left to see tasks scheduled for tomorrow'),
+      trackInMixpanel: false,
+      dateList: listState.dateState.selectedDate.value,
+    );
 
     // 3.
-    await listState.addTaskToList(MyTask(isDefault: true, title: 'Tap the double arrow icon on the right to move this instruction to the next day'),
-        trackInMixpanel: false);
+    await listState.addTaskToList(
+      MyTask(isDefault: true, title: 'Tap the double arrow icon on the right to move this instruction to the next day'),
+      trackInMixpanel: false,
+    );
 
     // 2.
-    await listState.addTaskToList(MyTask(isDefault: true, title: 'Long-press this instruction & drag down to deprioritize'), trackInMixpanel: false);
+    await listState.addTaskToList(
+      MyTask(isDefault: true, title: 'Long-press this instruction & drag down to deprioritize'),
+      trackInMixpanel: false,
+      dateList: listState.dateState.selectedDate.value,
+    );
 
     // 1.`
 
-    await listState.addTaskToList(MyTask(isDefault: true, title: 'Tick the box on the left to mark this instruction as complete'),
-        trackInMixpanel: false);
+    await listState.addTaskToList(
+      MyTask(isDefault: true, title: 'Tick the box on the left to mark this instruction as complete'),
+      trackInMixpanel: false,
+      dateList: listState.dateState.selectedDate.value,
+    );
 
     FirebaseAnalyticsService.analytics.logEvent(name: 'add_default_tasks');
     MixpanelService.mixpanel?.track('Add Default Todoes');
