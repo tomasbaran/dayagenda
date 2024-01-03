@@ -91,7 +91,7 @@ class ListState {
   }
 
   Future removeTaskFromList(MyTask myTask, MyList myList) async {
-    await AnalyticsService().updateUserStatOnDeletedTodo(myTask, dateState.selectedDate.value);
+    await AnalyticsService().updateUserStatOnDeletedTodo(myTask, myList.date);
 
     listService.removeTaskFromListInCloud(myTask, myList);
   }

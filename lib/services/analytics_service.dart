@@ -31,7 +31,7 @@ class AnalyticsService {
     }
   }
 
-  Future updateUserStatOnDeletedTodo(MyTask myTask, DateTime taskDate) async {
+  Future updateUserStatOnDeletedTodo(MyTask myTask, DateTime? taskDate) async {
     if (myTask.isDefault) {
       await increaseUserStat('default_todoes_counter', -1);
     } else {
@@ -44,8 +44,10 @@ class AnalyticsService {
         } else {
           await increaseUserStat('completed_tasks_counter', -1);
         }
-      } else if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
-        await increaseUserStat('undone_future_todoes', -1);
+      } else if (taskDate != null) {
+        if (taskDate.isAfter(DateTime.now()) || taskDate == DateTimeUtils.resetTimeToZero(DateTime.now())) {
+          await increaseUserStat('undone_future_todoes', -1);
+        }
       }
     }
   }
