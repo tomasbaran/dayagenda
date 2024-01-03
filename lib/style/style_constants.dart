@@ -12,9 +12,9 @@ const kBackgroundColor = Color(0xFFF3F3F3); // blueGrey
 const kThemeColor2 = Color(0xFFE4E9F0); // grey
 const kThemeColor3 = Color.fromARGB(255, 202, 208, 215); // blueGrey
 const kThemeColor4 = Color(0xFF95A2B1); // blueGrey
-Color kThemeColor6 = Colors.blueGrey.shade400; // blueGrey
+const kThemeColor6 = Color.fromRGBO(120, 144, 156, 1); // blueGrey
 const kThemeColor7 = Colors.blueGrey; // blueGrey
-Color kThemeColor8 = Colors.blueGrey.shade600; // blueGrey
+const kThemeColor8 = Color.fromRGBO(84, 110, 122, 1); // blueGrey
 const kThemeColor9 = Color(0xFF496370);
 const kIconColor = Color(0xFF5E6678);
 // Color kTodayColor = Colors.blue.shade600;
@@ -39,7 +39,7 @@ const TextStyle appBarSubtitleTextStyle = TextStyle(
 );
 
 const TextStyle taskCardSubtitleTextStyle = TextStyle(
-  color: kThemeColor11,
+  color: kThemeColor7,
   fontSize: 14,
   fontWeight: FontWeight.w600,
 );
