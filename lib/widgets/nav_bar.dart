@@ -64,7 +64,7 @@ class NavBar extends StatelessWidget {
 
                       // size: 28,
                       size: 31,
-                      color: kIconColor,
+                      color: isSelectedToday ? Colors.white : kIconColor,
                     );
                   }),
             ),
