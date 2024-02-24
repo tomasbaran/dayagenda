@@ -11,12 +11,12 @@ import 'package:logger/logger.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 
 class AnalyticsService {
   final db = FirebaseFirestore.instance;
-  String? get uid => getIt<AuthService>().uid;
+  String? get uid => locate<AuthService>().uid;
 
   Future updateUserStatOnAddedTodo(MyTask myTask, DateTime taskDate) async {
     debugPrint('here');
@@ -56,7 +56,7 @@ class AnalyticsService {
     FirebaseAnalyticsService.analytics.logEvent(name: 'snooze_todo');
     MixpanelService.mixpanel?.track('Snooze Todo');
     increaseUserStat('snooze_counter', 1);
-    final dateState = getIt<DateState>();
+    final dateState = locate<DateState>();
 
     if (DateTimeUtils.isSpecialDay(DateTime.now(), dateState.selectedDate.value) == DayType.isYesterday) {
       // debugPrint('yesterday');

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dayagenda/flavor.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/widgets/my_material_app.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/app_state.dart';
 
 void main() async {
@@ -10,7 +10,7 @@ void main() async {
 
   setupGetIt();
 
-  final appState = getIt<AppState>();
+  final appState = locate<AppState>();
   await appState.initializeSelectedFlavor();
 
   runApp(const DayAgendaApp());

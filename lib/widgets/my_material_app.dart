@@ -1,6 +1,6 @@
 import 'package:dayagenda/core/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/style/theme.dart';
 
@@ -9,7 +9,7 @@ class MyMaterialApp extends StatelessWidget {
     super.key,
   });
 
-  final appState = getIt<AppState>();
+  final appState = locate<AppState>();
 
   // GoRouter configuration
   final _router = AppRouter.createRouter();

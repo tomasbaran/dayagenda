@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/auth_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
@@ -11,9 +11,9 @@ import 'package:dayagenda/widgets/email_signup_form_container.dart';
 class AccountNavContainer extends StatelessWidget {
   AccountNavContainer({super.key});
 
-  final authService = getIt<AuthService>();
-  final authState = getIt<AuthState>();
-  final appState = getIt<AppState>();
+  final authService = locate<AuthService>();
+  final authState = locate<AuthState>();
+  final appState = locate<AppState>();
 
   @override
   Widget build(BuildContext context) {

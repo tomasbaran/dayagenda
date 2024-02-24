@@ -1,11 +1,11 @@
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/style/style_constants.dart';
 
 class ListsNavContainer extends StatelessWidget {
   ListsNavContainer({super.key});
-  final listState = getIt<ListState>();
+  final listState = locate<ListState>();
 
   @override
   Widget build(BuildContext context) {

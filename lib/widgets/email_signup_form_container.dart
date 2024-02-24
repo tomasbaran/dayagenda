@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:dayagenda/models/enums.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/auth_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
@@ -22,8 +22,8 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final authState = getIt<AuthState>();
-  final appState = getIt<AppState>();
+  final authState = locate<AuthState>();
+  final appState = locate<AppState>();
 
   @override
   void dispose() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/models/enums.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/widgets/calendar_nav_container.dart';
 import 'package:dayagenda/widgets/nav_bar.dart';
@@ -15,8 +15,8 @@ class NavContainer extends StatelessWidget {
     super.key,
   });
 
-  final listState = getIt<ListState>();
-  final appState = getIt<AppState>();
+  final listState = locate<ListState>();
+  final appState = locate<AppState>();
 
   @override
   Widget build(BuildContext context) {

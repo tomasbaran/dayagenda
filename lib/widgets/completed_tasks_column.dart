@@ -2,14 +2,14 @@ import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/widgets/task_card.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class CompletedTasksColumn extends StatelessWidget {
-  final listState = getIt<ListState>();
-  final appState = getIt<AppState>();
+  final listState = locate<ListState>();
+  final appState = locate<AppState>();
   CompletedTasksColumn({
     super.key,
   });

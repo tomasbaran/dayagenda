@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/models/enums.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
@@ -15,7 +15,7 @@ class TimeCard extends StatelessWidget {
     this.taskStartTime,
   });
 
-  final dateState = getIt<DateState>();
+  final dateState = locate<DateState>();
 
   @override
   Widget build(BuildContext context) {

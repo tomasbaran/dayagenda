@@ -5,7 +5,7 @@ import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/models/enums.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:dayagenda/widgets/tasks_container.dart';
@@ -20,9 +20,9 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final listState = getIt<ListState>();
-  final appState = getIt<AppState>();
-  final dateState = getIt<DateState>();
+  final listState = locate<ListState>();
+  final appState = locate<AppState>();
+  final dateState = locate<DateState>();
   @override
   void initState() {
     super.initState();

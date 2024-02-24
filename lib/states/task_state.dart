@@ -3,13 +3,13 @@ import 'package:dayagenda/services/analytics_service.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 
 class TaskState extends ChangeNotifier {
   final selectedTask = ValueNotifier<MyTask>(MyTask(title: ''));
-  final listState = getIt<ListState>();
-  final dateState = getIt<DateState>();
+  final listState = locate<ListState>();
+  final dateState = locate<DateState>();
 
   updateMyTaskStateWhenBeingSnoozed(MyTask myTask, bool isBeingSnoozed) {
     myTask.isBeingSnoozed.value = isBeingSnoozed;

@@ -13,7 +13,7 @@ import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/auth_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
@@ -51,7 +51,7 @@ class AppState {
   final datePageController = PageController(initialPage: todayIndex, viewportFraction: 1);
 
   listenToAuthChanges() {
-    final authService = getIt<AuthService>();
+    final authService = locate<AuthService>();
 
     authService.myAuthSubscription().onData((data) {
       // log('new data:$data ');
@@ -70,8 +70,8 @@ class AppState {
   }
 
   checkWhetherToSignUpFirstTimeUserAnonymously() async {
-    final authService = getIt<AuthService>();
-    final authState = getIt<AuthState>();
+    final authService = locate<AuthService>();
+    final authState = locate<AuthState>();
 
     if (authService.uid == null) {
       await authState.signInAnonymously();
@@ -89,7 +89,7 @@ class AppState {
   }
 
   void addDefaultTasks() async {
-    final listState = getIt<ListState>();
+    final listState = locate<ListState>();
 
     // create id list called Instructions
     final DocumentReference instructionsList = await listState.createNewIdList(title: 'Instructions');

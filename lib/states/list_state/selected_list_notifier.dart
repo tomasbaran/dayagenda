@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:dayagenda/models/my_list.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/services/list_service/list_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 
 class SelectedListNotifier extends ValueNotifier<MyList> {
   SelectedListNotifier() : super(MyList());
 
-  final listService = getIt<ListService>();
-  final dateState = getIt<DateState>();
+  final listService = locate<ListService>();
+  final dateState = locate<DateState>();
 
   StreamSubscription? selecetdListSubscription;
 

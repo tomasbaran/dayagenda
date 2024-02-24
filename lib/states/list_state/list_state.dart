@@ -9,7 +9,7 @@ import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/models/my_list.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/services/list_service/list_service.dart';
 import 'package:dayagenda/states/task_state.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
@@ -28,8 +28,8 @@ class ListState {
   Future updateListByTaskIsCompleted(MyTask updatedTask) async => selectedList.updateListByTaskIsCompleted(updatedTask);
   Future updateSameDateListByTask(MyTask updatedTask) async => selectedList.updateSameDateListByTask(updatedTask);
 
-  final dateState = getIt<DateState>();
-  final listService = getIt<ListService>();
+  final dateState = locate<DateState>();
+  final listService = locate<ListService>();
 
   StreamSubscription? idListsSubscription;
 
@@ -115,7 +115,7 @@ class ListState {
 
   Future snoozeTodoToTomorrow(MyTask myTask) async {
     AnalyticsService().trackSnooze(myTask);
-    final taskState = getIt<TaskState>();
+    final taskState = locate<TaskState>();
     taskState.updateMyTaskStateWhenBeingSnoozed(myTask, true);
 
     MyTask updatedTask = myTask.clone();

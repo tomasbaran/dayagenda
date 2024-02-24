@@ -7,7 +7,7 @@ import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/models/my_list.dart';
 import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:dayagenda/states/task_state.dart';
@@ -26,9 +26,9 @@ class TaskDetailSheet extends StatefulWidget {
 }
 
 class _TaskDetailSheetState extends State<TaskDetailSheet> {
-  final taskState = getIt<TaskState>();
-  final listState = getIt<ListState>();
-  final dateState = getIt<DateState>();
+  final taskState = locate<TaskState>();
+  final listState = locate<ListState>();
+  final dateState = locate<DateState>();
   late MyList originalList;
 
   @override

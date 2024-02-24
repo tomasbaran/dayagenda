@@ -1,11 +1,11 @@
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:flutter/material.dart';
 
 class AuthState {
-  final AuthService authService = getIt<AuthService>();
+  final AuthService authService = locate<AuthService>();
 
   Future loginWithEmailAndPassword(String email, String password) async {
     await authService.loginWithEmailAndPassword(email, password);

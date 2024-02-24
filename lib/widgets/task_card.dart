@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayagenda/states/task_state.dart';
 import 'package:dayagenda/models/my_task.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/widgets/task_detail_sheet.dart';
 import 'package:dayagenda/widgets/time_card.dart';
@@ -20,9 +20,9 @@ class TaskCard extends StatelessWidget {
     super.key,
     this.elevation = 0,
   });
-  final dateState = getIt<DateState>();
-  final taskState = getIt<TaskState>();
-  final listState = getIt<ListState>();
+  final dateState = locate<DateState>();
+  final taskState = locate<TaskState>();
+  final listState = locate<ListState>();
 
   @override
   Widget build(BuildContext context) {

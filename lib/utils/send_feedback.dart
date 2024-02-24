@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/globals/constants.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:dayagenda/style/style_constants.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class SendFeedback {
   void sendEmail(BuildContext context, String subject) async {
-    final authService = getIt<AuthService>();
+    final authService = locate<AuthService>();
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (kIsWeb) {

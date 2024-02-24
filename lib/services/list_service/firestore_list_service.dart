@@ -6,13 +6,13 @@ import 'package:dayagenda/models/my_task.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:logger/logger.dart';
 import 'package:dayagenda/services/list_service/list_service.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/utils/date_time_utils.dart';
 import 'package:intl/intl.dart';
 
 class FirestoreListService extends ListService {
   final db = FirebaseFirestore.instance;
-  String? get uid => getIt<AuthService>().uid;
+  String? get uid => locate<AuthService>().uid;
 
   @override
   StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? streamUserIdLists() {

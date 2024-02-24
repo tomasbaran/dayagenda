@@ -4,15 +4,15 @@ import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/models/enums.dart';
-import 'package:dayagenda/services/service_locator.dart';
+import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/style/style_constants.dart';
 
 class CalendarNavContainer extends StatelessWidget {
   CalendarNavContainer({super.key});
 
-  final listState = getIt<ListState>();
-  final appState = getIt<AppState>();
-  final dateState = getIt<DateState>();
+  final listState = locate<ListState>();
+  final appState = locate<AppState>();
+  final dateState = locate<DateState>();
   @override
   Widget build(BuildContext context) {
     return Padding(
