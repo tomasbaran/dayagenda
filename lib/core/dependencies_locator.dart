@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_owner_to_db.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/auth_service/firebase_auth_service.dart';
@@ -21,8 +23,11 @@ void setupGetIt() {
   locate.registerLazySingleton<AuthService>(() => FirebaseAuthService());
   locate.registerLazySingleton<AuthState>(() => AuthState());
 
+  // Register FirebaseFirestore instance
+  locate.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+
   // feature: Group
   // Repositories
-  locate.registerLazySingleton<FirestoreRepository>(() => FirestoreRepository(db: ));
+  locate.registerLazySingleton<FirestoreRepository>(() => FirestoreRepository(db: locate<FirebaseFirestore>()));
   // Use cases
 }
