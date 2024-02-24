@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class RegisterEmployeeScreen extends StatelessWidget {
-  const RegisterEmployeeScreen({super.key});
+  final String uid;
+  const RegisterEmployeeScreen({
+    super.key,
+    required this.uid,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: const Text('Register Employee Screen'));
+    return Center(child: Text('Register Employee Screen: $uid'));
   }
 }
