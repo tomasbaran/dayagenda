@@ -1,0 +1,4 @@
+enum EmployeeStatus {
+  invitationSent,
+  registered,
+}
