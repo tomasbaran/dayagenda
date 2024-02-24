@@ -30,4 +30,5 @@ void setupGetIt() {
   // Repositories
   locate.registerLazySingleton<FirestoreRepository>(() => FirestoreRepository(db: locate<FirebaseFirestore>()));
   // Use cases
+  locate.registerLazySingleton<AddOwnerToDb>(() => AddOwnerToDb(locate<FirestoreRepository>()));
 }
