@@ -13,11 +13,11 @@ void main() async {
   final appState = getIt<AppState>();
   await appState.initializeSelectedFlavor();
 
-  runApp(const TodayApp());
+  runApp(const DayAgendaApp());
 }
 
-class TodayApp extends StatelessWidget {
-  const TodayApp({super.key});
+class DayAgendaApp extends StatelessWidget {
+  const DayAgendaApp({super.key});
 
   @override
   Widget build(BuildContext context) {
