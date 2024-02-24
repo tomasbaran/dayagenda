@@ -1,3 +1,4 @@
+import 'package:dayagenda/features/employee_registration/presentation/screens/register_employee_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayagenda/screens/tasks_screen.dart';
@@ -24,6 +25,11 @@ class MyMaterialApp extends StatelessWidget {
           case '/':
             return MaterialWithModalsPageRoute(
               builder: (_) => const TasksScreen(),
+              settings: settings,
+            );
+          case '/register_employee':
+            return MaterialWithModalsPageRoute(
+              builder: (_) => const RegisterEmployeeScreen(),
               settings: settings,
             );
         }
