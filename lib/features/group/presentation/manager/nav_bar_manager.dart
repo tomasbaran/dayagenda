@@ -1,4 +1,5 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
@@ -11,9 +12,9 @@ class NavBarManager {
   final CreateGroupInDbUsecase createGroupInDb;
   NavBarManager({required this.createOwnerInDb, required this.createGroupInDb});
   final appState = locate<AppState>();
+  final authService = locate<AuthService>();
 
   Future tapGroupIcon() async {
-    final authService = locate<AuthService>();
     if (authService.auth.currentUser == null) {
       appState.updateNavBarSelection(NavBarSelection.account);
     } else {
@@ -26,5 +27,10 @@ class NavBarManager {
 
   Future addGroup() async {
     // appState.updateNavBarSelection(NavBarSelection.group);
+    Group group = Group(
+      name: 'My Group',
+      ownerUid: authService.auth.currentUser!.uid,
+    );
+    createGroupInDb(group);
   }
 }
