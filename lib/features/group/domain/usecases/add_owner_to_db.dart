@@ -1,10 +1,9 @@
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
-import 'package:googleapis/driveactivity/v2.dart';
+import 'package:dayagenda/features/group/domain/entities/owner.dart';
 
-class AddOwnerToDb {
+class AddOwnerToDbUsecase {
   final FirestoreRepository repository;
-
-  AddOwnerToDb(this.repository);
+  AddOwnerToDbUsecase(this.repository);
 
   Future<String> call(Owner owner) async {
     return await repository.addOwnerToDb(owner);

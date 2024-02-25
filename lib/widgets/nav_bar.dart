@@ -1,3 +1,5 @@
+import 'package:dayagenda/features/group/presentation/manager/nav_bar_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -13,6 +15,7 @@ class NavBar extends StatelessWidget {
     super.key,
   });
 
+  final manager = locate<NavBarManager>();
   final listState = locate<ListState>();
   final appState = locate<AppState>();
   final dateState = locate<DateState>();
@@ -124,7 +127,8 @@ class NavBar extends StatelessWidget {
           // Hamburger icon
           GestureDetector(
             behavior: HitTestBehavior.translucent,
-            onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
+            // onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
+            onTap: () => manager.addOwnerToDbCall('email', 'uid'),
             // child: Text(
             //   '&',
             //   style: bottomToolbarIconTextStyle,
@@ -133,7 +137,9 @@ class NavBar extends StatelessWidget {
               // Icons.flash_auto,
               // CupertinoIcons.line_horizontal_3_decrease,
               // Icons.notes_rounded,
-              Icons.filter_list_rounded,
+              // Icons.filter_list_rounded,
+              // CupertinoIcons.person,
+              Icons.group_outlined,
 
               color: kIconColor,
               size: 30,
