@@ -5,7 +5,5 @@ class CreateGroupInDb {
   final FirestoreRepository repository;
   CreateGroupInDb(this.repository);
 
-  call(Group group) async {
-    return await repository.createGroup(group);
-  }
+  Future<String> call(Group group) async => await repository.createGroup(group);
 }

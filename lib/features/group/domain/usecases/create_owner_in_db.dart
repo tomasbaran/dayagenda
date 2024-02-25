@@ -6,6 +6,6 @@ class CreateOwnerInDbUsecase {
   CreateOwnerInDbUsecase({required this.repository});
 
   Future<bool> call(Owner owner) async {
-    return await repository.createOwnerInDb(owner);
+    return await repository.createOwner(owner);
   }
 }
