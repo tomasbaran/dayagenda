@@ -5,7 +5,7 @@ class AddOwnerToDbUsecase {
   final FirestoreRepository repository;
   AddOwnerToDbUsecase(this.repository);
 
-  Future<String> call(Owner owner) async {
+  Future<bool> call(Owner owner) async {
     return await repository.addOwnerToDb(owner);
   }
 }

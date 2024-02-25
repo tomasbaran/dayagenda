@@ -4,9 +4,14 @@ import 'package:dayagenda/features/group/domain/entities/owner.dart';
 class FirestoreRepository {
   final FirebaseFirestore db;
   FirestoreRepository({required this.db});
-  Future<String> addOwnerToDb(Owner owner) async {
-    // Add owner to db
+
+  Future<bool> addOwnerToDb(Owner owner) async {
     print('Adding owner to db...');
-    return 'Owner added to db';
+    final parsedOwner = {
+      'uid': owner.uid,
+      'email': owner.email,
+    };
+    db.collection('owners').doc(owner.uid).set(parsedOwner);
+    return true;
   }
 }
