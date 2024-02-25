@@ -128,7 +128,7 @@ class NavBar extends StatelessWidget {
           GestureDetector(
             behavior: HitTestBehavior.translucent,
             // onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
-            onTap: () => manager.addOwnerToDbCall('email', 'uid'),
+            onTap: () => manager.tapGroupIcon(),
             // child: Text(
             //   '&',
             //   style: bottomToolbarIconTextStyle,

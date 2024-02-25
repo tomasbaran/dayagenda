@@ -3,7 +3,7 @@ import 'package:dayagenda/features/group/domain/entities/owner.dart';
 
 class AddOwnerToDbUsecase {
   final FirestoreRepository repository;
-  AddOwnerToDbUsecase(this.repository);
+  AddOwnerToDbUsecase({required this.repository});
 
   Future<bool> call(Owner owner) async {
     return await repository.addOwnerToDb(owner);

@@ -1,9 +1,9 @@
 class Owner {
   final String uid;
-  final String email;
+  final String? email;
 
   Owner({
     required this.uid,
-    required this.email,
+    this.email,
   });
 }
