@@ -5,7 +5,7 @@ class FirestoreRepository {
   final FirebaseFirestore db;
   FirestoreRepository({required this.db});
 
-  Future<bool> addOwnerToDb(Owner owner) async {
+  Future<bool> createOwnerInDb(Owner owner) async {
     print('Adding owner to db...');
     final parsedOwner = {
       'uid': owner.uid,
