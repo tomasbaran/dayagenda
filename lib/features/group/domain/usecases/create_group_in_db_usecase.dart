@@ -3,7 +3,7 @@ import 'package:dayagenda/features/group/domain/entities/group.dart';
 
 class CreateGroupInDbUsecase {
   final FirestoreRepository repository;
-  CreateGroupInDbUsecase(this.repository);
+  CreateGroupInDbUsecase({required this.repository});
 
   Future<String> call(Group group) async => await repository.createGroup(group);
 }

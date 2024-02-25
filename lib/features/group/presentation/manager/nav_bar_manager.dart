@@ -9,7 +9,7 @@ import 'package:dayagenda/states/app_state.dart';
 class NavBarManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
-  NavBarManager({required this.createOwnerInDb, this.createGroupInDb});
+  NavBarManager({required this.createOwnerInDb, required this.createGroupInDb});
   final appState = locate<AppState>();
 
   Future tapGroupIcon() async {
