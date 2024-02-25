@@ -25,4 +25,9 @@ class FirestoreRepository {
     final ref = await db.collection('groups').add(parsedGroup);
     return ref.id;
   }
+
+  Future updateOwner(String ownerUid, Map<Object, Object?> updatedMap) async {
+    print('Updating owner in db...');
+    await db.collection('owners').doc(ownerUid).update(updatedMap);
+  }
 }

@@ -4,5 +4,5 @@ class AddGroupIdToOwnerUsecase {
   final FirestoreRepository repository;
   AddGroupIdToOwnerUsecase({required this.repository});
 
-  Future<String> call(String groupId) async => await repository.updateOwner(ownerUid, {'groupId': groupId});
+  Future<String> call(String ownerUid, String groupId) async => await repository.updateOwner(ownerUid, {'groupId': groupId});
 }
