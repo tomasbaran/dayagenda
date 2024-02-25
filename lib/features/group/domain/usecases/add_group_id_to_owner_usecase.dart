@@ -1,8 +1,8 @@
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 
-class AddGroupIdToOwnerUsecase {
+class UpdateOwnerUsecase {
   final FirestoreRepository repository;
-  AddGroupIdToOwnerUsecase({required this.repository});
+  UpdateOwnerUsecase({required this.repository});
 
-  Future<String> call(String ownerUid, String groupId) async => await repository.updateOwner(ownerUid, {'groupId': groupId});
+  Future<String> call(String ownerUid, Map<Object, Object?> updatedMap) async => await repository.updateOwner(ownerUid, updatedMap);
 }

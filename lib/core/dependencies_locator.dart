@@ -37,8 +37,10 @@ void setupGetIt() {
   // Use cases
   locate.registerLazySingleton<CreateOwnerInDbUsecase>(() => CreateOwnerInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
-  locate.registerLazySingleton<AddGroupIdToOwnerUsecase>(() => AddGroupIdToOwnerUsecase(repository: locate<FirestoreRepository>()));
+  locate.registerLazySingleton<UpdateOwnerUsecase>(() => UpdateOwnerUsecase(repository: locate<FirestoreRepository>()));
   // Managers
-  locate.registerLazySingleton<NavBarManager>(
-      () => NavBarManager(createOwnerInDb: locate<CreateOwnerInDbUsecase>(), createGroupInDb: locate<CreateGroupInDbUsecase>()));
+  locate.registerLazySingleton<NavBarManager>(() => NavBarManager(
+      createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
+      createGroupInDb: locate<CreateGroupInDbUsecase>(),
+      updateOwner: locate<UpdateOwnerUsecase>()));
 }
