@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/presentation/manager/nav_bar_manager.dart';
@@ -36,6 +37,7 @@ void setupGetIt() {
   // Use cases
   locate.registerLazySingleton<CreateOwnerInDbUsecase>(() => CreateOwnerInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
+  locate.registerLazySingleton<AddGroupIdToOwnerUsecase>(() => AddGroupIdToOwnerUsecase(repository: locate<FirestoreRepository>()));
   // Managers
   locate.registerLazySingleton<NavBarManager>(
       () => NavBarManager(createOwnerInDb: locate<CreateOwnerInDbUsecase>(), createGroupInDb: locate<CreateGroupInDbUsecase>()));
