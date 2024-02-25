@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
@@ -34,5 +35,9 @@ class NavBarManager {
       ownerUid: authService.auth.currentUser!.uid,
     );
     final groupId = await createGroupInDb(group);
+    final groupRef = FirebaseFirestore.instance.collection('groups').doc(groupId);
+    updateOwner(authService.auth.currentUser!.uid, {
+      'groups': FieldValue.arrayUnion([groupRef])
+    });
   }
 }
