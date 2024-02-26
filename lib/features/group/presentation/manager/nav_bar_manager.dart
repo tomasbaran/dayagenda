@@ -62,6 +62,7 @@ class NavBarManager {
       final employeeCredentials = await authService.signInAnonymously();
       final employeeUid = employeeCredentials?.user?.uid;
       print('registerEmployeeAnonymously employeeUid: $employeeUid');
+      await authService.logout();
     }
     // step 3: log back in the owner
     final lastUsedEmail = authState.lastUsedEmail;
