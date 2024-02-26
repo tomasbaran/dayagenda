@@ -39,7 +39,6 @@ class AuthState {
 
   Future signInAnonymously() async {
     await authService.signInAnonymously();
-    debugPrint("Signed in with temporary account: ${authService.uid}");
 
     FirebaseAnalyticsService.analytics.setUserId(id: authService.uid);
     FirebaseAnalyticsService.analytics.logLogin(loginMethod: 'anonymous');

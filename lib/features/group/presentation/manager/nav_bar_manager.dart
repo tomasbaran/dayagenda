@@ -51,13 +51,15 @@ class NavBarManager {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
 
     final authState = locate<AuthState>();
+    final AuthService authService = locate<AuthService>();
+
     final appState = locate<AppState>();
     // step 1: logout: to be able to use signInAnonymously for the employees
-    await authState.logout();
+    await authService.logout();
 
     // step 2: register employees
     for (var employee in employees) {
-      final employeeCredentials = await authState.signInAnonymously();
+      final employeeCredentials = await authService.signInAnonymously();
       final employeeUid = employeeCredentials?.user?.uid;
       print('registerEmployeeAnonymously employeeUid: $employeeUid');
     }
