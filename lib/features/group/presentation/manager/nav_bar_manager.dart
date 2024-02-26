@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
+import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
@@ -15,10 +16,12 @@ class NavBarManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
+  final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
   NavBarManager({
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.updateOwner,
+    required this.sendInvitationMessageToEmployees,
   });
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
@@ -64,7 +67,9 @@ class NavBarManager {
       print('registerEmployeeAnonymously employeeUid: $employeeUid');
       await authService.logout();
     }
-    // step 3: owner login
+    // step 3: send invitation message to employees
+    final sendInvitationMessageToEmployees = locate<SendInvitationMessageToEmployees>();
+    // step 4: owner login
     final lastUsedEmail = authState.lastUsedEmail;
     final lastUsedPassword = authState.lastUsedPassword;
     if (lastUsedPassword == null || lastUsedEmail == null) {

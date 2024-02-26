@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayagenda/features/add_employee/data/repositories/send_sms.dart';
+import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
@@ -38,15 +40,18 @@ void setupGetIt() {
   locate.registerLazySingleton<CreateOwnerInDbUsecase>(() => CreateOwnerInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<UpdateOwnerUsecase>(() => UpdateOwnerUsecase(repository: locate<FirestoreRepository>()));
+  locate.registerLazySingleton<SendInvitationMessageToEmployees>(() => SendInvitationMessageToEmployees(locate<SendSms>()));
   // Managers
   locate.registerLazySingleton<NavBarManager>(
     () => NavBarManager(
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>(),
+      sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
     ),
   );
 
   // feature: add_employee
-  // Use cases
+  // Repositories
+  locate.registerLazySingleton<SendSms>(() => SendSms());
 }
