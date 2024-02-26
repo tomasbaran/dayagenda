@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously_usecase.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
@@ -45,7 +46,7 @@ class NavBarManager {
 
   Future addEmployeesToDb() async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
-    final result = await registerEmployeeAnonymously();
+    final result = await registerEmployeeAnonymously(Employee(firstName: 'firstName', secondName: 'secondName', phone: '123'));
     print('registerEmployeeAnonymously result: ${result.credential}');
   }
 }

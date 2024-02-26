@@ -1,4 +1,5 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -10,7 +11,7 @@ class RegisterEmployeesAnonymouslyUsecase {
 
   RegisterEmployeesAnonymouslyUsecase(this.repository);
 
-  Future<UserCredential> call() async {
+  Future<UserCredential> call(Employee employee) async {
     final authState = locate<AuthState>();
     final AppState appState = locate<AppState>();
     await repository.logout();
