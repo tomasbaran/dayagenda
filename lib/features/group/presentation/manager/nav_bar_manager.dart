@@ -15,8 +15,9 @@ class NavBarManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
-  final RegisterEmployeesAnonymouslyUsecase registerEmployeeAnonymously;
-  NavBarManager({required this.createOwnerInDb, required this.createGroupInDb, required this.updateOwner, required this.registerEmployeeAnonymously});
+  final RegisterEmployeesAnonymouslyUsecase registerEmployeesAnonymously;
+  NavBarManager(
+      {required this.createOwnerInDb, required this.createGroupInDb, required this.updateOwner, required this.registerEmployeesAnonymously});
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
 
@@ -46,7 +47,7 @@ class NavBarManager {
 
   Future addEmployeesToDb() async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
-    final result = await registerEmployeeAnonymously(Employee(firstName: 'firstName', secondName: 'secondName', phone: '123'));
+    final result = await registerEmployeesAnonymously([Employee(firstName: 'firstName', secondName: 'secondName', phone: '123')]);
     print('registerEmployeeAnonymously result: ${result.credential}');
   }
 }

@@ -45,7 +45,7 @@ void setupGetIt() {
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>(),
-      registerEmployeeAnonymously: locate<RegisterEmployeesAnonymouslyUsecase>(),
+      registerEmployeesAnonymously: locate<RegisterEmployeesAnonymouslyUsecase>(),
     ),
   );
 

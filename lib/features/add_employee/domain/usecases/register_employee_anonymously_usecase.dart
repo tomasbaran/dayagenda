@@ -11,7 +11,7 @@ class RegisterEmployeesAnonymouslyUsecase {
 
   RegisterEmployeesAnonymouslyUsecase(this.repository);
 
-  Future<UserCredential> call(Employee employee) async {
+  Future<UserCredential> call(List<Employee> employees) async {
     final authState = locate<AuthState>();
     final AppState appState = locate<AppState>();
     await repository.logout();
