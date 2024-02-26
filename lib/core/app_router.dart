@@ -1,4 +1,4 @@
-import 'package:dayagenda/features/employee_registration/presentation/screens/register_employee_screen.dart';
+import 'package:dayagenda/features/add_employee/presentation/screens/register_employee_screen.dart';
 import 'package:dayagenda/screens/tasks_screen.dart';
 import 'package:go_router/go_router.dart';
 
