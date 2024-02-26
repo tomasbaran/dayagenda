@@ -54,7 +54,7 @@ class NavBarManager {
     final AuthService authService = locate<AuthService>();
 
     final appState = locate<AppState>();
-    // step 1: logout: to be able to use signInAnonymously for the employees
+    // step 1: owner logout : to be able to use signInAnonymously for the employees
     await authService.logout();
 
     // step 2: register employees
@@ -64,7 +64,7 @@ class NavBarManager {
       print('registerEmployeeAnonymously employeeUid: $employeeUid');
       await authService.logout();
     }
-    // step 3: log back in the owner
+    // step 3: owner login
     final lastUsedEmail = authState.lastUsedEmail;
     final lastUsedPassword = authState.lastUsedPassword;
     if (lastUsedPassword == null || lastUsedEmail == null) {
