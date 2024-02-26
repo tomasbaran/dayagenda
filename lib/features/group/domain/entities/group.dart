@@ -1,4 +1,4 @@
-import 'package:dayagenda/features/group/domain/entities/employee.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 
 class Group {
   final String? id;
