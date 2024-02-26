@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
@@ -43,4 +44,8 @@ void setupGetIt() {
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>()));
+
+  // feature: add_employee
+  // Use cases
+  locate.registerLazySingleton<RegisterEmployeeAnonymously>(() => RegisterEmployeeAnonymously(locate<FirebaseAuthService>()));
 }

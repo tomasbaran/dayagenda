@@ -27,9 +27,7 @@ class FirebaseAuthService extends AuthService {
   @override
   Future signInAnonymously() async {
     try {
-      await auth.signInAnonymously();
-
-      await AnalyticsService().writeSignupDate();
+      return await auth.signInAnonymously().then((value) => AnalyticsService().writeSignupDate());
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "operation-not-allowed":
