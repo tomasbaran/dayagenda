@@ -8,7 +8,7 @@ class SendInvitationMessageToEmployees {
 
   Future call(List<Employee> employees) async {
     for (var employee in employees) {
-      await sendSmsRepo([employee], InvitationMessage.call(employee.uid!));
+      await sendSmsRepo([employee], InvitationMessage.call(employee));
     }
   }
 }
