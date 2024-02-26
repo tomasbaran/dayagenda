@@ -1,12 +1,12 @@
 import 'package:dayagenda/features/add_employee/domain/entities/employee_status.dart';
 
 class Employee {
-  final String? uid;
-  final String firstName;
-  final String? secondName;
-  final String? thirdName;
-  final String? email;
-  final String phone;
+  String? uid;
+  String firstName;
+  String? secondName;
+  String? thirdName;
+  String? email;
+  String phone;
   EmployeeStatus status;
 
   Employee({

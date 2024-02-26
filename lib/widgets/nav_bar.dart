@@ -132,8 +132,8 @@ class NavBar extends StatelessWidget {
             // onTap: () => manager.tapGroupIcon(),
             // onTap: () => manager.addGroup(),
             onTap: () => manager.addEmployeesToDb([
-              Employee(firstName: 'firstName', secondName: 'secondName', phone: '1'),
-              Employee(firstName: 'firstName2', phone: '2'),
+              Employee(firstName: 'firstName', secondName: 'secondName', phone: '9992438818'),
+              Employee(firstName: 'firstName2', phone: '9991759427'),
             ]),
             // child: Text(
             //   '&',

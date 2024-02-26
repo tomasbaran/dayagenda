@@ -64,6 +64,8 @@ class NavBarManager {
     for (var employee in employees) {
       final employeeCredentials = await authService.signInAnonymously();
       final employeeUid = employeeCredentials?.user?.uid;
+      employee.uid = employeeUid;
+
       print('registerEmployeeAnonymously employeeUid: $employeeUid');
       await authService.logout();
     }

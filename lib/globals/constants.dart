@@ -3,4 +3,3 @@ const String feedbackRecipient = 'feedback@dayagenda.app';
 const baseUrlLive = "https://dayagenda.app";
 const baseUrlDev = "https://dev.dayagenda.app";
 const int futureDaysToCrawl = 14;
-const String smsMessage = 'You are invited to join our team!';
