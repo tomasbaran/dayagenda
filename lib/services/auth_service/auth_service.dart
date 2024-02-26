@@ -9,7 +9,7 @@ abstract class AuthService {
 
   StreamSubscription<User?> myAuthSubscription();
 
-  Future signInAnonymously();
+  Future<UserCredential?> signInAnonymously();
 
   Future signupByConvertingAnonymousUserToPermanentUser(String emailAddress, String password);
 

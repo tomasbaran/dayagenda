@@ -25,7 +25,7 @@ class FirebaseAuthService extends AuthService {
   // );
 
   @override
-  Future signInAnonymously() async {
+  Future<UserCredential?> signInAnonymously() async {
     try {
       final result = await auth.signInAnonymously();
       AnalyticsService().writeSignupDate();
@@ -39,6 +39,7 @@ class FirebaseAuthService extends AuthService {
         default:
           debugPrint("Unknown error.");
       }
+      return null;
     }
   }
 
