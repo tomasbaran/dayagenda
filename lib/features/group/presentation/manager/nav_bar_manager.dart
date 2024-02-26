@@ -45,9 +45,9 @@ class NavBarManager {
     });
   }
 
-  Future addEmployeesToDb() async {
+  Future addEmployeesToDb(List<Employee> employees) async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
-    final result = await registerEmployeesAnonymously([Employee(firstName: 'firstName', secondName: 'secondName', phone: '123')]);
+    final result = await registerEmployeesAnonymously(employees);
     print('registerEmployeeAnonymously result: ${result.credential}');
   }
 }

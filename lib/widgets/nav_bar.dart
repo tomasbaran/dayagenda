@@ -1,3 +1,4 @@
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/group/presentation/manager/nav_bar_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,7 +131,9 @@ class NavBar extends StatelessWidget {
             // onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
             // onTap: () => manager.tapGroupIcon(),
             // onTap: () => manager.addGroup(),
-            onTap: () => manager.addEmployeesToDb(),
+            onTap: () => manager.addEmployeesToDb([
+              Employee(firstName: 'firstName', secondName: 'secondName', phone: '123'),
+            ]),
             // child: Text(
             //   '&',
             //   style: bottomToolbarIconTextStyle,
