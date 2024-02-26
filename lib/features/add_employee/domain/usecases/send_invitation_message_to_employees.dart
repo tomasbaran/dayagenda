@@ -1,12 +1,12 @@
+import 'package:dayagenda/features/add_employee/data/repositories/send_sms.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 
 class SendInvitationMessageToEmployees {
-  final EmployeeRepository repository;
+  final SendSms sendSmsRepo;
 
-  SendInvitationMessageToEmployees(this.repository);
+  SendInvitationMessageToEmployees(this.sendSmsRepo);
 
-  @override
   Future call(List<Employee> employees) async {
-    return await repository.sendInvitationMessageToEmployees(params.employees);
+    return await sendSmsRepo(employees, 'You are invited to join our team!');
   }
 }
