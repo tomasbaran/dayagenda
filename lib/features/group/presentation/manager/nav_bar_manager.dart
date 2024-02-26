@@ -68,7 +68,7 @@ class NavBarManager {
       await authService.logout();
     }
     // step 3: send invitation message to employees
-    final sendInvitationMessageToEmployees = locate<SendInvitationMessageToEmployees>();
+    await sendInvitationMessageToEmployees(employees);
     // step 4: owner login
     final lastUsedEmail = authState.lastUsedEmail;
     final lastUsedPassword = authState.lastUsedPassword;
