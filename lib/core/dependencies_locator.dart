@@ -45,11 +45,11 @@ void setupGetIt() {
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>(),
-      registerEmployeeAnonymously: locate<RegisterEmployeeAnonymouslyUsecase>(),
+      registerEmployeeAnonymously: locate<RegisterEmployeesAnonymouslyUsecase>(),
     ),
   );
 
   // feature: add_employee
   // Use cases
-  locate.registerLazySingleton<RegisterEmployeeAnonymouslyUsecase>(() => RegisterEmployeeAnonymouslyUsecase(locate<FirebaseAuthService>()));
+  locate.registerLazySingleton<RegisterEmployeesAnonymouslyUsecase>(() => RegisterEmployeesAnonymouslyUsecase(locate<AuthService>()));
 }

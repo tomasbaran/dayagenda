@@ -1,9 +1,12 @@
-import 'package:dayagenda/services/auth_service/firebase_auth_service.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterEmployeeAnonymouslyUsecase {
-  final FirebaseAuthService repository;
+class RegisterEmployeesAnonymouslyUsecase {
+  final AuthService repository;
 
-  RegisterEmployeeAnonymouslyUsecase(this.repository);
+  RegisterEmployeesAnonymouslyUsecase(this.repository);
 
-  Future call() async => await repository.signInAnonymously();
+  Future<UserCredential> call() async {
+    return await repository.signInAnonymously();
+  }
 }

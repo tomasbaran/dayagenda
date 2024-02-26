@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class AuthState {
   final AuthService authService = locate<AuthService>();
+  String? lastUsedPassword;
 
   Future loginWithEmailAndPassword(String email, String password) async {
+    lastUsedPassword = password;
     await authService.loginWithEmailAndPassword(email, password);
     debugPrint("Signed in with email: $email [${authService.uid}]");
 

@@ -129,7 +129,8 @@ class NavBar extends StatelessWidget {
             behavior: HitTestBehavior.translucent,
             // onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
             // onTap: () => manager.tapGroupIcon(),
-            onTap: () => manager.addGroup(),
+            // onTap: () => manager.addGroup(),
+            onTap: () => manager.addEmployeesToDb(),
             // child: Text(
             //   '&',
             //   style: bottomToolbarIconTextStyle,
