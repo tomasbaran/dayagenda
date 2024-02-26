@@ -733,6 +733,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_email_sender (0.0.1):
     - Flutter
+  - flutter_sms (1.1.0):
+    - Flutter
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
@@ -872,6 +874,7 @@ DEPENDENCIES:
   - FirebaseFirestore
   - Flutter (from `Flutter`)
   - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
+  - flutter_sms (from `.symlinks/plugins/flutter_sms/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - mixpanel_flutter (from `.symlinks/plugins/mixpanel_flutter/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -921,6 +924,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_email_sender:
     :path: ".symlinks/plugins/flutter_email_sender/ios"
+  flutter_sms:
+    :path: ".symlinks/plugins/flutter_sms/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   mixpanel_flutter:
@@ -952,6 +957,7 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: 62e248642c0582324d0390706cadd314687c116b
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
+  flutter_sms: 91ce41530f55c85d6524d82307a5d555844c086a
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleAppMeasurement: 4dcddfc7f102825c1c4e6422cb35567b101881a7
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
