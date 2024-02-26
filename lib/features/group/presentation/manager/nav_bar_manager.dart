@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
-import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously_usecase.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
@@ -10,14 +9,17 @@ import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usec
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/auth_state.dart';
 
 class NavBarManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
-  final RegisterEmployeesAnonymouslyUsecase registerEmployeesAnonymously;
-  NavBarManager(
-      {required this.createOwnerInDb, required this.createGroupInDb, required this.updateOwner, required this.registerEmployeesAnonymously});
+  NavBarManager({
+    required this.createOwnerInDb,
+    required this.createGroupInDb,
+    required this.updateOwner,
+  });
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
 
@@ -47,7 +49,25 @@ class NavBarManager {
 
   Future addEmployeesToDb(List<Employee> employees) async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
-    final result = await registerEmployeesAnonymously(employees);
-    print('registerEmployeeAnonymously result: ${result.credential}');
+
+    final authState = locate<AuthState>();
+    final appState = locate<AppState>();
+    // step 1: logout: to be able to use signInAnonymously for the employees
+    await authState.logout();
+
+    // step 2: register employees
+    for (var employee in employees) {
+      final employeeCredentials = await authState.signInAnonymously();
+      final employeeUid = employeeCredentials?.user?.uid;
+      print('registerEmployeeAnonymously employeeUid: $employeeUid');
+    }
+    // step 3: log back in the owner
+    final lastUsedEmail = authState.lastUsedEmail;
+    final lastUsedPassword = authState.lastUsedPassword;
+    if (lastUsedPassword == null || lastUsedEmail == null) {
+      appState.updateNavBarSelection(NavBarSelection.account);
+    } else {
+      await authState.loginWithEmailAndPassword(lastUsedEmail, lastUsedPassword);
+    }
   }
 }
