@@ -174,11 +174,13 @@ class AppState {
     await dotenv.load(fileName: "lib/dotenv");
     switch (selectedFlavor) {
       case FlavorType.dev:
+        kDayagendaUrl = baseUrlDev;
         await Firebase.initializeApp(name: kIsWeb ? null : 'dev', options: dev.DefaultFirebaseOptions.currentPlatform);
         FirebaseAnalyticsService.analytics.setAnalyticsCollectionEnabled(true);
         await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_DEV'));
         break;
       case FlavorType.live:
+        kDayagendaUrl = baseUrlLive;
         await Firebase.initializeApp(name: kIsWeb ? null : 'live', options: live.DefaultFirebaseOptions.currentPlatform);
         await MixpanelService.initMixpanel(dotenv.get('MIXPANEL_TOKEN_LIVE'));
 
