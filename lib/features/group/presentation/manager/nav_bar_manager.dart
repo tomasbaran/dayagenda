@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously_usecase.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
@@ -13,7 +14,8 @@ class NavBarManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
-  NavBarManager({required this.createOwnerInDb, required this.createGroupInDb, required this.updateOwner});
+  final RegisterEmployeeAnonymouslyUsecase registerEmployeeAnonymously;
+  NavBarManager({required this.createOwnerInDb, required this.createGroupInDb, required this.updateOwner, required this.registerEmployeeAnonymously});
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
 
@@ -39,5 +41,11 @@ class NavBarManager {
     updateOwner(authService.auth.currentUser!.uid, {
       'groups': FieldValue.arrayUnion([groupRef])
     });
+  }
+
+  Future addEmployeesToDb() async {
+    // appState.updateNavBarSelection(NavBarSelection.addEmployee);
+    final result = await registerEmployeeAnonymously();
+    print('registerEmployeeAnonymously result: $result');
   }
 }

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously.dart';
+import 'package:dayagenda/features/add_employee/domain/usecases/register_employee_anonymously_usecase.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
@@ -40,12 +40,16 @@ void setupGetIt() {
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<UpdateOwnerUsecase>(() => UpdateOwnerUsecase(repository: locate<FirestoreRepository>()));
   // Managers
-  locate.registerLazySingleton<NavBarManager>(() => NavBarManager(
+  locate.registerLazySingleton<NavBarManager>(
+    () => NavBarManager(
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
-      updateOwner: locate<UpdateOwnerUsecase>()));
+      updateOwner: locate<UpdateOwnerUsecase>(),
+      registerEmployeeAnonymously: locate<RegisterEmployeeAnonymouslyUsecase>(),
+    ),
+  );
 
   // feature: add_employee
   // Use cases
-  locate.registerLazySingleton<RegisterEmployeeAnonymously>(() => RegisterEmployeeAnonymously(locate<FirebaseAuthService>()));
+  locate.registerLazySingleton<RegisterEmployeeAnonymouslyUsecase>(() => RegisterEmployeeAnonymouslyUsecase(locate<FirebaseAuthService>()));
 }
