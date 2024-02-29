@@ -11,6 +11,7 @@ dependencies:
   cloud_firestore: ^4.8.5
   cupertino_icons: ^1.0.5
   device_info_plus: ^9.1.0
+  equatable: ^2.0.5
   extended_nested_scroll_view: ^6.0.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.9
   firebase_analytics: ^10.7.0

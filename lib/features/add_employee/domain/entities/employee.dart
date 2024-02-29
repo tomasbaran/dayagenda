@@ -1,6 +1,7 @@
 import 'package:dayagenda/features/add_employee/domain/entities/employee_status.dart';
+import 'package:equatable/equatable.dart';
 
-class Employee {
+class Employee extends Equatable {
   String? uid;
   String firstName;
   String? secondName;
@@ -18,4 +19,10 @@ class Employee {
     this.email,
     required this.phone,
   });
+
+  @override
+  List<Object?> get props => [uid, firstName, secondName, thirdName, email, phone, status];
+
+  @override
+  bool get stringify => true;
 }
