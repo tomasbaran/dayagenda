@@ -4,6 +4,8 @@ import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
@@ -17,11 +19,15 @@ class NavBarGroupsManager {
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
+  final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
+  final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
   NavBarGroupsManager({
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.updateOwner,
     required this.sendInvitationMessageToEmployees,
+    required this.addEmployeeToEmployeesCollection,
+    required this.addEmployeeToGroupsCollection,
   });
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
@@ -69,7 +75,7 @@ class NavBarGroupsManager {
 
       // step B: add employee to employees collection
       // TODO:  - [ ] Add /employee.doc(newly created uid) +phoneNumber + firstName + secondName? + thirdName? + status(invitation_sent/registered)
-      // print('added employee[${employee.uid}] to employees collection');
+      print('added employee[${employee.uid}] to employees collection');
 
       // step C: add employee to group collection
       // TODO: Update /groups/group_id/employees:[ref]

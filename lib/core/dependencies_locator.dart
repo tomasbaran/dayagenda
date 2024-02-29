@@ -52,6 +52,8 @@ void setupGetIt() {
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>(),
       sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
+      addEmployeeToEmployeesCollection: locate<AddEmployeeToEmployeesCollectionUsecase>(),
+      addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
     ),
   );
 
