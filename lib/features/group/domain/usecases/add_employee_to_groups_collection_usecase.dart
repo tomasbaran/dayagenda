@@ -6,7 +6,5 @@ class AddEmployeeToGroupsCollectionUsecase {
   final FirestoreRepository _repository;
   AddEmployeeToGroupsCollectionUsecase(this._repository);
 
-  Future<bool> call(Group group, Employee employee) async {
-    return _repository.addEmployeeToGroupsCollection(group, employee);
-  }
+  Future<bool> call(Group group, Employee employee) async => await _repository.addEmployeeToGroupsCollection(group, employee);
 }

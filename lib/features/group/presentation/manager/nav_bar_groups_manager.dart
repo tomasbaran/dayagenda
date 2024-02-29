@@ -71,10 +71,11 @@ class NavBarGroupsManager {
       // step A: register employee anonymously
       final employeeCredentials = await authService.signInAnonymously();
       employee.uid = employeeCredentials?.user?.uid;
-      print('registerEmployeeAnonymously employeeUid: ${employee.uid}');
+      print('registerEmployeeAnonymously employeeUid: $employee');
 
       // step B: add employee to employees collection
       // TODO:  - [ ] Add /employee.doc(newly created uid) +phoneNumber + firstName + secondName? + thirdName? + status(invitation_sent/registered)
+      await addEmployeeToEmployeesCollection(employee);
       print('added employee[${employee.uid}] to employees collection');
 
       // step C: add employee to group collection
