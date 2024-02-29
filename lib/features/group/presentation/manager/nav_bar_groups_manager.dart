@@ -12,12 +12,12 @@ import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/auth_state.dart';
 
-class NavBarManager {
+class NavBarGroupsManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
-  NavBarManager({
+  NavBarGroupsManager({
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.updateOwner,

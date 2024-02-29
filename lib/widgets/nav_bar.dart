@@ -1,5 +1,5 @@
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
-import 'package:dayagenda/features/group/presentation/manager/nav_bar_manager.dart';
+import 'package:dayagenda/features/group/presentation/manager/nav_bar_groups_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -16,7 +16,7 @@ class NavBar extends StatelessWidget {
     super.key,
   });
 
-  final manager = locate<NavBarManager>();
+  final manager = locate<NavBarGroupsManager>();
   final listState = locate<ListState>();
   final appState = locate<AppState>();
   final dateState = locate<DateState>();
