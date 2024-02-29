@@ -56,7 +56,7 @@ class NavBarGroupsManager {
     });
   }
 
-  Future addEmployeesToDb(List<Employee> employees) async {
+  Future addEmployeesToDb({required List<Employee> employees, required Group group}) async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
 
     final authState = locate<AuthState>();
@@ -74,12 +74,11 @@ class NavBarGroupsManager {
       print('registerEmployeeAnonymously employeeUid: $employee');
 
       // step B: add employee to employees collection
-      // TODO:  - [ ] Add /employee.doc(newly created uid) +phoneNumber + firstName + secondName? + thirdName? + status(invitation_sent/registered)
       await addEmployeeToEmployeesCollection(employee);
       print('added employee[${employee.uid}] to employees collection');
 
       // step C: add employee to group collection
-      // TODO: Update /groups/group_id/employees:[ref]
+      await addEmployeeToGroupsCollection(group, employee);
       // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
 
       await authService.logout();

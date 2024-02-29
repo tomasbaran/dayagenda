@@ -1,4 +1,5 @@
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
+import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/presentation/manager/nav_bar_groups_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,10 +132,13 @@ class NavBar extends StatelessWidget {
             // onTap: () => appState.updateNavBarSelection(NavBarSelection.list),
             // onTap: () => manager.tapGroupIcon(),
             // onTap: () => manager.addGroup(),
-            onTap: () => manager.addEmployeesToDb([
-              Employee(firstName: 'Anna', secondName: 'secondName', phone: '9992438818'),
-              Employee(firstName: 'Tomas', phone: '9991759427'),
-            ]),
+            onTap: () => manager.addEmployeesToDb(
+              group: Group(name: 'My Group', id: '2hpJ7RCzrB4VuAYk6yfp', ownerUid: 'dMcYZrKOdWQYWr7eIaJtrpRj2DE2'),
+              employees: [
+                Employee(firstName: 'Anna', secondName: 'secondName', phone: '9992438818'),
+                Employee(firstName: 'Tomas', phone: '9991759427'),
+              ],
+            ),
             // child: Text(
             //   '&',
             //   style: bottomToolbarIconTextStyle,
