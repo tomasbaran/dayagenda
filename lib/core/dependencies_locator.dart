@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/add_employee/data/repositories/send_sms.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
@@ -41,6 +43,8 @@ void setupGetIt() {
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<UpdateOwnerUsecase>(() => UpdateOwnerUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<SendInvitationMessageToEmployees>(() => SendInvitationMessageToEmployees(locate<SendSms>()));
+  locate.registerLazySingleton<AddEmployeeToEmployeesCollectionUsecase>(() => AddEmployeeToEmployeesCollectionUsecase(locate<FirestoreRepository>()));
+  locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
   // Managers
   locate.registerLazySingleton<NavBarGroupsManager>(
     () => NavBarGroupsManager(
