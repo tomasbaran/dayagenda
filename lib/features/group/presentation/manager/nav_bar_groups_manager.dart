@@ -71,7 +71,7 @@ class NavBarGroupsManager {
       // TODO:  - [ ] Add /employee.doc(newly created uid) +phoneNumber + firstName + secondName? + thirdName? + status(invitation_sent/registered)
       // print('added employee[${employee.uid}] to employees collection');
 
-      // step C: update group collection with a new employee member
+      // step C: add employee to group collection
       // TODO: Update /groups/group_id/employees:[ref]
       // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
 
