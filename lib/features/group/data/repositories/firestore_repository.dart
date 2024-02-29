@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 
@@ -29,6 +30,21 @@ class FirestoreRepository {
   Future<bool> updateOwner(String ownerUid, Map<Object, Object?> updatedMap) async {
     print('Updating owner in db...');
     await db.collection('owners').doc(ownerUid).update(updatedMap);
+    return true;
+  }
+
+  Future<bool> addEmployeeToEmployeesCollection(Employee employee) async {
+    print('Adding employee: $employee to employees collection...');
+    final parsedEmployee = {
+      'first_name': employee.firstName,
+      'second_name': employee.secondName,
+      'third_name': employee.thirdName,
+      'phone': employee.phone,
+      'status': employee.status,
+      'uid': employee.uid,
+      'email': employee.email,
+    };
+    await db.collection('employees').doc(employee.uid).set(parsedEmployee);
     return true;
   }
 }

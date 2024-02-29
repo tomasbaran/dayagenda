@@ -5,7 +5,7 @@ class AddEmployeeToEmployeesCollectionUsecase {
   final FirestoreRepository _repository;
   AddEmployeeToEmployeesCollectionUsecase(this._repository);
 
-  Future<void> call(Employee employee) async {
+  Future<bool> call(Employee employee) async {
     return _repository.addEmployeeToEmployeesCollection(employee);
   }
 }
