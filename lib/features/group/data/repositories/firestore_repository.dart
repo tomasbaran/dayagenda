@@ -47,4 +47,13 @@ class FirestoreRepository {
     await db.collection('employees').doc(employee.uid).set(parsedEmployee);
     return true;
   }
+
+  Future<bool> addEmployeeToGroupsCollection(Group group, Employee employee) async {
+    print('Adding employee: $employee to groups collection...');
+    final employeeRef = await db.collection('employees').doc(employee.uid).get();
+    await db.collection('groups').doc(group.id).update({
+      'employees': FieldValue.arrayUnion([employeeRef])
+    });
+    return true;
+  }
 }
