@@ -4,9 +4,24 @@ import 'package:dayagenda/features/group/presentation/widgets/no_groups_descript
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
 
-class GroupTab extends StatelessWidget {
+class GroupTab extends StatefulWidget {
   GroupTab({super.key});
+
+  @override
+  State<GroupTab> createState() => _GroupTabState();
+}
+
+class _GroupTabState extends State<GroupTab> {
+  final _newGroupTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _newGroupTextController.dispose();
+    super.dispose();
+  }
+
   final _manager = locate<GroupTabManager>();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -47,6 +62,7 @@ class GroupTab extends StatelessWidget {
                       child: Column(
                         children: [
                           TextFormField(
+                            controller: _newGroupTextController,
                             validator: (value) => value == null ? 'Por favor, ingrese un nombre' : null,
                             style: navBarAccountEmailInputTextStyle,
                             decoration: InputDecoration(
@@ -77,7 +93,7 @@ class GroupTab extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                _manager.addGroup('newGroup');
+                                _manager.addGroup(_newGroupTextController.text);
                               }
                             },
                             child: Text('Agrega Grupo', style: navBarAccountButtonTitleTextStyle),
