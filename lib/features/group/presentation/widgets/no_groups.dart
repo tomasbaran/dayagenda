@@ -1,3 +1,4 @@
+import 'package:dayagenda/features/group/presentation/widgets/no_groups_description.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -17,16 +18,7 @@ class NoGroups extends StatelessWidget {
             style: navBarHeadlineTextStyle,
           ),
           const SizedBox(height: 24),
-          Text(
-            'Gestiona tareas de tus empleados.',
-            style: navBarAccountEmailInputTextStyle,
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Toca + para agrega un grupo (e.g. empresa, departamento, proyecto, etc.).',
-            style: navBarAccountEmailInputTextStyle,
-            textAlign: TextAlign.center,
-          ),
+          const NoGroupsDescription(),
           const SizedBox(height: 24),
           Align(
             alignment: Alignment.bottomRight,
