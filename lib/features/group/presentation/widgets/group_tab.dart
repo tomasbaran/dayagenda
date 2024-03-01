@@ -1,12 +1,12 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
-import 'package:dayagenda/features/group/presentation/managers/no_grous_manager.dart';
+import 'package:dayagenda/features/group/presentation/managers/group_tab_manager.dart';
 import 'package:dayagenda/features/group/presentation/widgets/no_groups_description.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
 
 class GroupTab extends StatelessWidget {
   GroupTab({super.key});
-  final _manager = locate<NoGroupsManager>();
+  final _manager = locate<GroupTabManager>();
   final _formKey = GlobalKey<FormState>();
 
   @override

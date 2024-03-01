@@ -1,4 +1,4 @@
-import 'package:dayagenda/features/group/presentation/widgets/no_groups.dart';
+import 'package:dayagenda/features/group/presentation/widgets/group_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';

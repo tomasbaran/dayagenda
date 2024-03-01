@@ -8,7 +8,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_u
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/presentation/manager/nav_bar_groups_manager.dart';
-import 'package:dayagenda/features/group/presentation/managers/no_grous_manager.dart';
+import 'package:dayagenda/features/group/presentation/managers/group_tab_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
@@ -57,7 +57,7 @@ void setupGetIt() {
       addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
     ),
   );
-  locate.registerLazySingleton<NoGroupsManager>(() => NoGroupsManager());
+  locate.registerLazySingleton<GroupTabManager>(() => GroupTabManager());
 
   // feature: add_employee
   // Repositories
