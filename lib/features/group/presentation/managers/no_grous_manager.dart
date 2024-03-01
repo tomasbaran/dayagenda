@@ -9,4 +9,8 @@ class NoGroupsManager {
     showAddGroupForm.value = value;
     groups.value ??= [];
   }
+
+  addGroup(String groupName) {
+    print('newGroup: $groupName');
+  }
 }

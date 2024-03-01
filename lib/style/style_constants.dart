@@ -172,5 +172,5 @@ TextStyle navBarAccountEmailSubmitButtonTextStyle = const TextStyle(
 TextStyle navBarAccountButtonTitleTextStyle = const TextStyle(
   color: kThemeColor12,
   fontSize: 16,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w600,
 );

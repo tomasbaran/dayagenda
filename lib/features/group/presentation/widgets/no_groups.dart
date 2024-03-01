@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class GroupTab extends StatelessWidget {
   GroupTab({super.key});
   final _manager = locate<NoGroupsManager>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,30 +42,47 @@ class GroupTab extends StatelessWidget {
               if (addGroupValue) {
                 return Column(
                   children: [
-                    TextField(
-                      style: navBarAccountEmailInputTextStyle,
-                      decoration: InputDecoration(
-                        hintText: 'Nombre del grupo',
-                        hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
-                        prefixIcon: const Icon(
-                          Icons.group_add_outlined,
-                          color: kBlueAccentColor,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: kBlueAccentColor,
-                            width: 2,
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            validator: (value) => value == null ? 'Por favor, ingrese un nombre' : null,
+                            style: navBarAccountEmailInputTextStyle,
+                            decoration: InputDecoration(
+                              hintText: 'Nombre del grupo',
+                              hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
+                              prefixIcon: const Icon(
+                                Icons.group_add_outlined,
+                                color: kBlueAccentColor,
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: kBlueAccentColor,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  // color: kBlueAccentColor,
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                              ),
+                            ),
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            // color: kBlueAccentColor,
-                            color: Colors.white,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
+                          const SizedBox(height: 24),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _manager.addGroup('newGroup');
+                              }
+                            },
+                            child: Text('Agrega Grupo', style: navBarAccountButtonTitleTextStyle),
+                          )
+                        ],
                       ),
                     ),
                     SizedBox(height: 24),
