@@ -46,7 +46,7 @@ class NavContainer extends StatelessWidget {
                   case NavBarSelection.calendar:
                     return CalendarNavContainer();
                   case NavBarSelection.groups:
-                    return NoGroups();
+                    return GroupTab();
                   default:
                     return NavBar();
                 }

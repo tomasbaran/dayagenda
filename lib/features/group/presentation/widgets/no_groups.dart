@@ -4,8 +4,8 @@ import 'package:dayagenda/features/group/presentation/widgets/no_groups_descript
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
 
-class NoGroups extends StatelessWidget {
-  NoGroups({super.key});
+class GroupTab extends StatelessWidget {
+  GroupTab({super.key});
   final _manager = locate<NoGroupsManager>();
 
   @override
