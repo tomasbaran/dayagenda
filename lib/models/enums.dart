@@ -5,6 +5,7 @@ enum NavBarSelection {
   calendar,
   list,
   account,
+  groups,
 }
 
 enum DayType {

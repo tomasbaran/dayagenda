@@ -18,6 +18,7 @@ const kThemeColor8 = Color.fromRGBO(84, 110, 122, 1); // blueGrey
 const kThemeColor9 = Color(0xFF496370);
 const kIconColor = Color(0xFF5E6678);
 // Color kTodayColor = Colors.blue.shade600;
+const kBlueAccentColor = Color(0xFF6589C8);
 
 // 496370
 // dark ones
@@ -158,7 +159,7 @@ TextStyle navBarAccountEmailInputLabelTextStyle = const TextStyle(
 
 TextStyle navBarAccountEmailInputTextStyle = const TextStyle(
   color: kThemeColor2,
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: FontWeight.w500,
 );
 
