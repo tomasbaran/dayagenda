@@ -27,9 +27,9 @@ class FirestoreRepository {
     return ref.id;
   }
 
-  Future<bool> updateOwner(String ownerUid, Map<Object, Object?> updatedMap) async {
+  Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
     print('Updating owner in db...');
-    await db.collection('owners').doc(ownerUid).update(updatedMap);
+    await db.collection('owners').doc(ownerUid).set(updatedMap, SetOptions(merge: true));
     return true;
   }
 

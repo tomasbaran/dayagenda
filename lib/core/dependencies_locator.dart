@@ -7,8 +7,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
-import 'package:dayagenda/features/group/presentation/manager/nav_bar_groups_manager.dart';
-import 'package:dayagenda/features/group/presentation/managers/group_tab_manager.dart';
+import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
@@ -47,8 +46,8 @@ void setupGetIt() {
   locate.registerLazySingleton<AddEmployeeToEmployeesCollectionUsecase>(() => AddEmployeeToEmployeesCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
   // Managers
-  locate.registerLazySingleton<NavBarGroupsManager>(
-    () => NavBarGroupsManager(
+  locate.registerLazySingleton<GroupTabManager>(
+    () => GroupTabManager(
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       updateOwner: locate<UpdateOwnerUsecase>(),
@@ -57,7 +56,6 @@ void setupGetIt() {
       addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
     ),
   );
-  locate.registerLazySingleton<GroupTabManager>(() => GroupTabManager());
 
   // feature: add_employee
   // Repositories

@@ -13,15 +13,16 @@ import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/auth_state.dart';
+import 'package:flutter/material.dart';
 
-class NavBarGroupsManager {
+class GroupTabManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
   final UpdateOwnerUsecase updateOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
   final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
-  NavBarGroupsManager({
+  GroupTabManager({
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.updateOwner,
@@ -32,21 +33,23 @@ class NavBarGroupsManager {
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
 
-  Future tapGroupIcon() async {
-    if (authService.auth.currentUser == null) {
-      appState.updateNavBarSelection(NavBarSelection.account);
-    } else {
-      final currentUser = authService.auth.currentUser;
-      final owner = Owner(uid: currentUser!.uid, email: currentUser.email);
-      await createOwnerInDb(owner);
-    }
+  final groups = ValueNotifier<List<Group>?>(null);
+  final showAddGroupForm = ValueNotifier<bool>(false);
+
+  Future tapAddGroupIcon() async {
+    showAddGroupForm.value = true;
+    groups.value ??= [];
+
+    final currentUser = authService.auth.currentUser;
+    final owner = Owner(uid: currentUser!.uid, email: currentUser.email);
+    await createOwnerInDb(owner);
     return;
   }
 
-  Future addGroup() async {
+  Future addGroup(String groupName) async {
     // appState.updateNavBarSelection(NavBarSelection.group);
     Group group = Group(
-      name: 'My Group',
+      name: groupName,
       ownerUid: authService.auth.currentUser!.uid,
     );
     final groupId = await createGroupInDb(group);

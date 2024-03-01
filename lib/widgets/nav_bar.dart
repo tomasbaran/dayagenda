@@ -1,4 +1,4 @@
-import 'package:dayagenda/features/group/presentation/manager/nav_bar_groups_manager.dart';
+import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -14,7 +14,7 @@ class NavBar extends StatelessWidget {
     super.key,
   });
 
-  final manager = locate<NavBarGroupsManager>();
+  final manager = locate<GroupTabManager>();
   final listState = locate<ListState>();
   final appState = locate<AppState>();
   final dateState = locate<DateState>();

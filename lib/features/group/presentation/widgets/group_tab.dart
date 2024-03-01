@@ -1,5 +1,5 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
-import 'package:dayagenda/features/group/presentation/managers/group_tab_manager.dart';
+import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:dayagenda/features/group/presentation/widgets/no_groups_description.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +63,7 @@ class _GroupTabState extends State<GroupTab> {
                         children: [
                           TextFormField(
                             controller: _newGroupTextController,
-                            validator: (value) => value == null ? 'Por favor, ingrese un nombre' : null,
+                            validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese un nombre' : null,
                             style: navBarAccountEmailInputTextStyle,
                             decoration: InputDecoration(
                               hintText: 'Nombre del grupo',
@@ -108,7 +108,7 @@ class _GroupTabState extends State<GroupTab> {
                 return Align(
                   alignment: Alignment.bottomRight,
                   child: IconButton(
-                    onPressed: () => _manager.showAddGroupFrom(true),
+                    onPressed: () => _manager.tapAddGroupIcon(),
                     icon: const Icon(
                       Icons.add_circle_rounded,
                       size: 32,
