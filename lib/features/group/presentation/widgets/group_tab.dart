@@ -49,10 +49,11 @@ class _GroupTabState extends State<GroupTab> {
               if (groupsValue == null) {
                 return const NoGroupsDescription();
               } else {
-                for (var group in groupsValue) {
-                  return Text(group.name);
-                }
-                return const SizedBox();
+                return Column(
+                  children: [
+                    for (var group in groupsValue) Text(group.name, style: navBarAccountEmailInputTextStyle),
+                  ],
+                );
               }
             },
           ),

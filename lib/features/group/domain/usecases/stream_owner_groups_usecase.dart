@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 
 class StreamOwnerGroupsUseCase {
@@ -14,6 +15,7 @@ class StreamOwnerGroupsUseCase {
     subs.onData((data) {
       final owner = data.data() as Map<String, dynamic>;
       final groupRefs = owner['groups'];
+      print('cp0: groupRefs: $groupRefs');
       controller.add(groupRefs);
     });
 

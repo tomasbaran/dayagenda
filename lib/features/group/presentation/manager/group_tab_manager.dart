@@ -41,9 +41,13 @@ class GroupTabManager {
 
   Future subscribeToGroups() async {
     final groupSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
+    groups.value = [];
+
     groupSubscription.listen((event) {
       event.forEach((group) {
         print('group: $group');
+        groups.value!.add(Group(ownerUid: 'ownerUid', name: group.toString()));
+        groups.value = List.from(groups.value!);
       });
     });
   }
