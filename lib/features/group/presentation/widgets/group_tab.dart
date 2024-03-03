@@ -15,6 +15,12 @@ class _GroupTabState extends State<GroupTab> {
   final _newGroupTextController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _manager.subscribeToGroups();
+  }
+
+  @override
   void dispose() {
     _newGroupTextController.dispose();
     super.dispose();

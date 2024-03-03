@@ -9,6 +9,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/stream_owner_groups_usecase.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -22,7 +23,9 @@ class GroupTabManager {
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
   final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
+  final StreamOwnerGroupsUseCase streamOwnerGroups;
   GroupTabManager({
+    required this.streamOwnerGroups,
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.updateOwner,
@@ -35,6 +38,15 @@ class GroupTabManager {
 
   final groups = ValueNotifier<List<Group>?>(null);
   final showAddGroupForm = ValueNotifier<bool>(false);
+
+  Future subscribeToGroups() async {
+    final groupSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
+    groupSubscription.listen((event) {
+      event.forEach((group) {
+        print('group: $group');
+      });
+    });
+  }
 
   Future tapAddGroupIcon() async {
     showAddGroupForm.value = true;

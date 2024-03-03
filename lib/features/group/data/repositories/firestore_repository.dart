@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
@@ -26,6 +28,10 @@ class FirestoreRepository {
     final ref = await db.collection('groups').add(parsedGroup);
     return ref.id;
   }
+
+  // Stream<List<Group>>
+
+  StreamSubscription subscribeToOwnerData(String ownerUid) => db.collection('owners').doc(ownerUid).snapshots().listen((event) {});
 
   Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
     print('Updating owner in db...');
