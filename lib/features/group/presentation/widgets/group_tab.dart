@@ -41,9 +41,33 @@ class _GroupTabState extends State<GroupTab> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 12),
-          Text(
-            'Mis Grupos',
-            style: navBarHeadlineTextStyle,
+          Row(
+            children: [
+              const SizedBox(
+                height: 48,
+                width: 48,
+              ),
+              Expanded(
+                child: Text(
+                  'Mis Grupos',
+                  textAlign: TextAlign.center,
+                  style: navBarHeadlineTextStyle,
+                ),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isAddingGroup = true;
+                  });
+                  _manager.tapAddGroupIcon();
+                },
+                icon: const Icon(
+                  Icons.add_circle_rounded,
+                  size: 32,
+                  color: kBlueAccentColor,
+                ),
+              )
+            ],
           ),
           const SizedBox(height: 24),
           ValueListenableBuilder(
@@ -74,75 +98,59 @@ class _GroupTabState extends State<GroupTab> {
               }
             },
           ),
-          _isAddingGroup
-              ? Column(
-                  children: [
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _newGroupTextController,
-                            validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese un nombre' : null,
-                            style: navBarAccountEmailInputTextStyle,
-                            decoration: InputDecoration(
-                              hintText: 'Nombre del grupo',
-                              hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
-                              prefixIcon: const Icon(
-                                Icons.group_add_outlined,
-                                color: kBlueAccentColor,
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: kBlueAccentColor,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  // color: kBlueAccentColor,
-                                  color: Colors.white,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.all(Radius.circular(8)),
-                              ),
-                            ),
+          if (_isAddingGroup)
+            Column(
+              children: [
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _newGroupTextController,
+                        validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese un nombre' : null,
+                        style: navBarAccountEmailInputTextStyle,
+                        decoration: InputDecoration(
+                          hintText: 'Nombre del grupo',
+                          hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
+                          prefixIcon: const Icon(
+                            Icons.group_add_outlined,
+                            color: kBlueAccentColor,
                           ),
-                          const SizedBox(height: 24),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _manager.addGroup(_newGroupTextController.text);
-                              }
-                              setState(() {
-                                _isAddingGroup = false;
-                                _newGroupTextController.text = '';
-                              });
-                            },
-                            child: Text('Agrega Grupo', style: navBarAccountButtonTitleTextStyle),
-                          )
-                        ],
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: kBlueAccentColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              // color: kBlueAccentColor,
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              : Align(
-                  alignment: Alignment.bottomRight,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _isAddingGroup = true;
-                      });
-                      _manager.tapAddGroupIcon();
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_rounded,
-                      size: 32,
-                      color: kBlueAccentColor,
-                    ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _manager.addGroup(_newGroupTextController.text);
+                          }
+                          setState(() {
+                            _isAddingGroup = false;
+                            _newGroupTextController.text = '';
+                          });
+                        },
+                        child: Text('Agrega Grupo', style: navBarAccountButtonTitleTextStyle),
+                      )
+                    ],
                   ),
-                )
+                ),
+              ],
+            )
         ],
       ),
     );
