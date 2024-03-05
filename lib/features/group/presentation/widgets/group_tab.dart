@@ -63,7 +63,6 @@ class _GroupTabState extends State<GroupTab> {
               }
             },
           ),
-          const SizedBox(height: 24),
           _isAddingGroup
               ? Column(
                   children: [
@@ -111,7 +110,6 @@ class _GroupTabState extends State<GroupTab> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 24),
                   ],
                 )
               : Align(
