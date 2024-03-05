@@ -5,11 +5,12 @@ class StreamGroupRefsUseCase {
   final FirestoreRepository _repository;
   StreamGroupRefsUseCase(this._repository);
   late StreamController controller;
+  late StreamSubscription subs;
 
   Stream call(String ownerUid) {
     // Create a StreamController to create and control the stream
     controller = StreamController<List<dynamic>>();
-    final subs = _repository.subscribeToOwnerData(ownerUid);
+    subs = _repository.subscribeToOwnerData(ownerUid);
     subs.onData((data) {
       final owner = data.data() as Map<String, dynamic>;
       final groupRefs = owner['groups'];
@@ -25,5 +26,6 @@ class StreamGroupRefsUseCase {
 
   dispose() {
     controller.close();
+    subs.cancel();
   }
 }
