@@ -25,8 +25,12 @@ class FirestoreRepository {
       'name': group.name,
       'owner_uid': group.ownerUid,
     };
-    final ref = await db.collection('groups').add(parsedGroup);
-    return ref.id;
+    try {
+      final ref = await db.collection('groups').add(parsedGroup);
+      return ref.id;
+    } catch (e) {
+      throw e;
+    }
   }
 
   // Stream<List<Group>>
@@ -42,11 +46,15 @@ class FirestoreRepository {
   }
 
   Future<bool> addGroupRefToOwner({required String ownerUid, required String groupId}) async {
-    DocumentReference groupRef = db.collection('groups').doc(groupId);
-    await db.collection('owners').doc(ownerUid).update({
-      'groups': FieldValue.arrayUnion([groupRef])
-    });
-    print('Added group ref to owner');
+    try {
+      DocumentReference groupRef = db.collection('groups').doc(groupId);
+      await db.collection('owners').doc(ownerUid).update({
+        'groups': FieldValue.arrayUnion([groupRef])
+      });
+      print('Added group ref to owner');
+    } catch (e) {
+      throw e;
+    }
 
     return true;
   }

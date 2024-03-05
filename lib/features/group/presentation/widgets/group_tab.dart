@@ -54,13 +54,15 @@ class _GroupTabState extends State<GroupTab> {
               if (groupsValue == null || groupsValue.isEmpty) {
                 return _isAddingGroup ? const SizedBox() : const NoGroupsDescription();
               } else {
-                return Column(children: [
-                  for (var group in groupsValue)
-                    GroupListWithEmployees(
-                      group: group,
-                      id: id++,
-                    ),
-                ]);
+                return Column(
+                  children: [
+                    for (var group in groupsValue)
+                      GroupListWithEmployees(
+                        group: group,
+                        id: id++,
+                      ),
+                  ],
+                );
               }
             },
           ),
@@ -102,13 +104,13 @@ class _GroupTabState extends State<GroupTab> {
                           const SizedBox(height: 24),
                           ElevatedButton(
                             onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _manager.addGroup(_newGroupTextController.text);
+                              }
                               setState(() {
                                 _isAddingGroup = false;
                                 _newGroupTextController.text = '';
                               });
-                              if (_formKey.currentState!.validate()) {
-                                _manager.addGroup(_newGroupTextController.text);
-                              }
                             },
                             child: Text('Agrega Grupo', style: navBarAccountButtonTitleTextStyle),
                           )
