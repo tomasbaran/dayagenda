@@ -77,7 +77,7 @@ class GroupTabManager {
     );
     final groupId = await createGroupInDb(group);
     // 2. add group to owner
-    addGroupToOwner(ownerUid: authService.auth.currentUser!.uid, groupId: groupId);
+    await addGroupToOwner(ownerUid: authService.auth.currentUser!.uid, groupId: groupId);
   }
 
   Future addEmployeesToDb({required List<Employee> employees, required Group group}) async {

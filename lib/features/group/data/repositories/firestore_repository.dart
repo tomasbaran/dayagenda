@@ -15,7 +15,7 @@ class FirestoreRepository {
       'uid': owner.uid,
       'email': owner.email,
     };
-    await db.collection('owners').doc(owner.uid).set(parsedOwner);
+    await db.collection('owners').doc(owner.uid).set(parsedOwner, SetOptions(merge: true));
     return true;
   }
 
