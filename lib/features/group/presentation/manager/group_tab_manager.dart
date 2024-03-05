@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
@@ -6,7 +5,6 @@ import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
-import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
@@ -48,15 +46,15 @@ class GroupTabManager {
 
     groupRefsSubscription.listen((groupRefEvent) {
       groups.value = [];
+      print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
       groupRefEvent.forEach((groupRef) {
         final groupsSubscription = streamGroups(groupRef);
         // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
 
         groupsSubscription.listen((group) {
-          print('\x1B[35mGroupTabManager.event: $group\n\x1B[0m');
-
           groups.value!.add(group);
           groups.value = List.from(groups.value!);
+          print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
         });
       });
     });

@@ -51,12 +51,14 @@ class _GroupTabState extends State<GroupTab> {
             builder: (context, groupsValue, child) {
               int id = 0;
               print('GroupTab.build.groupsValue: $groupsValue');
-              if (groupsValue == null || groupsValue.isEmpty) {
+              if (groupsValue == null) {
+                debugPrint('groupsValue is null');
                 return _isAddingGroup ? const SizedBox() : const NoGroupsDescription();
               } else {
                 return ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height - 280,
+                    minHeight: 200,
                   ),
                   child: ListView(
                     shrinkWrap: true,
