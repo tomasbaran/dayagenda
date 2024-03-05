@@ -7,6 +7,7 @@ import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_group_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/stream_group_usecase.dart';
@@ -20,18 +21,18 @@ import 'package:flutter/material.dart';
 class GroupTabManager {
   final CreateOwnerInDbUsecase createOwnerInDb;
   final CreateGroupInDbUsecase createGroupInDb;
-  final UpdateOwnerUsecase updateOwner;
+  final AddGroupToOwnerUseCase addGroupToOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
   final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
   final StreamOwnerGroupsUseCase streamOwnerGroups;
   final StreamGroupUseCase streamGroups;
   GroupTabManager({
+    required this.addGroupToOwner,
     required this.streamGroups,
     required this.streamOwnerGroups,
     required this.createOwnerInDb,
     required this.createGroupInDb,
-    required this.updateOwner,
     required this.sendInvitationMessageToEmployees,
     required this.addEmployeeToEmployeesCollection,
     required this.addEmployeeToGroupsCollection,
@@ -42,12 +43,13 @@ class GroupTabManager {
   final groups = ValueNotifier<List<Group>?>(null);
 
   Future subscribeToGroups() async {
-    final ownerSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
     groups.value = [];
 
-    ownerSubscription.listen((event) {
-      event.forEach((owner) {
-        final groupsSubscription = streamGroups(owner);
+    final groupRefsSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
+
+    groupRefsSubscription.listen((groupRefEvent) {
+      groupRefEvent.forEach((groupRef) {
+        final groupsSubscription = streamGroups(groupRef);
         print('GroupTabManager.newGroup: $groupsSubscription\n');
 
         groupsSubscription.listen((group) {
@@ -68,15 +70,14 @@ class GroupTabManager {
 
   Future addGroup(String groupName) async {
     // appState.updateNavBarSelection(NavBarSelection.group);
+    // 1. create group
     Group group = Group(
       name: groupName,
       ownerUid: authService.auth.currentUser!.uid,
     );
     final groupId = await createGroupInDb(group);
-    final groupRef = FirebaseFirestore.instance.collection('groups').doc(groupId);
-    updateOwner(authService.auth.currentUser!.uid, {
-      'groups': FieldValue.arrayUnion([groupRef])
-    });
+    // 2. add group to owner
+    addGroupToOwner(ownerUid: authService.auth.currentUser!.uid, groupId: groupId);
   }
 
   Future addEmployeesToDb({required List<Employee> employees, required Group group}) async {

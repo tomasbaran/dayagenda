@@ -37,7 +37,17 @@ class FirestoreRepository {
 
   Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
     print('Updating owner in db...');
-    await db.collection('owners').doc(ownerUid).set(updatedMap, SetOptions(merge: true));
+    await db.collection('owners').doc(ownerUid).update(updatedMap);
+    return true;
+  }
+
+  Future<bool> addGroupRefToOwner({required String ownerUid, required String groupId}) async {
+    DocumentReference groupRef = db.collection('groups').doc(groupId);
+    await db.collection('owners').doc(ownerUid).update({
+      'groups': FieldValue.arrayUnion([groupRef])
+    });
+    print('Added group ref to owner');
+
     return true;
   }
 

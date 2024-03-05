@@ -5,6 +5,7 @@ import 'package:dayagenda/features/group/data/repositories/firestore_repository.
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/add_group_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/stream_group_usecase.dart';
@@ -49,17 +50,18 @@ void setupGetIt() {
   locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamOwnerGroupsUseCase>(() => StreamOwnerGroupsUseCase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamGroupUseCase>(() => StreamGroupUseCase(locate<FirestoreRepository>()));
+  locate.registerLazySingleton<AddGroupToOwnerUseCase>(() => AddGroupToOwnerUseCase(locate<FirestoreRepository>()));
   // Managers
   locate.registerLazySingleton<GroupTabManager>(
     () => GroupTabManager(
       createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
-      updateOwner: locate<UpdateOwnerUsecase>(),
       sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
       addEmployeeToEmployeesCollection: locate<AddEmployeeToEmployeesCollectionUsecase>(),
       addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
       streamOwnerGroups: locate<StreamOwnerGroupsUseCase>(),
       streamGroups: locate<StreamGroupUseCase>(),
+      addGroupToOwner: locate<AddGroupToOwnerUseCase>(),
     ),
   );
 
