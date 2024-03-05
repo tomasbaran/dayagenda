@@ -42,18 +42,19 @@ class GroupTabManager {
 
   final groups = ValueNotifier<List<Group>?>(null);
 
-  Future subscribeToGroups() async {
-    groups.value = [];
-
+  subscribeToGroups() {
+    print('\x1B[35msubscribeToGroups: ${authService.auth.currentUser!.uid}\n\x1B[0m');
     final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
 
     groupRefsSubscription.listen((groupRefEvent) {
+      groups.value = [];
       groupRefEvent.forEach((groupRef) {
         final groupsSubscription = streamGroups(groupRef);
-        print('GroupTabManager.newGroup: $groupsSubscription\n');
+        // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
 
         groupsSubscription.listen((group) {
-          print('GroupTabManager.event: $group\n');
+          print('\x1B[35mGroupTabManager.event: $group\n\x1B[0m');
+
           groups.value!.add(group);
           groups.value = List.from(groups.value!);
         });
@@ -78,6 +79,7 @@ class GroupTabManager {
     final groupId = await createGroupInDb(group);
     // 2. add group to owner
     await addGroupToOwner(ownerUid: authService.auth.currentUser!.uid, groupId: groupId);
+    return;
   }
 
   Future addEmployeesToDb({required List<Employee> employees, required Group group}) async {
@@ -122,5 +124,6 @@ class GroupTabManager {
   dispose() {
     streamGroupRefs.dispose();
     streamGroups.dispose();
+    print('\x1B[35mdisposed streams!\x1B[0m');
   }
 }
