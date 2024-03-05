@@ -28,6 +28,7 @@ class _GroupTabState extends State<GroupTab> {
   }
 
   final _manager = locate<GroupTabManager>();
+  bool _isAddingGroup = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -50,7 +51,7 @@ class _GroupTabState extends State<GroupTab> {
               int id = 0;
               print('GroupTab.build.groupsValue: $groupsValue');
               if (groupsValue == null || groupsValue.isEmpty) {
-                return const NoGroupsDescription();
+                return _isAddingGroup ? const SizedBox() : const NoGroupsDescription();
               } else {
                 return Column(children: [
                   for (var group in groupsValue)
@@ -63,11 +64,8 @@ class _GroupTabState extends State<GroupTab> {
             },
           ),
           const SizedBox(height: 24),
-          ValueListenableBuilder(
-            valueListenable: _manager.showAddGroupForm,
-            builder: (context, addGroupValue, child) {
-              if (addGroupValue) {
-                return Column(
+          _isAddingGroup
+              ? Column(
                   children: [
                     Form(
                       key: _formKey,
@@ -115,22 +113,23 @@ class _GroupTabState extends State<GroupTab> {
                     ),
                     SizedBox(height: 24),
                   ],
-                );
-              } else {
-                return Align(
+                )
+              : Align(
                   alignment: Alignment.bottomRight,
                   child: IconButton(
-                    onPressed: () => _manager.tapAddGroupIcon(),
+                    onPressed: () {
+                      setState(() {
+                        _isAddingGroup = true;
+                      });
+                      _manager.tapAddGroupIcon();
+                    },
                     icon: const Icon(
                       Icons.add_circle_rounded,
                       size: 32,
                       color: kBlueAccentColor,
                     ),
                   ),
-                );
-              }
-            },
-          ),
+                )
         ],
       ),
     );

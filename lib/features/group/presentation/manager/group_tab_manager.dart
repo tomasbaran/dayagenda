@@ -40,7 +40,6 @@ class GroupTabManager {
   final authService = locate<AuthService>();
 
   final groups = ValueNotifier<List<Group>?>(null);
-  final showAddGroupForm = ValueNotifier<bool>(false);
 
   Future subscribeToGroups() async {
     final ownerSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
@@ -61,9 +60,6 @@ class GroupTabManager {
   }
 
   Future tapAddGroupIcon() async {
-    showAddGroupForm.value = true;
-    groups.value ??= [];
-
     final currentUser = authService.auth.currentUser;
     final owner = Owner(uid: currentUser!.uid, email: currentUser.email);
     await createOwnerInDb(owner);
