@@ -48,7 +48,8 @@ class _GroupTabState extends State<GroupTab> {
             valueListenable: _manager.groups,
             builder: (context, groupsValue, child) {
               int id = 0;
-              if (groupsValue == null) {
+              print('GroupTab.build.groupsValue: $groupsValue');
+              if (groupsValue == null || groupsValue.isEmpty) {
                 return const NoGroupsDescription();
               } else {
                 return Column(children: [

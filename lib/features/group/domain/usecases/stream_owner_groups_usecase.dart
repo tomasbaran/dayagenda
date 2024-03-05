@@ -14,7 +14,9 @@ class StreamOwnerGroupsUseCase {
       final owner = data.data() as Map<String, dynamic>;
       final groupRefs = owner['groups'];
       print('StreamOwnerGroupsUseCase.groupRefs: $groupRefs');
-      controller.add(groupRefs);
+      if (groupRefs != null) {
+        controller.add(groupRefs);
+      }
     });
 
     // Return the stream from the controller
