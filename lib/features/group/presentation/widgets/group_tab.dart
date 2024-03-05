@@ -54,14 +54,20 @@ class _GroupTabState extends State<GroupTab> {
               if (groupsValue == null || groupsValue.isEmpty) {
                 return _isAddingGroup ? const SizedBox() : const NoGroupsDescription();
               } else {
-                return Column(
-                  children: [
-                    for (var group in groupsValue)
-                      GroupListWithEmployees(
-                        group: group,
-                        id: id++,
-                      ),
-                  ],
+                return ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height - 280,
+                  ),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      for (var group in groupsValue)
+                        GroupListWithEmployees(
+                          group: group,
+                          id: id++,
+                        ),
+                    ],
+                  ),
                 );
               }
             },
