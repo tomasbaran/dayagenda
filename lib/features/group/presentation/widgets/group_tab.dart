@@ -1,5 +1,6 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
+import 'package:dayagenda/features/group/presentation/widgets/group_list_with_employees.dart';
 import 'package:dayagenda/features/group/presentation/widgets/no_groups_description.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -46,14 +47,17 @@ class _GroupTabState extends State<GroupTab> {
           ValueListenableBuilder(
             valueListenable: _manager.groups,
             builder: (context, groupsValue, child) {
+              int id = 0;
               if (groupsValue == null) {
                 return const NoGroupsDescription();
               } else {
-                return Column(
-                  children: [
-                    for (var group in groupsValue) Text(group.name, style: navBarAccountEmailInputTextStyle),
-                  ],
-                );
+                return Column(children: [
+                  for (var group in groupsValue)
+                    GroupListWithEmployees(
+                      group: group,
+                      id: id++,
+                    ),
+                ]);
               }
             },
           ),

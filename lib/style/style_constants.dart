@@ -20,6 +20,22 @@ const kIconColor = Color(0xFF5E6678);
 // Color kTodayColor = Colors.blue.shade600;
 const kBlueAccentColor = Color(0xFF6589C8);
 
+const groupColors = [
+  Colors.amber,
+  Colors.blue,
+  Colors.brown,
+  Colors.cyan,
+  Colors.deepOrange,
+  Colors.green,
+  Colors.indigo,
+  Colors.lightBlue,
+  Colors.lightGreen,
+  Colors.lime,
+  Colors.orange,
+  Colors.pink,
+  Colors.purple,
+];
+
 // 496370
 // dark ones
 const kThemeColor10 = Color(0xFF232B34); // blueGrey
