@@ -39,25 +39,30 @@ class GroupTabManager {
   final authService = locate<AuthService>();
 
   final groups = ValueNotifier<List<Group>?>(null);
+  final isGroupsStreamInitialized = ValueNotifier<bool>(false);
 
   subscribeToGroups() {
-    print('\x1B[35msubscribeToGroups: ${authService.auth.currentUser!.uid}\n\x1B[0m');
-    final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
+    if (!isGroupsStreamInitialized.value) {
+      isGroupsStreamInitialized.value = true;
 
-    groupRefsSubscription.listen((groupRefEvent) {
-      groups.value = [];
-      print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
-      groupRefEvent.forEach((groupRef) {
-        final groupsSubscription = streamGroups(groupRef);
-        // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
+      print('\x1B[35msubscribeToGroups: ${authService.auth.currentUser!.uid}\n\x1B[0m');
+      final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
 
-        groupsSubscription.listen((group) {
-          groups.value!.add(group);
-          groups.value = List.from(groups.value!);
-          print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
+      groupRefsSubscription.listen((groupRefEvent) {
+        groups.value = [];
+        print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
+        groupRefEvent.forEach((groupRef) {
+          final groupsSubscription = streamGroups(groupRef);
+          // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
+
+          groupsSubscription.listen((group) {
+            groups.value!.add(group);
+            groups.value = List.from(groups.value!);
+            print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
+          });
         });
       });
-    });
+    }
   }
 
   Future tapAddGroupIcon() async {
