@@ -81,7 +81,6 @@ class _GroupTabState extends State<GroupTab> {
                 return ConstrainedBox(
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height - 280,
-                    minHeight: 200,
                   ),
                   child: ListView(
                     shrinkWrap: true,
