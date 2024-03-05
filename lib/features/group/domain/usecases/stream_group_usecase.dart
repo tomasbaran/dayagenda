@@ -7,11 +7,11 @@ import 'package:dayagenda/features/group/domain/entities/group.dart';
 class StreamGroupUseCase {
   final FirestoreRepository _repository;
   StreamGroupUseCase(this._repository);
+  late StreamController<Group> controller;
 
   Stream<Group> call(DocumentReference groupRef) {
     // Create a StreamController to create and control the stream
-    final controller = StreamController<Group>();
-    List<Group> parsedGroups = [];
+    controller = StreamController<Group>();
     List<Employee> parsedEmployees = [];
 
     final subs = _repository.subscribeToGroupData(groupRef);
@@ -40,5 +40,9 @@ class StreamGroupUseCase {
 
     // Return the stream from the controller
     return controller.stream;
+  }
+
+  dispose() {
+    controller.close();
   }
 }

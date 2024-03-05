@@ -24,6 +24,7 @@ class _GroupTabState extends State<GroupTab> {
   @override
   void dispose() {
     _newGroupTextController.dispose();
+    _manager.dispose();
     super.dispose();
   }
 

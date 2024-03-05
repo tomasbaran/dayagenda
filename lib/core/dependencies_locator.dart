@@ -9,7 +9,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_group_to_owner_usec
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/stream_group_usecase.dart';
-import 'package:dayagenda/features/group/domain/usecases/stream_owner_groups_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/stream_group_refs_usecase.dart';
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
@@ -48,7 +48,7 @@ void setupGetIt() {
   locate.registerLazySingleton<SendInvitationMessageToEmployees>(() => SendInvitationMessageToEmployees(locate<SendSms>()));
   locate.registerLazySingleton<AddEmployeeToEmployeesCollectionUsecase>(() => AddEmployeeToEmployeesCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
-  locate.registerLazySingleton<StreamOwnerGroupsUseCase>(() => StreamOwnerGroupsUseCase(locate<FirestoreRepository>()));
+  locate.registerLazySingleton<StreamGroupRefsUseCase>(() => StreamGroupRefsUseCase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamGroupUseCase>(() => StreamGroupUseCase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<AddGroupToOwnerUseCase>(() => AddGroupToOwnerUseCase(locate<FirestoreRepository>()));
   // Managers
@@ -59,7 +59,7 @@ void setupGetIt() {
       sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
       addEmployeeToEmployeesCollection: locate<AddEmployeeToEmployeesCollectionUsecase>(),
       addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
-      streamOwnerGroups: locate<StreamOwnerGroupsUseCase>(),
+      streamGroupRefs: locate<StreamGroupRefsUseCase>(),
       streamGroups: locate<StreamGroupUseCase>(),
       addGroupToOwner: locate<AddGroupToOwnerUseCase>(),
     ),

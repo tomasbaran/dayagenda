@@ -11,7 +11,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_group_to_owner_usec
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/stream_group_usecase.dart';
-import 'package:dayagenda/features/group/domain/usecases/stream_owner_groups_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/stream_group_refs_usecase.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -25,12 +25,12 @@ class GroupTabManager {
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
   final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
-  final StreamOwnerGroupsUseCase streamOwnerGroups;
+  final StreamGroupRefsUseCase streamGroupRefs;
   final StreamGroupUseCase streamGroups;
   GroupTabManager({
     required this.addGroupToOwner,
     required this.streamGroups,
-    required this.streamOwnerGroups,
+    required this.streamGroupRefs,
     required this.createOwnerInDb,
     required this.createGroupInDb,
     required this.sendInvitationMessageToEmployees,
@@ -45,7 +45,7 @@ class GroupTabManager {
   Future subscribeToGroups() async {
     groups.value = [];
 
-    final groupRefsSubscription = streamOwnerGroups(authService.auth.currentUser!.uid);
+    final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
 
     groupRefsSubscription.listen((groupRefEvent) {
       groupRefEvent.forEach((groupRef) {
@@ -117,5 +117,10 @@ class GroupTabManager {
     } else {
       await authState.loginWithEmailAndPassword(lastUsedEmail, lastUsedPassword);
     }
+  }
+
+  dispose() {
+    streamGroupRefs.dispose();
+    streamGroups.dispose();
   }
 }

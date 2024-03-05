@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 
-class StreamOwnerGroupsUseCase {
+class StreamGroupRefsUseCase {
   final FirestoreRepository _repository;
-  StreamOwnerGroupsUseCase(this._repository);
+  StreamGroupRefsUseCase(this._repository);
+  late StreamController controller;
 
   Stream call(String ownerUid) {
     // Create a StreamController to create and control the stream
-    final controller = StreamController<List<dynamic>>();
-
+    controller = StreamController<List<dynamic>>();
     final subs = _repository.subscribeToOwnerData(ownerUid);
     subs.onData((data) {
       final owner = data.data() as Map<String, dynamic>;
@@ -21,5 +21,9 @@ class StreamOwnerGroupsUseCase {
 
     // Return the stream from the controller
     return controller.stream;
+  }
+
+  dispose() {
+    controller.close();
   }
 }
