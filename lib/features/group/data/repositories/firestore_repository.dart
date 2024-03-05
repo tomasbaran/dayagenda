@@ -33,6 +33,8 @@ class FirestoreRepository {
 
   StreamSubscription subscribeToOwnerData(String ownerUid) => db.collection('owners').doc(ownerUid).snapshots().listen((event) {});
 
+  StreamSubscription subscribeToGroupData(DocumentReference groupRef) => groupRef.snapshots().listen((event) {});
+
   Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
     print('Updating owner in db...');
     await db.collection('owners').doc(ownerUid).set(updatedMap, SetOptions(merge: true));

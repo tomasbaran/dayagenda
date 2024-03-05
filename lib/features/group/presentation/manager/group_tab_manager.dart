@@ -9,6 +9,7 @@ import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_
 import 'package:dayagenda/features/group/domain/usecases/add_group_id_to_owner_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_group_in_db_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/create_owner_in_db_usecase.dart';
+import 'package:dayagenda/features/group/domain/usecases/stream_group_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/stream_owner_groups_usecase.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
@@ -24,7 +25,9 @@ class GroupTabManager {
   final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
   final StreamOwnerGroupsUseCase streamOwnerGroups;
+  final StreamGroupUseCase streamGroups;
   GroupTabManager({
+    required this.streamGroups,
     required this.streamOwnerGroups,
     required this.createOwnerInDb,
     required this.createGroupInDb,
@@ -44,9 +47,10 @@ class GroupTabManager {
     groups.value = [];
 
     groupSubscription.listen((event) {
-      event.forEach((group) {
-        print('group: $group');
-        groups.value!.add(Group(ownerUid: 'ownerUid', name: group.toString()));
+      event.forEach((groupRef) {
+        print('GroupTabManager.group: $groupRef');
+        streamGroups(groupRef);
+        groups.value!.add(Group(ownerUid: 'ownerUid', name: groupRef.toString()));
         groups.value = List.from(groups.value!);
       });
     });
