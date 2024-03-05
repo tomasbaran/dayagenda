@@ -102,6 +102,10 @@ class _GroupTabState extends State<GroupTab> {
                           const SizedBox(height: 24),
                           ElevatedButton(
                             onPressed: () {
+                              setState(() {
+                                _isAddingGroup = false;
+                                _newGroupTextController.text = '';
+                              });
                               if (_formKey.currentState!.validate()) {
                                 _manager.addGroup(_newGroupTextController.text);
                               }
