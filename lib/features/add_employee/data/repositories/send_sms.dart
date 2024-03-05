@@ -6,7 +6,7 @@ class SendSms {
     print('send sms to employees: $employees with message: $message');
 
     for (var employee in employees) {
-      String _result = await sendSMS(message: message, recipients: [employee.phone]).catchError((onError) {
+      String _result = await sendSMS(message: message, recipients: [employee.phone!]).catchError((onError) {
         print(onError);
         return onError;
       });

@@ -7,17 +7,17 @@ class Employee extends Equatable {
   String? secondName;
   String? thirdName;
   String? email;
-  String phone;
+  String? phone;
   EmployeeStatus status;
 
   Employee({
+    required this.firstName,
     this.status = EmployeeStatus.invitationSent,
     this.uid,
-    required this.firstName,
     this.secondName,
     this.thirdName,
     this.email,
-    required this.phone,
+    this.phone,
   });
 
   @override
