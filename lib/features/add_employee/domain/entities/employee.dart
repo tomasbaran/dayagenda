@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 
 class Employee extends Equatable {
   String? uid;
-  String firstName;
+  String nickname;
+  String? firstName;
   String? secondName;
   String? thirdName;
   String? email;
@@ -11,7 +12,8 @@ class Employee extends Equatable {
   EmployeeStatus status;
 
   Employee({
-    required this.firstName,
+    required this.nickname,
+    this.firstName,
     this.status = EmployeeStatus.invitationSent,
     this.uid,
     this.secondName,
@@ -21,7 +23,7 @@ class Employee extends Equatable {
   });
 
   @override
-  List<Object?> get props => [uid, firstName, secondName, thirdName, email, phone, status];
+  List<Object?> get props => [nickname, uid, firstName, secondName, thirdName, email, phone, status];
 
   @override
   bool get stringify => true;
