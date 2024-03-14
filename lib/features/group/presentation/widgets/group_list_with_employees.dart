@@ -50,7 +50,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () => setState(() => _isAddingEmployee = !_isAddingEmployee),
                 child: CircleAvatar(
                   radius: 12,
