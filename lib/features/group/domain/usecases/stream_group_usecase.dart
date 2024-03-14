@@ -12,9 +12,10 @@ class StreamGroupUseCase {
   Stream<Group> call(DocumentReference groupRef) {
     // Create a StreamController to create and control the stream
     controller = StreamController<Group>();
-    List<Employee> parsedEmployees = [];
     final subs = _repository.subscribeToGroupData(groupRef);
     subs.onData((data) {
+      List<Employee> parsedEmployees = [];
+
       final group = data.data() as Map<String, dynamic>;
       print('StreamGroupUseCase.group: $group\n');
       print('StreamGroupUseCase.employees: ${group['employees']}\n');
