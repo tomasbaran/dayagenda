@@ -69,7 +69,10 @@ class FirestoreRepository {
         print('Owner data: ${event.data()}');
       });
 
-  StreamSubscription subscribeToGroupData(DocumentReference groupRef) => groupRef.snapshots().listen((event) {});
+  StreamSubscription subscribeToGroupData(DocumentReference groupRef) {
+    print('Subscribing to group data: $groupRef');
+    return groupRef.snapshots().listen((event) {});
+  }
 
   Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
     print('Updating owner in db...');
@@ -108,10 +111,14 @@ class FirestoreRepository {
   }
 
   Future<bool> addEmployeeToGroupsCollection(Group group, Employee employee) async {
-    print('Adding employee: $employee to groups collection...');
-    final DocumentReference employeeRef = db.collection('employees').doc(employee.uid);
+    print('Adding employee: $employee to groups collection: $group');
+    // final DocumentReference employeeRef = db.collection('employees').doc(employee.uid);
+    Map<String, dynamic> employeeMap = {
+      'nickname': employee.nickname,
+      'uid': employee.uid,
+    };
     await db.collection('groups').doc(group.id).update({
-      'employees': FieldValue.arrayUnion([employeeRef])
+      'employees': FieldValue.arrayUnion([employeeMap])
     });
     return true;
   }

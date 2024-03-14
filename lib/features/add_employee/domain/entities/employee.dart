@@ -14,7 +14,7 @@ class Employee extends Equatable {
   Employee({
     required this.nickname,
     this.firstName,
-    this.status = EmployeeStatus.invitationSent,
+    this.status = EmployeeStatus.registeredAnonymously,
     this.uid,
     this.secondName,
     this.thirdName,

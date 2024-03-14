@@ -13,7 +13,6 @@ class StreamGroupUseCase {
     // Create a StreamController to create and control the stream
     controller = StreamController<Group>();
     List<Employee> parsedEmployees = [];
-
     final subs = _repository.subscribeToGroupData(groupRef);
     subs.onData((data) {
       final group = data.data() as Map<String, dynamic>;
@@ -23,12 +22,15 @@ class StreamGroupUseCase {
       if (group['employees'] != null) {
         List employees = group['employees'];
         for (var employee in employees) {
+          print('new employee: $employee\n');
           Employee parsedEmployee = Employee(nickname: employee['nickname'], uid: employee['uid']);
+          print('parsedEmployee: $parsedEmployee\n');
           parsedEmployees.add(parsedEmployee);
         }
       }
 
       final Group parsedGroup = Group(
+        id: groupRef.id,
         ownerUid: group['owner_uid'],
         name: group['name'],
         employees: parsedEmployees,
