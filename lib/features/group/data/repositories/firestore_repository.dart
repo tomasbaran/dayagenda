@@ -62,6 +62,7 @@ class FirestoreRepository {
   Future<bool> addEmployeeToEmployeesCollection(Employee employee) async {
     print('Adding employee: ${employee.uid} to employees collection...');
     final parsedEmployee = {
+      'nickname': employee.nickname,
       'first_name': employee.firstName,
       'second_name': employee.secondName,
       'third_name': employee.thirdName,

@@ -23,7 +23,7 @@ class StreamGroupUseCase {
       if (group['employees'] != null) {
         List employees = group['employees'];
         for (var employee in employees) {
-          Employee parsedEmployee = Employee(firstName: employee['name'], uid: employee['uid']);
+          Employee parsedEmployee = Employee(nickname: employee['nickname'], uid: employee['uid']);
           parsedEmployees.add(parsedEmployee);
         }
       }

@@ -1,4 +1,5 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:dayagenda/style/style_constants.dart';
@@ -64,7 +65,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
           ],
         ),
         for (var employee in widget.group.employees)
-          Text(employee.firstName, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+          Text(employee.nickname, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
         const SizedBox(height: 24),
         if (_isAddingEmployee)
           Column(
@@ -104,8 +105,9 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
+                        final employee = Employee(nickname: _newGroupTextController.text);
                         if (_formKey.currentState!.validate()) {
-                          _manager.addGroup(_newGroupTextController.text);
+                          _manager.addEmployeesToDb(employees: [employee], group: widget.group);
                         }
                         setState(() {
                           _isAddingEmployee = false;
