@@ -155,7 +155,7 @@ TextStyle navBarAccountTextStyle = const TextStyle(
 // # navBarAccount
 TextStyle navBarAccountHighlightedTextStyle = const TextStyle(
   color: kThemeColor2,
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: FontWeight.w700,
   // decoration: TextDecoration.underline,
 );

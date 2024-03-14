@@ -15,7 +15,32 @@ class GroupListWithEmployees extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(group.name.toUpperCase(), style: navBarAccountHighlightedTextStyle),
+        Row(
+          children: [
+            const SizedBox(
+              height: 48,
+              width: 48,
+            ),
+            Expanded(
+              child: Text(
+                group.name.toUpperCase(),
+                style: navBarAccountHighlightedTextStyle,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: CircleAvatar(
+                radius: 12,
+                child: Icon(
+                  Icons.person_add_alt_outlined,
+                  size: 18,
+                  color: groupColors[id],
+                ),
+              ),
+            ),
+          ],
+        ),
         for (var employee in group.employees) Text(employee.firstName, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[id])),
         const SizedBox(height: 24),
       ],
