@@ -58,7 +58,7 @@ class _GroupTabState extends State<GroupTab> {
                   setState(() {
                     _isAddingGroup = true;
                   });
-                  _manager.tapAddGroupIcon();
+                  _manager.createOwnerInDbIfNotCreatedYet();
                 },
                 icon: const Icon(
                   Icons.add_circle_rounded,

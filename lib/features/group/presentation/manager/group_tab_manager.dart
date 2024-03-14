@@ -1,6 +1,7 @@
 import 'package:dayagenda/core/dependencies_locator.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
+import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/domain/entities/owner.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
@@ -17,7 +18,7 @@ import 'package:dayagenda/states/auth_state.dart';
 import 'package:flutter/material.dart';
 
 class GroupTabManager {
-  final CreateOwnerInDbUsecase createOwnerInDb;
+  final CreateOwnerInDbUsecase createOwnerInDbUseCase;
   final CreateGroupInDbUsecase createGroupInDb;
   final AddGroupToOwnerUseCase addGroupToOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
@@ -29,7 +30,7 @@ class GroupTabManager {
     required this.addGroupToOwner,
     required this.streamGroups,
     required this.streamGroupRefs,
-    required this.createOwnerInDb,
+    required this.createOwnerInDbUseCase,
     required this.createGroupInDb,
     required this.sendInvitationMessageToEmployees,
     required this.addEmployeeToEmployeesCollection,
@@ -37,15 +38,34 @@ class GroupTabManager {
   });
   final appState = locate<AppState>();
   final authService = locate<AuthService>();
+  Owner? owner;
 
   final groups = ValueNotifier<List<Group>?>(null);
   final isGroupsStreamInitialized = ValueNotifier<bool>(false);
+  final firestoreRepo = locate<FirestoreRepository>();
 
-  subscribeToGroups() {
-    if (!isGroupsStreamInitialized.value) {
+  Future<Owner?> getOwnerOrNull() {
+    return firestoreRepo.checkDocumentExists('owners/${authService.auth.currentUser!.uid}').then((exists) async {
+      if (exists) {
+        final Map<String, dynamic>? ownerData = await firestoreRepo.getOwnerData(authService.auth.currentUser!.uid);
+        final Owner owner = Owner(
+          uid: ownerData?['uid'],
+          email: ownerData?['email'],
+        );
+        return owner;
+      } else {
+        return null;
+      }
+    });
+  }
+
+  subscribeToGroups() async {
+    owner = await getOwnerOrNull();
+    print('owner: $owner');
+    if (!isGroupsStreamInitialized.value && owner != null) {
       isGroupsStreamInitialized.value = true;
 
-      print('\x1B[35msubscribeToGroups: ${authService.auth.currentUser!.uid}\n\x1B[0m');
+      print('\x1B[35msubscribeToGroups of OwnerUid: ${authService.auth.currentUser!.uid}\n\x1B[0m');
       final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
 
       groupRefsSubscription.listen((groupRefEvent) {
@@ -65,10 +85,12 @@ class GroupTabManager {
     }
   }
 
-  Future tapAddGroupIcon() async {
-    final currentUser = authService.auth.currentUser;
-    final owner = Owner(uid: currentUser!.uid, email: currentUser.email);
-    await createOwnerInDb(owner);
+  Future createOwnerInDbIfNotCreatedYet() async {
+    if (owner == null) {
+      final currentUser = authService.auth.currentUser;
+      owner = Owner(uid: currentUser!.uid, email: currentUser.email);
+      await createOwnerInDbUseCase(owner!);
+    }
     return;
   }
 

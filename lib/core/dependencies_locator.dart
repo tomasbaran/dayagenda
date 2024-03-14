@@ -54,7 +54,7 @@ void setupGetIt() {
   // Managers
   locate.registerLazySingleton<GroupTabManager>(
     () => GroupTabManager(
-      createOwnerInDb: locate<CreateOwnerInDbUsecase>(),
+      createOwnerInDbUseCase: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
       addEmployeeToEmployeesCollection: locate<AddEmployeeToEmployeesCollectionUsecase>(),

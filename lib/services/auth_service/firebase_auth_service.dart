@@ -77,6 +77,7 @@ class FirebaseAuthService extends AuthService {
   Future loginWithEmailAndPassword(String emailAddress, String password) async {
     try {
       await auth.signInWithEmailAndPassword(email: emailAddress, password: password);
+      print('firebase_auth_service.dart:loginWithEmailAndPassword: User logged in: $emailAddress');
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "invalid-email":

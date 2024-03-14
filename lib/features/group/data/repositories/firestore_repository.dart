@@ -19,6 +19,22 @@ class FirestoreRepository {
     return true;
   }
 
+  Future<Map<String, dynamic>?> getOwnerData(String ownerUid) async {
+    try {
+      DocumentSnapshot ownerDocument = await db.collection('owners').doc(ownerUid).get();
+
+      if (ownerDocument.exists) {
+        return ownerDocument.data() as Map<String, dynamic>?;
+      } else {
+        print('No data found for this owner UID.');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching owner data: $e');
+      return null;
+    }
+  }
+
   Future<String> createGroup(Group group) async {
     print('Adding group to db...');
     final parsedGroup = {
@@ -33,9 +49,25 @@ class FirestoreRepository {
     }
   }
 
+  Future<bool> checkDocumentExists(String path) async {
+    try {
+      // Attempt to fetch the document at the specified path
+      var document = await FirebaseFirestore.instance.doc(path).get();
+
+      // Return true if the document exists, false if it doesn't
+      return document.exists;
+    } catch (e) {
+      // Handle any errors, such as network issues, permissions, etc.
+      print('Error checking document existence: $e');
+      return false;
+    }
+  }
+
   // Stream<List<Group>>
 
-  StreamSubscription subscribeToOwnerData(String ownerUid) => db.collection('owners').doc(ownerUid).snapshots().listen((event) {});
+  StreamSubscription subscribeToOwnerData(String ownerUid) => db.collection('owners').doc(ownerUid).snapshots().listen((event) {
+        print('Owner data: ${event.data()}');
+      });
 
   StreamSubscription subscribeToGroupData(DocumentReference groupRef) => groupRef.snapshots().listen((event) {});
 
