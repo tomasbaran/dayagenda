@@ -122,13 +122,6 @@ class GroupTabManager {
 
     final authState = locate<AuthState>();
     final appState = locate<AppState>();
-    // step 1: owner logout : to be able to use signInAnonymously for the employees
-    // await authService.logout();
-    // 2. clear employees of the group
-    // groups.value?.firstWhere((element) => element.id == group.id).employees = [];
-    // groups.value = [];
-    // dispose();
-    // subscribeToGroups();
 
     // Register a new FirebaseApp for Employees
     final employeeAuthService =
