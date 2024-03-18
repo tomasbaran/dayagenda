@@ -21,14 +21,18 @@ class GroupListWithEmployees extends StatefulWidget {
 
 class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
   bool _isAddingEmployee = false;
-  final _newGroupTextController = TextEditingController();
+  final _phoneTextController = TextEditingController();
+  final _nicknameTextController = TextEditingController();
+  final _phoneNumberController = TextEditingController(); // Controller for the phone number
   final _manager = locate<GroupTabManager>();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _newGroupTextController.dispose();
+    _phoneTextController.dispose();
+    _nicknameTextController.dispose();
+    _phoneNumberController.dispose(); // Dispose the phone number controller
     super.dispose();
   }
 
@@ -68,7 +72,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
         for (var employee in widget.group.employees)
           Row(
             children: [
-              Text(employee.nickname, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+              Text(employee.phone!, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
               employee.status == EmployeeStatus.registeredAnonymously
                   ? IconButton(onPressed: () => _manager.inviteEmployee(employee), icon: const Icon(Icons.send, color: kBlueAccentColor, size: 18))
                   : Icon(Icons.check, color: kBlueAccentColor, size: 18),
@@ -83,44 +87,44 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _newGroupTextController,
+                      controller: _nicknameTextController,
                       validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese un nombre' : null,
                       style: navBarAccountEmailInputTextStyle,
                       decoration: InputDecoration(
                         hintText: 'Apodo del empleado',
                         hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
-                        prefixIcon: const Icon(
-                          Icons.person_add_alt_outlined,
-                          color: kBlueAccentColor,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: kBlueAccentColor,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            // color: kBlueAccentColor,
-                            color: Colors.white,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
+                        prefixIcon: const Icon(Icons.person, color: kBlueAccentColor),
+                        // Update border styles as needed
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    TextFormField(
+                      controller: _phoneNumberController,
+                      validator: (value) => (value == null || value.isEmpty) ? 'Please enter a phone number' : null,
+                      style: navBarAccountEmailInputTextStyle,
+                      decoration: InputDecoration(
+                        hintText: 'Phone number',
+                        hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
+                        prefixIcon: const Icon(Icons.phone, color: kBlueAccentColor),
+                        // Update border styles as needed
                       ),
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
-                        final employee = Employee(nickname: _newGroupTextController.text);
                         if (_formKey.currentState!.validate()) {
+                          final employee = Employee(
+                            nickname: _nicknameTextController.text,
+                            phone: _phoneNumberController.text,
+                            // Include additional fields as required
+                          );
                           _manager.addEmployeesToDb(employee: employee, group: widget.group);
+                          setState(() {
+                            _isAddingEmployee = false;
+                            _nicknameTextController.clear();
+                            _phoneNumberController.clear();
+                          });
                         }
-                        setState(() {
-                          _isAddingEmployee = false;
-                          _newGroupTextController.text = '';
-                        });
                       },
                       child: Text('Agrega Empleado', style: navBarAccountButtonTitleTextStyle),
                     )
@@ -128,7 +132,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
                 ),
               ),
             ],
-          )
+          ),
       ],
     );
   }

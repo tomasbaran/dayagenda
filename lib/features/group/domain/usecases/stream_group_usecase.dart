@@ -24,7 +24,7 @@ class StreamGroupUseCase {
         List employees = group['employees'];
         for (var employee in employees) {
           print('new employee: $employee\n');
-          Employee parsedEmployee = Employee(nickname: employee['nickname'], uid: employee['uid']);
+          Employee parsedEmployee = Employee(nickname: employee['nickname'], uid: employee['uid'], phone: employee['phone']);
           print('parsedEmployee: $parsedEmployee\n');
           parsedEmployees.add(parsedEmployee);
         }

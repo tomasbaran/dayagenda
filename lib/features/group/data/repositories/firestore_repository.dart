@@ -115,6 +115,7 @@ class FirestoreRepository {
     // final DocumentReference employeeRef = db.collection('employees').doc(employee.uid);
     Map<String, dynamic> employeeMap = {
       'nickname': employee.nickname,
+      'phone': employee.phone,
       'uid': employee.uid,
     };
     await db.collection('groups').doc(group.id).update({
