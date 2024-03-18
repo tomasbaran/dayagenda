@@ -69,18 +69,18 @@ class GroupTabManager {
       final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
 
       groupRefsSubscription.listen((groupRefEvent) {
-        // groups.value = [];
-        print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
+        groups.value = [];
         groupRefEvent.forEach((groupRef) {
           final groupsSubscription = streamGroups(groupRef);
           // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
+          print('\x1B[32mgroupRef.value: ${groupRef}\n\x1B[0m');
 
           groupsSubscription.listen((group) {
-            groups.value = [];
+            print('\x1B[32m1.group.value: ${groups.value}\n\x1B[0m');
 
             groups.value!.add(group);
             groups.value = List.from(groups.value!);
-            print('\x1B[32mgroup.value: ${groups.value}\n\x1B[0m');
+            print('\x1B[32m2.group.value: ${groups.value}\n\x1B[0m');
           });
         });
       });
