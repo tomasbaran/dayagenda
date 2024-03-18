@@ -148,7 +148,6 @@ class GroupTabManager {
     }
 
     // step 3: send invitation message to employees
-    // await sendInvitationMessageToEmployees(employees);
     // step 4: owner login
     final lastUsedEmail = authState.lastUsedEmail;
     final lastUsedPassword = authState.lastUsedPassword;
@@ -158,6 +157,8 @@ class GroupTabManager {
       await authState.loginWithEmailAndPassword(lastUsedEmail, lastUsedPassword);
     }
   }
+
+  Future inviteEmployee(Employee employee) async => await sendInvitationMessageToEmployees(employee);
 
   dispose() {
     streamGroupRefs.dispose();

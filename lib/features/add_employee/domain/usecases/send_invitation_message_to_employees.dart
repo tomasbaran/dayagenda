@@ -6,9 +6,9 @@ class SendInvitationMessageToEmployees {
   final SendSms sendSmsRepo;
   SendInvitationMessageToEmployees(this.sendSmsRepo);
 
-  Future call(List<Employee> employees) async {
-    for (var employee in employees) {
-      await sendSmsRepo([employee], InvitationMessage.call(employee));
-    }
+  Future call(Employee employee) async {
+    // for (var employee in employees) {
+    await sendSmsRepo(employee, InvitationMessage.call(employee));
+    // }
   }
 }
