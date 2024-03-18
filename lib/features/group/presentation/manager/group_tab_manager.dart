@@ -144,16 +144,6 @@ class GroupTabManager {
     // logout the newly registered and signed in employee
     print('employeeCredentials: ${employeeCredentials.user?.uid}');
     await employeeAuthService.signOut();
-
-    // step 3: send invitation message to employees
-    // step 4: owner login
-    final lastUsedEmail = authState.lastUsedEmail;
-    final lastUsedPassword = authState.lastUsedPassword;
-    if (lastUsedPassword == null || lastUsedEmail == null) {
-      appState.updateNavBarSelection(NavBarSelection.account);
-    } else {
-      await authState.loginWithEmailAndPassword(lastUsedEmail, lastUsedPassword);
-    }
   }
 
   Future inviteEmployee(Employee employee) async => await sendInvitationMessageToEmployees(employee);
