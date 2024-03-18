@@ -117,7 +117,7 @@ class GroupTabManager {
     return;
   }
 
-  Future addEmployeesToDb({required List<Employee> employees, required Group group}) async {
+  Future addEmployeesToDb({required Employee employee, required Group group}) async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
 
     final authState = locate<AuthState>();
@@ -128,24 +128,22 @@ class GroupTabManager {
         FirebaseAuth.instanceFor(app: await Firebase.initializeApp(name: 'employees', options: dev.DefaultFirebaseOptions.currentPlatform));
 
     // step 2: register employees
-    for (var employee in employees) {
-      // step A: register employee anonymously
-      final employeeCredentials = await employeeAuthService.signInAnonymously();
-      employee.uid = employeeCredentials.user?.uid;
-      print('registerEmployeeAnonymously employeeUid: $employee');
+    // step A: register employee anonymously
+    final employeeCredentials = await employeeAuthService.signInAnonymously();
+    employee.uid = employeeCredentials.user?.uid;
+    print('registerEmployeeAnonymously employeeUid: $employee');
 
-      // step B: add employee to employees collection
-      await addEmployeeToEmployeesCollection(employee);
-      print('added employee[${employee.uid}] to employees collection');
+    // step B: add employee to employees collection
+    await addEmployeeToEmployeesCollection(employee);
+    print('added employee[${employee.uid}] to employees collection');
 
-      // step C: add employee to group collection
-      await addEmployeeToGroupsCollection(group, employee);
-      // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
+    // step C: add employee to group collection
+    await addEmployeeToGroupsCollection(group, employee);
+    // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
 
-      // logout the newly registered and signed in employee
-      print('employeeCredentials: ${employeeCredentials.user?.uid}');
-      await employeeAuthService.signOut();
-    }
+    // logout the newly registered and signed in employee
+    print('employeeCredentials: ${employeeCredentials.user?.uid}');
+    await employeeAuthService.signOut();
 
     // step 3: send invitation message to employees
     // step 4: owner login

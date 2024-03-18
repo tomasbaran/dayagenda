@@ -115,7 +115,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
                       onPressed: () {
                         final employee = Employee(nickname: _newGroupTextController.text);
                         if (_formKey.currentState!.validate()) {
-                          _manager.addEmployeesToDb(employees: [employee], group: widget.group);
+                          _manager.addEmployeesToDb(employee: employee, group: widget.group);
                         }
                         setState(() {
                           _isAddingEmployee = false;
