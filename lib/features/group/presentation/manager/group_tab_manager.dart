@@ -15,7 +15,10 @@ import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/auth_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:dayagenda/firebase_options_dev.dart' as dev;
 
 class GroupTabManager {
   final CreateOwnerInDbUsecase createOwnerInDbUseCase;
@@ -99,6 +102,8 @@ class GroupTabManager {
 
   Future addGroup(String groupName) async {
     // appState.updateNavBarSelection(NavBarSelection.group);
+    // 0. clear employees of the group
+    groups.value = [];
     // 1. create group
     Group group = Group(
       name: groupName,
@@ -114,17 +119,20 @@ class GroupTabManager {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
 
     final authState = locate<AuthState>();
-    final AuthService authService = locate<AuthService>();
-
     final appState = locate<AppState>();
     // step 1: owner logout : to be able to use signInAnonymously for the employees
-    await authService.logout();
+    // await authService.logout();
+    // 2. clear employees of the group
+    // groups.value?.firstWhere((element) => element.id == group.id).;
+    // groups.
+    final employeeAuthService =
+        FirebaseAuth.instanceFor(app: await Firebase.initializeApp(name: 'employees', options: dev.DefaultFirebaseOptions.currentPlatform));
 
     // step 2: register employees
     for (var employee in employees) {
       // step A: register employee anonymously
-      final employeeCredentials = await authService.signInAnonymously();
-      employee.uid = employeeCredentials?.user?.uid;
+      final employeeCredentials = await employeeAuthService.signInAnonymously();
+      employee.uid = employeeCredentials.user?.uid;
       print('registerEmployeeAnonymously employeeUid: $employee');
 
       // step B: add employee to employees collection
@@ -135,10 +143,13 @@ class GroupTabManager {
       await addEmployeeToGroupsCollection(group, employee);
       // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
 
-      await authService.logout();
+      // logout the newly registered and signed in employee
+      print('employeeCredentials: ${employeeCredentials.user?.uid}');
+      await employeeAuthService.signOut();
     }
+
     // step 3: send invitation message to employees
-    await sendInvitationMessageToEmployees(employees);
+    // await sendInvitationMessageToEmployees(employees);
     // step 4: owner login
     final lastUsedEmail = authState.lastUsedEmail;
     final lastUsedPassword = authState.lastUsedPassword;
