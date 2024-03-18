@@ -64,26 +64,28 @@ class GroupTabManager {
 
   subscribeToGroups() async {
     owner = await getOwnerOrNull();
-    print('owner: $owner');
     if (!isGroupsStreamInitialized.value && owner != null) {
       isGroupsStreamInitialized.value = true;
-
-      print('\x1B[35msubscribeToGroups of OwnerUid: ${authService.auth.currentUser!.uid}\n\x1B[0m');
       final groupRefsSubscription = streamGroupRefs(authService.auth.currentUser!.uid);
+      groups.value = []; // Initialize your groups list
 
       groupRefsSubscription.listen((groupRefEvent) {
-        groups.value = [];
         groupRefEvent.forEach((groupRef) {
           final groupsSubscription = streamGroups(groupRef);
-          // print('\x1B[35mGroupTabManager.newGroup: ${groupsSubscription.map((group) => group.name)}\n\x1B[0m');
-          print('\x1B[32mgroupRef.value: ${groupRef}\n\x1B[0m');
+          groupsSubscription.listen((updatedGroup) {
+            // Find if the group already exists
+            var existingGroupIndex = groups.value?.indexWhere((g) => g.id == updatedGroup.id);
 
-          groupsSubscription.listen((group) {
-            print('\x1B[32m1.group.value: ${groups.value}\n\x1B[0m');
+            if (existingGroupIndex != null && existingGroupIndex != -1) {
+              // If exists, update the existing group
+              groups.value![existingGroupIndex] = updatedGroup;
+            } else {
+              // If doesn't exist, add as a new group
+              groups.value?.add(updatedGroup);
+            }
 
-            groups.value!.add(group);
+            // To trigger the ValueNotifier, set it to a new list containing the updated groups
             groups.value = List.from(groups.value!);
-            print('\x1B[32m2.group.value: ${groups.value}\n\x1B[0m');
           });
         });
       });
@@ -103,7 +105,7 @@ class GroupTabManager {
   Future addGroup(String groupName) async {
     // appState.updateNavBarSelection(NavBarSelection.group);
     // 0. clear employees of the group
-    groups.value = [];
+    // groups.value = [];
     // 1. create group
     Group group = Group(
       name: groupName,
@@ -123,8 +125,12 @@ class GroupTabManager {
     // step 1: owner logout : to be able to use signInAnonymously for the employees
     // await authService.logout();
     // 2. clear employees of the group
-    // groups.value?.firstWhere((element) => element.id == group.id).;
-    // groups.
+    // groups.value?.firstWhere((element) => element.id == group.id).employees = [];
+    // groups.value = [];
+    // dispose();
+    // subscribeToGroups();
+
+    // Register a new FirebaseApp for Employees
     final employeeAuthService =
         FirebaseAuth.instanceFor(app: await Firebase.initializeApp(name: 'employees', options: dev.DefaultFirebaseOptions.currentPlatform));
 

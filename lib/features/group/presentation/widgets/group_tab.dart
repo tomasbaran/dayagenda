@@ -73,7 +73,7 @@ class _GroupTabState extends State<GroupTab> {
             valueListenable: _manager.groups,
             builder: (context, groupsValue, child) {
               int id = 0;
-              print('GroupTab.build.groupsValue: $groupsValue');
+              print('\x1B[33mGroupTab.build.groupsValue:\x1B[0m $groupsValue\n\n');
               if (groupsValue == null) {
                 debugPrint('groupsValue is null');
                 return _isAddingGroup ? const SizedBox() : const NoGroupsDescription();
