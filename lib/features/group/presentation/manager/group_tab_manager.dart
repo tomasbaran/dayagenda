@@ -93,6 +93,7 @@ class GroupTabManager {
       owner = Owner(uid: currentUser!.uid, email: currentUser.email);
       await createOwnerInDbUseCase(owner!);
     }
+    subscribeToGroups();
     return;
   }
 
