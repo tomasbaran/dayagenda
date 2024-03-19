@@ -1,3 +1,4 @@
+import 'package:dayagenda/globals/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:dayagenda/services/auth_service/auth_service.dart';
@@ -111,6 +112,14 @@ class AccountNavContainer extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (kDayagendaUrl == baseUrlDev)
+                  ElevatedButton(
+                    child: Text(
+                      'a@a.aa',
+                      style: navBarAccountEmailSubmitButtonTextStyle,
+                    ),
+                    onPressed: () async => await authState.loginWithEmailAndPassword('a@a.aa', '123456'),
+                  ),
               ],
             );
           }),
