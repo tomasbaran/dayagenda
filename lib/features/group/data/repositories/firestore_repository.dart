@@ -71,7 +71,41 @@ class FirestoreRepository {
 
   StreamSubscription subscribeToGroupData(DocumentReference groupRef) {
     print('Subscribing to group data: $groupRef');
-    return groupRef.snapshots().listen((event) {});
+
+    return groupRef.snapshots().listen((event) {
+      print('event: $event');
+    });
+  }
+
+  Future<bool> updateEmployee(String employeeUid, Map<String, Object?> updatedMap) async {
+    print('Updating employee in db...');
+    await db.collection('employees').doc(employeeUid).update(updatedMap);
+    return true;
+  }
+
+  Future<bool> updateGroupEmployee(String groupId, Employee oldEmployee, Employee newEmployee) async {
+    print('Updating group in db...');
+    await db.collection('groups').doc(groupId).update({
+      'employees': FieldValue.arrayRemove([
+        {
+          'nickname': oldEmployee.nickname,
+          'phone': oldEmployee.phone,
+          'uid': oldEmployee.uid,
+          'status': oldEmployee.status.name.toString(),
+        }
+      ])
+    });
+    await db.collection('groups').doc(groupId).update({
+      'employees': FieldValue.arrayUnion([
+        {
+          'nickname': newEmployee.nickname,
+          'phone': newEmployee.phone,
+          'uid': newEmployee.uid,
+          'status': newEmployee.status.name.toString(),
+        }
+      ])
+    });
+    return true;
   }
 
   Future<bool> updateOwner(String ownerUid, Map<String, Object?> updatedMap) async {
@@ -117,6 +151,7 @@ class FirestoreRepository {
       'nickname': employee.nickname,
       'phone': employee.phone,
       'uid': employee.uid,
+      'status': employee.status.name.toString(),
     };
     await db.collection('groups').doc(group.id).update({
       'employees': FieldValue.arrayUnion([employeeMap])

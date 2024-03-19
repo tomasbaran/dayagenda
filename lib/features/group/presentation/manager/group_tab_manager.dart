@@ -146,7 +146,7 @@ class GroupTabManager {
     await employeeAuthService.signOut();
   }
 
-  Future inviteEmployee(Employee employee) async => await sendInvitationMessageToEmployees(employee);
+  Future inviteEmployee(Employee employee, Group group) async => await sendInvitationMessageToEmployees(employee, group);
 
   dispose() {
     streamGroupRefs.dispose();

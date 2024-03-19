@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
+import 'package:dayagenda/features/add_employee/domain/entities/employee_status.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 
@@ -23,8 +24,27 @@ class StreamGroupUseCase {
       if (group['employees'] != null) {
         List employees = group['employees'];
         for (var employee in employees) {
-          print('new employee: $employee\n');
-          Employee parsedEmployee = Employee(nickname: employee['nickname'], uid: employee['uid'], phone: employee['phone']);
+          print('new employee: $employee;\n');
+
+          EmployeeStatus? employeeStatus;
+          switch (employee['status']) {
+            case 'invitationSent':
+              employeeStatus = EmployeeStatus.invitationSent;
+              break;
+            case 'registered':
+              employeeStatus = EmployeeStatus.registered;
+              break;
+            default:
+              employeeStatus = EmployeeStatus.registeredAnonymously;
+              break;
+          }
+
+          Employee parsedEmployee = Employee(
+            nickname: employee['nickname'],
+            uid: employee['uid'],
+            phone: employee['phone'],
+            status: employeeStatus,
+          );
           print('parsedEmployee: $parsedEmployee\n');
           parsedEmployees.add(parsedEmployee);
         }

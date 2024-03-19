@@ -45,7 +45,10 @@ void setupGetIt() {
   locate.registerLazySingleton<CreateOwnerInDbUsecase>(() => CreateOwnerInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<CreateGroupInDbUsecase>(() => CreateGroupInDbUsecase(repository: locate<FirestoreRepository>()));
   locate.registerLazySingleton<UpdateOwnerUsecase>(() => UpdateOwnerUsecase(repository: locate<FirestoreRepository>()));
-  locate.registerLazySingleton<SendInvitationMessageToEmployees>(() => SendInvitationMessageToEmployees(locate<SendSms>()));
+  locate.registerLazySingleton<SendInvitationMessageToEmployees>(() => SendInvitationMessageToEmployees(
+        sendSmsRepo: locate<SendSms>(),
+        firestoreRepository: locate<FirestoreRepository>(),
+      ));
   locate.registerLazySingleton<AddEmployeeToEmployeesCollectionUsecase>(() => AddEmployeeToEmployeesCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamGroupRefsUseCase>(() => StreamGroupRefsUseCase(locate<FirestoreRepository>()));

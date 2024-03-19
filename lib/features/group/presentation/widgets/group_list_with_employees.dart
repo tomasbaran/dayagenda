@@ -72,9 +72,11 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
         for (var employee in widget.group.employees)
           Row(
             children: [
-              Text(employee.phone!, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+              Text(employee.status.name.toString(), style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
               employee.status == EmployeeStatus.registeredAnonymously
-                  ? IconButton(onPressed: () => _manager.inviteEmployee(employee), icon: const Icon(Icons.send, color: kBlueAccentColor, size: 18))
+                  ? IconButton(
+                      onPressed: () => _manager.inviteEmployee(employee, widget.group),
+                      icon: const Icon(Icons.send, color: kBlueAccentColor, size: 18))
                   : Icon(Icons.check, color: kBlueAccentColor, size: 18),
             ],
           ),
