@@ -70,15 +70,28 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
           ],
         ),
         for (var employee in widget.group.employees)
-          Row(
-            children: [
-              Text(employee.status.name.toString(), style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
-              employee.status == EmployeeStatus.registeredAnonymously
-                  ? IconButton(
-                      onPressed: () => _manager.inviteEmployee(employee, widget.group),
-                      icon: const Icon(Icons.send, color: kBlueAccentColor, size: 18))
-                  : Icon(Icons.check, color: kBlueAccentColor, size: 18),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(employee.nickname, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+                const SizedBox(width: 12),
+                employee.status == EmployeeStatus.registeredAnonymously
+                    ? ElevatedButton(
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(groupColors[widget.id])),
+                        onPressed: () => _manager.inviteEmployee(employee, widget.group),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.send, color: kThemeColor11, size: 18),
+                            const SizedBox(width: 4),
+                            Text('Invitar', style: navBarAccountEmailInputTextStyle.copyWith(color: kThemeColor11)),
+                          ],
+                        ),
+                      )
+                    : Text('(invitación enviada)', style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id]))
+              ],
+            ),
           ),
         const SizedBox(height: 24),
         if (_isAddingEmployee)
