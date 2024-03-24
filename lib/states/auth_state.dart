@@ -9,6 +9,9 @@ class AuthState {
   String? lastUsedPassword;
   String? lastUsedEmail;
 
+  Future signupByConvertingAnonymousEmployeeToPermanentEmployee(String email, String password) async =>
+      await authService.signupByConvertingAnonymousEmployeeToPermanentEmployee(email, password);
+
   Future loginWithEmailAndPassword(String email, String password) async {
     lastUsedPassword = password;
     lastUsedEmail = email;

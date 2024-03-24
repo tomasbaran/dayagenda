@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/features/add_employee/data/repositories/send_sms.dart';
 import 'package:dayagenda/features/add_employee/domain/usecases/send_invitation_message_to_employees.dart';
+import 'package:dayagenda/features/add_employee/presentation/managers/employee_manager.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_employees_collection_usecase.dart';
 import 'package:dayagenda/features/group/domain/usecases/add_employee_to_groups_collection_usecase.dart';
@@ -71,4 +72,5 @@ void setupGetIt() {
   // feature: add_employee
   // Repositories
   locate.registerLazySingleton<SendSms>(() => SendSms());
+  locate.registerLazySingleton<EmployeeManager>(() => EmployeeManager(locate()));
 }
