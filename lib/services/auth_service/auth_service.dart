@@ -13,7 +13,7 @@ abstract class AuthService {
 
   Future signupByConvertingAnonymousUserToPermanentUser(String emailAddress, String password);
 
-  Future signupByConvertingAnonymousEmployeeToPermanentEmployee(String emailAddress, String password);
+  Future<UserCredential?> signupWithEmailAndPassword(String emailAddress, String password);
 
   Future loginWithEmailAndPassword(String emailAddress, String password);
 

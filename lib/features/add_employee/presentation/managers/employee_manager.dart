@@ -4,11 +4,17 @@ class EmployeeManager {
   final FirestoreRepository _firestoreRepository;
   EmployeeManager(this._firestoreRepository);
 
-  Future finalEmployeeRegistration(String employeeUid, String firstName) async {
-    final Map<String, dynamic> employeeData = {
-      'first_name': firstName,
-      'employee_status': 'registered',
-    };
-    await _firestoreRepository.updateEmployee(employeeUid, employeeData);
+  Future addEmployeeInfo(
+    String tmpEmployeeId,
+    String employeeUid,
+    String email,
+    String firstName,
+  ) async {
+    await _firestoreRepository.updateEmployee(
+      tmpEmployeeId,
+      employeeUid,
+      email,
+      firstName,
+    );
   }
 }

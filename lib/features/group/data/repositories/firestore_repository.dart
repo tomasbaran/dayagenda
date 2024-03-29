@@ -77,9 +77,26 @@ class FirestoreRepository {
     });
   }
 
-  Future<bool> updateEmployee(String employeeUid, Map<String, Object?> updatedMap) async {
+  Future<bool> updateEmployee(String tmpEmployeeId, String employeeUid, String email, String firstName) async {
     print('Updating employee in db...');
-    await db.collection('employees').doc(employeeUid).update(updatedMap);
+    final tmpEmployeeInfo = await db.collection('tmp_employees_info').doc(tmpEmployeeId).get();
+    final tmpEmployeeInfoData = tmpEmployeeInfo.data();
+
+    final nickname = tmpEmployeeInfoData!['nickname'];
+    final phone = tmpEmployeeInfoData['phone'];
+
+    final Map<String, dynamic> employeeData = {
+      'nickname': nickname,
+      'employee_status': 'registered',
+      'phone': phone,
+      'uid': employeeUid,
+      'email': email,
+      'first_name': firstName,
+    };
+
+    print('tmpEmployeeId: $tmpEmployeeId');
+    print('employeeUid: $employeeUid');
+    await db.collection('employees').doc(employeeUid).set(employeeData, SetOptions(merge: true));
     return true;
   }
 

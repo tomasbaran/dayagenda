@@ -13,7 +13,7 @@ class AppRouter {
             // RELEASE-MODE:
             // return const TasksScreen();
             // DEV-MODE:
-            return RegisterEmployeeScreen(uid: 'ANzdFI6cqiU5X6ut8JFWSQp4jVE2');
+            return RegisterEmployeeScreen(tmpEmployeeId: '7DSOlNLtwGi59I3BRw6D');
           },
         ),
         GoRoute(
@@ -30,10 +30,10 @@ class AppRouter {
           },
         ),
         GoRoute(
-            path: '/register_employee/:uid',
+            path: '/register_employee/:tmpEmployeeId',
             builder: (context, state) {
-              final uid = state.pathParameters['uid'] ?? 'unknown';
-              return RegisterEmployeeScreen(uid: uid);
+              final tmpEmployeeId = state.pathParameters['tmpEmployeeId'] ?? 'unknown';
+              return RegisterEmployeeScreen(tmpEmployeeId: tmpEmployeeId);
             }),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthState {
@@ -9,8 +10,8 @@ class AuthState {
   String? lastUsedPassword;
   String? lastUsedEmail;
 
-  Future signupByConvertingAnonymousEmployeeToPermanentEmployee(String email, String password) async =>
-      await authService.signupByConvertingAnonymousEmployeeToPermanentEmployee(email, password);
+  Future<UserCredential?> signupWithEmailAndPassword(String email, String password) async =>
+      await authService.signupWithEmailAndPassword(email, password);
 
   Future loginWithEmailAndPassword(String email, String password) async {
     lastUsedPassword = password;

@@ -4,14 +4,15 @@ import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/states/auth_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:dayagenda/utils/screen_utlis.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterEmployeeScreen extends StatefulWidget {
-  final String uid;
+  final String tmpEmployeeId;
   RegisterEmployeeScreen({
     super.key,
-    required this.uid,
+    required this.tmpEmployeeId,
   });
 
   @override
@@ -93,8 +94,13 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                     if (_employeeFormKey.currentState!.validate()) {
                       final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
-                        await _manager.finalEmployeeRegistration(widget.uid, _firstNameTextController.text);
-                        await authState.signupByConvertingAnonymousEmployeeToPermanentEmployee(_emailController.text, _passwordController.text);
+                        final userCredential = await authState.signupWithEmailAndPassword(_emailController.text, _passwordController.text);
+                        await _manager.addEmployeeInfo(
+                          widget.tmpEmployeeId,
+                          userCredential?.user?.uid ?? 'errorUid',
+                          _emailController.text,
+                          _firstNameTextController.text,
+                        );
 
                         // Check if the widget is still mounted before trying to use the context
                         if (!mounted) return;

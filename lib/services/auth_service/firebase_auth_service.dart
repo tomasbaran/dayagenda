@@ -43,13 +43,10 @@ class FirebaseAuthService extends AuthService {
   }
 
   @override
-  Future signupByConvertingAnonymousEmployeeToPermanentEmployee(String emailAddress, String password) async {
+  Future<UserCredential?> signupWithEmailAndPassword(String emailAddress, String password) async {
     try {
-      // Email and password sign-in
-      final employeeCredential = EmailAuthProvider.credential(email: emailAddress, password: password);
-
-      final userCredential = await FirebaseAuth.instance.currentUser?.linkWithCredential(employeeCredential);
-      print('userCredential: ${userCredential!.user?.uid}');
+      final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailAddress, password: password);
+      return result;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "email-already-in-use":
