@@ -50,7 +50,7 @@ void setupGetIt() {
         sendSmsRepo: locate<SendSms>(),
         firestoreRepository: locate<FirestoreRepository>(),
       ));
-  locate.registerLazySingleton<AddEmployeeToEmployeesCollectionUsecase>(() => AddEmployeeToEmployeesCollectionUsecase(locate<FirestoreRepository>()));
+  locate.registerLazySingleton<AddTmpEmployeeInfo>(() => AddTmpEmployeeInfo(locate<FirestoreRepository>()));
   locate.registerLazySingleton<AddEmployeeToGroupsCollectionUsecase>(() => AddEmployeeToGroupsCollectionUsecase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamGroupRefsUseCase>(() => StreamGroupRefsUseCase(locate<FirestoreRepository>()));
   locate.registerLazySingleton<StreamGroupUseCase>(() => StreamGroupUseCase(locate<FirestoreRepository>()));
@@ -61,7 +61,7 @@ void setupGetIt() {
       createOwnerInDbUseCase: locate<CreateOwnerInDbUsecase>(),
       createGroupInDb: locate<CreateGroupInDbUsecase>(),
       sendInvitationMessageToEmployees: locate<SendInvitationMessageToEmployees>(),
-      addEmployeeToEmployeesCollection: locate<AddEmployeeToEmployeesCollectionUsecase>(),
+      addTmpEmployeeInfo: locate<AddTmpEmployeeInfo>(),
       addEmployeeToGroupsCollection: locate<AddEmployeeToGroupsCollectionUsecase>(),
       streamGroupRefs: locate<StreamGroupRefsUseCase>(),
       streamGroups: locate<StreamGroupUseCase>(),

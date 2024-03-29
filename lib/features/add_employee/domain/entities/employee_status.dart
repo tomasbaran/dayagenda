@@ -1,5 +1,5 @@
 enum EmployeeStatus {
-  registeredAnonymously,
+  addedByOwner,
   invitationSent,
   registered,
 }

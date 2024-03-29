@@ -25,7 +25,7 @@ class GroupTabManager {
   final CreateGroupInDbUsecase createGroupInDb;
   final AddGroupToOwnerUseCase addGroupToOwner;
   final SendInvitationMessageToEmployees sendInvitationMessageToEmployees;
-  final AddEmployeeToEmployeesCollectionUsecase addEmployeeToEmployeesCollection;
+  final AddTmpEmployeeInfo addTmpEmployeeInfo;
   final AddEmployeeToGroupsCollectionUsecase addEmployeeToGroupsCollection;
   final StreamGroupRefsUseCase streamGroupRefs;
   final StreamGroupUseCase streamGroups;
@@ -36,7 +36,7 @@ class GroupTabManager {
     required this.createOwnerInDbUseCase,
     required this.createGroupInDb,
     required this.sendInvitationMessageToEmployees,
-    required this.addEmployeeToEmployeesCollection,
+    required this.addTmpEmployeeInfo,
     required this.addEmployeeToGroupsCollection,
   });
   final appState = locate<AppState>();
@@ -123,27 +123,12 @@ class GroupTabManager {
     final authState = locate<AuthState>();
     final appState = locate<AppState>();
 
-    // Register a new FirebaseApp for Employees
-    final employeeAuthService =
-        FirebaseAuth.instanceFor(app: await Firebase.initializeApp(name: 'employees', options: dev.DefaultFirebaseOptions.currentPlatform));
-
-    // step 2: register employees
-    // step A: register employee anonymously
-    final employeeCredentials = await employeeAuthService.signInAnonymously();
-    employee.uid = employeeCredentials.user?.uid;
-    print('registerEmployeeAnonymously employeeUid: $employee');
-
     // step B: add employee to employees collection
-    await addEmployeeToEmployeesCollection(employee);
-    print('added employee[${employee.uid}] to employees collection');
+    await addTmpEmployeeInfo(employee);
 
     // step C: add employee to group collection
     await addEmployeeToGroupsCollection(group, employee);
     // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
-
-    // logout the newly registered and signed in employee
-    print('employeeCredentials: ${employeeCredentials.user?.uid}');
-    await employeeAuthService.signOut();
   }
 
   Future inviteEmployee(Employee employee, Group group) async => await sendInvitationMessageToEmployees(employee, group);

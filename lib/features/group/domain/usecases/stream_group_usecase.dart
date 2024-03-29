@@ -35,7 +35,7 @@ class StreamGroupUseCase {
               employeeStatus = EmployeeStatus.registered;
               break;
             default:
-              employeeStatus = EmployeeStatus.registeredAnonymously;
+              employeeStatus = EmployeeStatus.addedByOwner;
               break;
           }
 

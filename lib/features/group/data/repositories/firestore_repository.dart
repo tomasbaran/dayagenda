@@ -145,19 +145,19 @@ class FirestoreRepository {
     return true;
   }
 
-  Future<bool> addEmployeeToEmployeesCollection(Employee employee) async {
+  Future<bool> addTmpEmployeeInfo(Employee employee) async {
     print('Adding employee: ${employee.uid} to employees collection...');
     final parsedEmployee = {
       'nickname': employee.nickname,
-      'first_name': employee.firstName,
-      'second_name': employee.secondName,
-      'third_name': employee.thirdName,
+      // 'first_name': employee.firstName,
+      // 'second_name': employee.secondName,
+      // 'third_name': employee.thirdName,
       'phone': employee.phone,
       'status': employee.status.name,
-      'uid': employee.uid,
-      'email': employee.email,
+      // 'uid': employee.uid,
+      // 'email': employee.email,
     };
-    await db.collection('employees').doc(employee.uid).set(parsedEmployee);
+    await db.collection('tmp_employees_info').doc(employee.uid).set(parsedEmployee);
     return true;
   }
 

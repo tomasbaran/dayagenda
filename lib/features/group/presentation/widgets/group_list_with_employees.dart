@@ -77,7 +77,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
               children: [
                 Text(employee.nickname, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
                 const SizedBox(width: 12),
-                employee.status == EmployeeStatus.registeredAnonymously
+                employee.status == EmployeeStatus.addedByOwner
                     ? ElevatedButton(
                         style: ButtonStyle(backgroundColor: MaterialStateProperty.all(groupColors[widget.id])),
                         onPressed: () => _manager.inviteEmployee(employee, widget.group),
