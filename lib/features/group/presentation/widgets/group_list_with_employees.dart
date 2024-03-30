@@ -4,6 +4,7 @@ import 'package:dayagenda/features/add_employee/domain/entities/employee_status.
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
 import 'package:dayagenda/screens/tasks_screen.dart';
+import 'package:dayagenda/states/app_state.dart';
 import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
   }
 
   final listState = locate<ListState>();
+  final appState = locate<AppState>();
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +80,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
             child: InkWell(
-              onTap: employee.status == EmployeeStatus.registered
-                  ? () {
-                      listState.selectDateList();
-                    }
-                  : null,
+              onTap: employee.status == EmployeeStatus.registered ? () => appState.updateAgenda(employee.uid!) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
