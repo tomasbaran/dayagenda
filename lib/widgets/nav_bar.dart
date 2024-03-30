@@ -1,4 +1,5 @@
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayagenda/states/app_state.dart';
@@ -53,7 +54,9 @@ class NavBar extends StatelessWidget {
                       // isSelectedToday ? CupertinoIcons.clock_fill : CupertinoIcons.clock,
                       // Icons.history,
 
-                      Icons.description_outlined,
+                      // Icons.home_outlined,
+                      isSelectedToday ? CupertinoIcons.house_fill : CupertinoIcons.house,
+                      // Icons.description_outlined,
                       // isSelectedToday ? Icons.description : Icons.description_outlined,
                       // isSelectedToday ? CupertinoIcons.doc_text_fill : CupertinoIcons.doc_text,
                       // CupertinoIcons.doc_plaintext,

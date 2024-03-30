@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
+import 'package:dayagenda/states/date_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,11 @@ class AppState {
   final selectedAgenda = ValueNotifier<String?>(null);
 
   updateAgenda(String newAgendaUser) {
+    final dateState = locate<DateState>();
     final listState = locate<ListState>();
     print('\x1B[31mnewAgendaUser: $newAgendaUser\x1B[0m');
     selectedAgenda.value = newAgendaUser;
+    dateState.selecteNewDate(DateTime.now());
     listState.selectDateList();
   }
 

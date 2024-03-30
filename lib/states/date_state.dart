@@ -1,4 +1,8 @@
+import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
+import 'package:dayagenda/states/app_state.dart';
+import 'package:dayagenda/states/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:dayagenda/models/enums.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
@@ -7,10 +11,11 @@ import 'package:dayagenda/utils/date_time_utils.dart';
 class DateState {
   final selectedDate = ValueNotifier<DateTime>(DateTimeUtils.resetTimeToZero(DateTime.now()));
   final isSelectedDateToday = ValueNotifier<bool>(true);
+  final authService = locate<AuthService>();
 
   selecteNewDate(DateTime newDateTime) {
     selectedDate.value = DateTimeUtils.resetTimeToZero(newDateTime);
-    isSelectedDateToday.value = checkIfSelectedDateIsToday();
+    isSelectedDateToday.value = checkIfSelectedDateIsToday() && checkIfCurrentAgendaIsOfLoggedInUser();
 
     if (isSelectedDateToday.value) {
       FirebaseAnalyticsService.analytics.logScreenView(screenName: 'today_view');
@@ -20,4 +25,9 @@ class DateState {
   }
 
   bool checkIfSelectedDateIsToday() => DateTimeUtils.isSpecialDay(DateTime.now(), selectedDate.value) == DayType.isToday;
+
+  bool checkIfCurrentAgendaIsOfLoggedInUser() {
+    final appState = locate<AppState>();
+    return appState.selectedAgenda.value == authService.auth.currentUser!.uid;
+  }
 }
