@@ -1,4 +1,5 @@
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
+import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -19,6 +20,7 @@ class NavBar extends StatelessWidget {
   final listState = locate<ListState>();
   final appState = locate<AppState>();
   final dateState = locate<DateState>();
+  final authService = locate<AuthService>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +33,14 @@ class NavBar extends StatelessWidget {
           GestureDetector(
             // Flutter BUG: https://github.com/flutter/flutter/issues/128530
             // onTap: () => widgetManager.pageController.animateToPage(todayIndex, duration: Duration(milliseconds: 300), curve: Curves.easeIn),
-            onTap: () => listState.selectDateListByDate(DateTime.now()),
+            onTap: () => appState.updateAgenda(authService.uid!),
             behavior: HitTestBehavior.translucent,
             child: Transform.translate(
               // angle: 0.18 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
               // angle: 0 * 3.1415926535897932, // Rotate 45 degrees (0.25 * 2 * pi)
-              offset: Offset(0, 0),
+              offset: Offset(8, 0),
               child: ValueListenableBuilder(
-                  valueListenable: dateState.isSelectedDateToday,
+                  valueListenable: dateState.isSelectedDateTodayForLoggedUser,
                   builder: (_, isSelectedToday, __) {
                     // return CustomIcon(
                     //   imagePath: /* isSelectedToday ? 'assets/icons/hummingbird-filled.png' :  */ 'assets/icons/hummingbird-outlined.png',
@@ -67,8 +69,8 @@ class NavBar extends StatelessWidget {
                       // isSelectedToday ? CupertinoIcons.sun_max_fill : CupertinoIcons.sun_max,
                       // isSelectedToday ? CupertinoIcons.sun_haze_fill : CupertinoIcons.sun_haze,
 
-                      // size: 28,
-                      size: 31,
+                      size: 29,
+                      // size: 31,
                       color: isSelectedToday ? Colors.white : kIconColor,
                     );
                   }),

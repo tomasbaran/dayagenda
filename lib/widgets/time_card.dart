@@ -26,7 +26,7 @@ class TimeCard extends StatelessWidget {
     return Visibility(
       visible: taskStartTime != null,
       child: ValueListenableBuilder(
-          valueListenable: dateState.isSelectedDateToday,
+          valueListenable: dateState.isSelectedDateTodayForLoggedUser,
           builder: (_, isSelectedToday, __) {
             return Container(
               decoration: BoxDecoration(

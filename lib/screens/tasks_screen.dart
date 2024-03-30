@@ -47,7 +47,7 @@ class _TasksScreenState extends State<TasksScreen> {
           backgroundColor: kBackgroundColor,
           shadowColor: Colors.transparent,
           title: ValueListenableBuilder(
-              valueListenable: dateState.isSelectedDateToday,
+              valueListenable: dateState.isSelectedDateTodayForLoggedUser,
               builder: (_, isSelectedToday, __) {
                 return ValueListenableBuilder(
                   valueListenable: dateState.selectedDate,

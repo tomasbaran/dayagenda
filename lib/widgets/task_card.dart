@@ -99,7 +99,7 @@ class TaskCard extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: ValueListenableBuilder(
-                                      valueListenable: dateState.isSelectedDateToday,
+                                      valueListenable: dateState.isSelectedDateTodayForLoggedUser,
                                       builder: (_, isSelectedToday, __) {
                                         return Text(
                                           isBeingSnoozed ? '' : task.title,
