@@ -28,8 +28,10 @@ class AppState {
   final selectedAgenda = ValueNotifier<String?>(null);
 
   updateAgenda(String newAgendaUser) {
+    final listState = locate<ListState>();
     print('\x1B[31mnewAgendaUser: $newAgendaUser\x1B[0m');
     selectedAgenda.value = newAgendaUser;
+    listState.selectDateList();
   }
 
   final navigatorKey = GlobalKey<NavigatorState>();
