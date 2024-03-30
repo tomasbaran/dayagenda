@@ -3,8 +3,11 @@ import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/add_employee/domain/entities/employee_status.dart';
 import 'package:dayagenda/features/group/domain/entities/group.dart';
 import 'package:dayagenda/features/group/presentation/manager/group_tab_manager.dart';
+import 'package:dayagenda/screens/tasks_screen.dart';
+import 'package:dayagenda/states/list_state/list_state.dart';
 import 'package:dayagenda/style/style_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class GroupListWithEmployees extends StatefulWidget {
   const GroupListWithEmployees({
@@ -35,6 +38,8 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
     _phoneNumberController.dispose(); // Dispose the phone number controller
     super.dispose();
   }
+
+  final listState = locate<ListState>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,25 +77,34 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
         for (var employee in widget.group.employees)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(employee.nickname!, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
-                const SizedBox(width: 12),
-                employee.status == EmployeeStatus.addedByOwner
-                    ? ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(groupColors[widget.id])),
-                        onPressed: () => _manager.inviteEmployee(employee, widget.group),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.send, color: kThemeColor11, size: 18),
-                            const SizedBox(width: 4),
-                            Text('Invitar', style: navBarAccountEmailInputTextStyle.copyWith(color: kThemeColor11)),
-                          ],
-                        ),
-                      )
-                    : Text('(invitación enviada)', style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id]))
-              ],
+            child: InkWell(
+              onTap: employee.status == EmployeeStatus.registered
+                  ? () {
+                      listState.selectDateList();
+                    }
+                  : null,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(employee.nickname!, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+                  const SizedBox(width: 12),
+                  employee.status == EmployeeStatus.addedByOwner
+                      ? ElevatedButton(
+                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(groupColors[widget.id])),
+                          onPressed: () => _manager.inviteEmployee(employee, widget.group),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.send, color: kThemeColor11, size: 18),
+                              const SizedBox(width: 4),
+                              Text('Invitar', style: navBarAccountEmailInputTextStyle.copyWith(color: kThemeColor11)),
+                            ],
+                          ),
+                        )
+                      : employee.status == EmployeeStatus.invitationSent
+                          ? Text('(invitación enviada)', style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id]))
+                          : const SizedBox()
+                ],
+              ),
             ),
           ),
         const SizedBox(height: 24),
