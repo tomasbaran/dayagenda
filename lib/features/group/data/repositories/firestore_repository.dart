@@ -77,9 +77,12 @@ class FirestoreRepository {
     });
   }
 
-  Future<bool> updateEmployee(String tmpEmployeeId, String employeeUid, String email, String firstName) async {
+  Future<bool> migrateTmpEmployeeToEmployee(
+    Employee employee,
+    /*  String tmpEmployeeId, String employeeUid, String email, String firstName */
+  ) async {
     print('Updating employee in db...');
-    final tmpEmployeeInfo = await db.collection('tmp_employees_info').doc(tmpEmployeeId).get();
+    final tmpEmployeeInfo = await db.collection('tmp_employees_info').doc(employee.tmpId).get();
     final tmpEmployeeInfoData = tmpEmployeeInfo.data();
 
     final nickname = tmpEmployeeInfoData!['nickname'];
@@ -87,16 +90,15 @@ class FirestoreRepository {
 
     final Map<String, dynamic> employeeData = {
       'nickname': nickname,
-      'employee_status': 'registered',
       'phone': phone,
-      'uid': employeeUid,
-      'email': email,
-      'first_name': firstName,
+      'uid': employee.uid,
+      'email': employee.email,
+      'first_name': employee.firstName,
     };
 
-    print('tmpEmployeeId: $tmpEmployeeId');
-    print('employeeUid: $employeeUid');
-    await db.collection('employees').doc(employeeUid).set(employeeData, SetOptions(merge: true));
+    print('tmpEmployeeId: ${employee.tmpId}');
+    print('employeeUid: ${employee.uid}');
+    await db.collection('employees').doc(employee.uid).set(employeeData, SetOptions(merge: true));
     return true;
   }
 
@@ -145,8 +147,8 @@ class FirestoreRepository {
     return true;
   }
 
-  Future<bool> addTmpEmployeeInfo(Employee employee) async {
-    print('Adding employee: ${employee.uid} to employees collection...');
+  Future<bool> updateTmpEmployeeInfo(Employee employee) async {
+    print('Update employee: ${employee} in tmp employee info collection...');
     final parsedEmployee = {
       'nickname': employee.nickname,
       // 'first_name': employee.firstName,
@@ -157,7 +159,7 @@ class FirestoreRepository {
       // 'uid': employee.uid,
       // 'email': employee.email,
     };
-    await db.collection('tmp_employees_info').doc(employee.uid).set(parsedEmployee);
+    await db.collection('tmp_employees_info').doc(employee.uid).set(parsedEmployee, SetOptions(merge: true));
     return true;
   }
 

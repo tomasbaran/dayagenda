@@ -5,5 +5,5 @@ class AddTmpEmployeeInfo {
   final FirestoreRepository _repository;
   AddTmpEmployeeInfo(this._repository);
 
-  Future<bool> call(Employee employee) async => await _repository.addTmpEmployeeInfo(employee);
+  Future<bool> call(Employee employee) async => await _repository.updateTmpEmployeeInfo(employee);
 }

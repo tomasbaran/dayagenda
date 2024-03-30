@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 
 class Employee extends Equatable {
   String? uid;
-  String nickname;
+  String? tmpId;
+  String? nickname;
   String? firstName;
   String? secondName;
   String? thirdName;
@@ -12,18 +13,29 @@ class Employee extends Equatable {
   EmployeeStatus status;
 
   Employee({
-    required this.nickname,
+    this.nickname,
     this.firstName,
     this.status = EmployeeStatus.addedByOwner,
     this.uid,
+    this.tmpId,
     this.secondName,
     this.thirdName,
     this.email,
-    required this.phone,
+    this.phone,
   });
 
   @override
-  List<Object?> get props => [nickname, uid, firstName, secondName, thirdName, email, phone, status];
+  List<Object?> get props => [
+        tmpId,
+        nickname,
+        uid,
+        firstName,
+        secondName,
+        thirdName,
+        email,
+        phone,
+        status,
+      ];
 
   @override
   bool get stringify => true;
@@ -31,6 +43,7 @@ class Employee extends Equatable {
   // Add the copyWith method
   Employee copyWith({
     String? uid,
+    String? tmpId,
     String? nickname,
     String? firstName,
     String? secondName,
@@ -41,6 +54,7 @@ class Employee extends Equatable {
   }) {
     return Employee(
       uid: uid ?? this.uid,
+      tmpId: tmpId ?? this.tmpId,
       nickname: nickname ?? this.nickname,
       firstName: firstName ?? this.firstName,
       secondName: secondName ?? this.secondName,

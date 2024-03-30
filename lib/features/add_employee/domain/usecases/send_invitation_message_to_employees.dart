@@ -13,8 +13,7 @@ class SendInvitationMessageToEmployees {
 
   Future call(Employee employee, Group group) async {
     await sendSmsRepo(employee, InvitationMessage.call(employee));
-    // TODO: Implement the following method
-    // firestoreRepository.updateEmployee(employee.uid!, {'status': 'invitationSent'});
+    firestoreRepository.updateTmpEmployeeInfo(employee.copyWith(status: EmployeeStatus.invitationSent));
     print('group: $group');
 
     firestoreRepository.updateGroupEmployee(

@@ -1,3 +1,4 @@
+import 'package:dayagenda/features/add_employee/domain/entities/employee.dart';
 import 'package:dayagenda/features/group/data/repositories/firestore_repository.dart';
 
 class EmployeeManager {
@@ -10,11 +11,13 @@ class EmployeeManager {
     String email,
     String firstName,
   ) async {
-    await _firestoreRepository.updateEmployee(
-      tmpEmployeeId,
-      employeeUid,
-      email,
-      firstName,
+    final Employee employee = Employee(
+      tmpId: tmpEmployeeId,
+      uid: employeeUid,
+      email: email,
+      firstName: firstName,
     );
+
+    await _firestoreRepository.migrateTmpEmployeeToEmployee(employee);
   }
 }

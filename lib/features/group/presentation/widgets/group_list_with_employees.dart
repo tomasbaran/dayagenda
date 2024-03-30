@@ -75,7 +75,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(employee.nickname, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
+                Text(employee.nickname!, style: navBarAccountEmailInputTextStyle.copyWith(color: groupColors[widget.id])),
                 const SizedBox(width: 12),
                 employee.status == EmployeeStatus.addedByOwner
                     ? ElevatedButton(
