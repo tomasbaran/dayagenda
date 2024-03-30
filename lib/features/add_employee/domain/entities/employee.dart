@@ -11,6 +11,7 @@ class Employee extends Equatable {
   String? email;
   String? phone;
   EmployeeStatus status;
+  String? groupId;
 
   Employee({
     this.nickname,
@@ -22,6 +23,7 @@ class Employee extends Equatable {
     this.thirdName,
     this.email,
     this.phone,
+    this.groupId,
   });
 
   @override
@@ -35,6 +37,7 @@ class Employee extends Equatable {
         email,
         phone,
         status,
+        groupId,
       ];
 
   @override
@@ -51,6 +54,7 @@ class Employee extends Equatable {
     String? email,
     String? phone,
     EmployeeStatus? status,
+    String? groupId,
   }) {
     return Employee(
       uid: uid ?? this.uid,
@@ -62,6 +66,7 @@ class Employee extends Equatable {
       email: email ?? this.email,
       phone: phone ?? this.phone,
       status: status ?? this.status,
+      groupId: groupId ?? this.groupId,
     );
   }
 }

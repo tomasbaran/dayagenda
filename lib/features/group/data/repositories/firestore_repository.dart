@@ -87,6 +87,7 @@ class FirestoreRepository {
 
     final nickname = tmpEmployeeInfoData!['nickname'];
     final phone = tmpEmployeeInfoData['phone'];
+    final groupId = tmpEmployeeInfoData['group_id'];
 
     final Map<String, dynamic> employeeData = {
       'nickname': nickname,
@@ -99,6 +100,31 @@ class FirestoreRepository {
     print('tmpEmployeeId: ${employee.tmpId}');
     print('employeeUid: ${employee.uid}');
     await db.collection('employees').doc(employee.uid).set(employeeData, SetOptions(merge: true));
+
+    // Update the employee in the group with the new employee data: remove tmp_id and add uid
+    await db.collection('groups').doc(groupId).update({
+      'employees': FieldValue.arrayRemove([
+        {
+          'nickname': nickname,
+          'phone': phone,
+          'tmp_id': employee.tmpId,
+          'uid': null,
+          'status': 'invitationSent',
+        }
+      ])
+    });
+    await db.collection('groups').doc(groupId).update({
+      'employees': FieldValue.arrayUnion([
+        {
+          'nickname': nickname,
+          'phone': phone,
+          'uid': employee.uid,
+          'status': 'registered',
+        }
+      ])
+    });
+
+    // Delete the tmp employee info document
     await db.collection('tmp_employees_info').doc(employee.tmpId).delete();
     return true;
   }
@@ -162,6 +188,7 @@ class FirestoreRepository {
       tmpId: tmpEmployeeRef.id,
       uid: employee.uid,
       email: employee.email,
+      groupId: employee.groupId,
     );
 
     print(' \x1B[31m1: tmpEmployeeRef: ${tmpEmployeeRef.id}');
@@ -176,6 +203,7 @@ class FirestoreRepository {
       'tmp_id': updatedEmployee.tmpId,
       // 'uid': employee.uid,
       // 'email': employee.email,
+      'group_id': employee.groupId,
     };
 
     tmpEmployeeRef.set(parsedEmployee, SetOptions(merge: true));
