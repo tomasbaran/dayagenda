@@ -2,11 +2,13 @@ import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
 import 'package:dayagenda/services/mixpanel_service.dart';
 import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthState {
   final AuthService authService = locate<AuthService>();
+  final AppState appState = locate<AppState>();
   String? lastUsedPassword;
   String? lastUsedEmail;
 
@@ -17,6 +19,7 @@ class AuthState {
     lastUsedPassword = password;
     lastUsedEmail = email;
     await authService.loginWithEmailAndPassword(email, password);
+    appState.updateAgenda(authService.uid!);
     debugPrint("Signed in with email: $email [${authService.uid}]");
 
     FirebaseAnalyticsService.analytics.setUserId(id: authService.uid);
@@ -32,6 +35,7 @@ class AuthState {
     lastUsedPassword = password;
     lastUsedEmail = email;
     await authService.signupByConvertingAnonymousUserToPermanentUser(email, password);
+    appState.updateAgenda(authService.uid!);
     debugPrint("Converted anonymous user with email: $email [${authService.uid}]");
 
     FirebaseAnalyticsService.analytics.logSignUp(signUpMethod: 'email');
@@ -43,6 +47,7 @@ class AuthState {
 
   Future signInAnonymously() async {
     await authService.signInAnonymously();
+    appState.updateAgenda(authService.uid!);
 
     FirebaseAnalyticsService.analytics.setUserId(id: authService.uid);
     FirebaseAnalyticsService.analytics.logLogin(loginMethod: 'anonymous');

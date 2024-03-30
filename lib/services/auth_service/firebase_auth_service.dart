@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:dayagenda/core/dependencies_locator.dart';
+import 'package:dayagenda/states/app_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/calendar/v3.dart';
@@ -8,6 +10,7 @@ import 'package:dayagenda/services/auth_service/auth_service.dart';
 import 'package:dayagenda/services/analytics_service.dart';
 
 class FirebaseAuthService extends AuthService {
+  final AppState appState = locate<AppState>();
   // creating firebase instance
   @override
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -28,6 +31,7 @@ class FirebaseAuthService extends AuthService {
   Future<UserCredential?> signInAnonymously() async {
     try {
       final result = await auth.signInAnonymously();
+      appState.updateAgenda(auth.currentUser!.uid);
       AnalyticsService().writeSignupDate();
       return result;
     } on FirebaseAuthException catch (e) {
@@ -46,6 +50,8 @@ class FirebaseAuthService extends AuthService {
   Future<UserCredential?> signupWithEmailAndPassword(String emailAddress, String password) async {
     try {
       final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailAddress, password: password);
+      appState.updateAgenda(auth.currentUser!.uid);
+
       return result;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -70,6 +76,7 @@ class FirebaseAuthService extends AuthService {
   Future signupByConvertingAnonymousUserToPermanentUser(String emailAddress, String password) async {
     // Email and password sign-in
     final credential = EmailAuthProvider.credential(email: emailAddress, password: password);
+    appState.updateAgenda(auth.currentUser!.uid);
 
     try {
       if (auth.currentUser == null) {
@@ -101,6 +108,8 @@ class FirebaseAuthService extends AuthService {
   Future loginWithEmailAndPassword(String emailAddress, String password) async {
     try {
       await auth.signInWithEmailAndPassword(email: emailAddress, password: password);
+      appState.updateAgenda(auth.currentUser!.uid);
+
       print('firebase_auth_service.dart:loginWithEmailAndPassword: User logged in: $emailAddress');
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

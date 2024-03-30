@@ -25,6 +25,13 @@ import 'package:universal_platform/universal_platform.dart';
 class AppState {
   final isSignedIn = ValueNotifier<bool>(false);
 
+  final selectedAgenda = ValueNotifier<String?>(null);
+
+  updateAgenda(String newAgendaUser) {
+    print('\x1B[31mnewAgendaUser: $newAgendaUser\x1B[0m');
+    selectedAgenda.value = newAgendaUser;
+  }
+
   final navigatorKey = GlobalKey<NavigatorState>();
   final navBar = ValueNotifier<NavBarSelection>(NavBarSelection.unselected);
   updateNavBarSelection(NavBarSelection newNavBarSelection) => navBar.value = newNavBarSelection;
@@ -72,6 +79,7 @@ class AppState {
   checkWhetherToSignUpFirstTimeUserAnonymously() async {
     final authService = locate<AuthService>();
     final authState = locate<AuthState>();
+    final appState = locate<AppState>();
 
     if (authService.uid == null) {
       await authState.signInAnonymously();
@@ -79,7 +87,7 @@ class AppState {
     } else {
       FirebaseAnalyticsService.analytics.setUserId(id: authService.uid);
       MixpanelService.mixpanel?.identify(authService.uid!);
-
+      appState.updateAgenda(authService.uid!);
       log(
         time: DateTime.now(),
         '\x1B[33m${authService.uid}\x1B[0m',
