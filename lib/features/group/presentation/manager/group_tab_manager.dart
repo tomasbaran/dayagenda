@@ -117,17 +117,17 @@ class GroupTabManager {
     return;
   }
 
-  Future addEmployeesToDb({required Employee employee, required Group group}) async {
+  Future addEmployeeToDb({required Employee employee, required Group group}) async {
     // appState.updateNavBarSelection(NavBarSelection.addEmployee);
 
     final authState = locate<AuthState>();
     final appState = locate<AppState>();
 
     // step B: add employee to employees collection
-    await addTmpEmployeeInfo(employee);
+    final updatedEmployee = await addTmpEmployeeInfo(employee);
 
     // step C: add employee to group collection
-    await addEmployeeToGroupsCollection(group, employee);
+    await addEmployeeToGroupsCollection(group, updatedEmployee);
     // print('updated group collection with a new employee member: Employee.uid: ${employee.uid}');
   }
 

@@ -133,7 +133,7 @@ class _GroupListWithEmployeesState extends State<GroupListWithEmployees> {
                             phone: _phoneNumberController.text,
                             // Include additional fields as required
                           );
-                          _manager.addEmployeesToDb(employee: employee, group: widget.group);
+                          _manager.addEmployeeToDb(employee: employee, group: widget.group);
                           setState(() {
                             _isAddingEmployee = false;
                             _nicknameTextController.clear();

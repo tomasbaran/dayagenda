@@ -42,6 +42,7 @@ class StreamGroupUseCase {
           Employee parsedEmployee = Employee(
             nickname: employee['nickname'],
             uid: employee['uid'],
+            tmpId: employee['tmp_id'],
             phone: employee['phone'],
             status: employeeStatus,
           );

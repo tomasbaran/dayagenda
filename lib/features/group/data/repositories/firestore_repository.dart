@@ -104,11 +104,14 @@ class FirestoreRepository {
 
   Future<bool> updateGroupEmployee(String groupId, Employee oldEmployee, Employee newEmployee) async {
     print('Updating group in db...');
+    print('\x1B[32moldEmployee: $oldEmployee\x1B[0m');
+
     await db.collection('groups').doc(groupId).update({
       'employees': FieldValue.arrayRemove([
         {
           'nickname': oldEmployee.nickname,
           'phone': oldEmployee.phone,
+          'tmp_id': oldEmployee.tmpId,
           'uid': oldEmployee.uid,
           'status': oldEmployee.status.name.toString(),
         }
@@ -119,6 +122,7 @@ class FirestoreRepository {
         {
           'nickname': newEmployee.nickname,
           'phone': newEmployee.phone,
+          'tmp_id': newEmployee.tmpId,
           'uid': newEmployee.uid,
           'status': newEmployee.status.name.toString(),
         }
@@ -147,20 +151,34 @@ class FirestoreRepository {
     return true;
   }
 
-  Future<bool> updateTmpEmployeeInfo(Employee employee) async {
-    print('Update employee: ${employee} in tmp employee info collection...');
+  Future<Employee> updateTmpEmployeeInfo(Employee employee) async {
+    print('\x1B[33m Update employee: ${employee} in tmp employee info collection... \x1B[0m');
+    final tmpEmployeeRef = db.collection('tmp_employees_info').doc(employee.tmpId);
+    final updatedEmployee = Employee(
+      nickname: employee.nickname,
+      phone: employee.phone,
+      status: employee.status,
+      tmpId: tmpEmployeeRef.id,
+      uid: employee.uid,
+      email: employee.email,
+    );
+
+    print(' \x1B[31m1: tmpEmployeeRef: ${tmpEmployeeRef.id}');
+
     final parsedEmployee = {
-      'nickname': employee.nickname,
+      'nickname': updatedEmployee.nickname,
       // 'first_name': employee.firstName,
       // 'second_name': employee.secondName,
       // 'third_name': employee.thirdName,
-      'phone': employee.phone,
-      'status': employee.status.name,
+      'phone': updatedEmployee.phone,
+      'status': updatedEmployee.status.name,
+      'tmp_id': updatedEmployee.tmpId,
       // 'uid': employee.uid,
       // 'email': employee.email,
     };
-    await db.collection('tmp_employees_info').doc(employee.uid).set(parsedEmployee, SetOptions(merge: true));
-    return true;
+
+    tmpEmployeeRef.set(parsedEmployee, SetOptions(merge: true));
+    return updatedEmployee;
   }
 
   Future<bool> addEmployeeToGroupsCollection(Group group, Employee employee) async {
@@ -170,6 +188,7 @@ class FirestoreRepository {
       'nickname': employee.nickname,
       'phone': employee.phone,
       'uid': employee.uid,
+      'tmp_id': employee.tmpId,
       'status': employee.status.name.toString(),
     };
     await db.collection('groups').doc(group.id).update({
