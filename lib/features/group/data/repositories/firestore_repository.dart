@@ -99,6 +99,7 @@ class FirestoreRepository {
     print('tmpEmployeeId: ${employee.tmpId}');
     print('employeeUid: ${employee.uid}');
     await db.collection('employees').doc(employee.uid).set(employeeData, SetOptions(merge: true));
+    await db.collection('tmp_employees_info').doc(employee.tmpId).delete();
     return true;
   }
 
