@@ -10,6 +10,8 @@ abstract class ListService {
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({required DateTime date});
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamIdList({required String id});
 
+  Future<String?> getEmployeeNickname(String employeeUid);
+
   Future removeTaskFromListInCloud(MyTask myTask, MyList myList);
 
   Future updateDateListInCloud(MyList updatedList);

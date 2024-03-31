@@ -32,6 +32,13 @@ class FirestoreListService extends ListService {
     }
   }
 
+  Future<String?> getEmployeeNickname(String employeeUid) async {
+    final data = await db.collection("employees").doc(employeeUid).get();
+    final dataValue = data.data();
+    final nickname = dataValue?['nickname'];
+    return nickname;
+  }
+
   @override
   StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? streamDateList({required DateTime date}) {
     if (uid == null) {

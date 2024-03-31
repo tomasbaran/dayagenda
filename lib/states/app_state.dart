@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayagenda/services/firebase_analytics_service.dart';
+import 'package:dayagenda/services/list_service/list_service.dart';
 import 'package:dayagenda/states/date_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -27,14 +28,17 @@ class AppState {
   final isSignedIn = ValueNotifier<bool>(false);
 
   final selectedAgenda = ValueNotifier<String?>(null);
+  final nickname = ValueNotifier<String?>(null);
 
-  updateAgenda(String newAgendaUser) {
+  updateAgenda(String newAgendaUser) async {
     final dateState = locate<DateState>();
     final listState = locate<ListState>();
+    final listService = locate<ListService>();
     print('\x1B[31mnewAgendaUser: $newAgendaUser\x1B[0m');
     selectedAgenda.value = newAgendaUser;
     dateState.selecteNewDate(DateTime.now());
     listState.selectDateList();
+    nickname.value = await listService.getEmployeeNickname(selectedAgenda.value!);
   }
 
   final navigatorKey = GlobalKey<NavigatorState>();

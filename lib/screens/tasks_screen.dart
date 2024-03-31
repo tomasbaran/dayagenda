@@ -1,3 +1,5 @@
+import 'package:dayagenda/services/auth_service/auth_service.dart';
+import 'package:dayagenda/services/list_service/list_service.dart';
 import 'package:dayagenda/utils/screen_utlis.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -37,6 +39,8 @@ class _TasksScreenState extends State<TasksScreen> {
     super.dispose();
   }
 
+  final authService = locate<AuthService>();
+
   @override
   Widget build(BuildContext context) {
     appState.getScreenMeasurments(context);
@@ -67,6 +71,36 @@ class _TasksScreenState extends State<TasksScreen> {
                       )),
                 );
               }),
+          actions: [
+            ValueListenableBuilder(
+                valueListenable: appState.selectedAgenda,
+                builder: (_, selectedAgenda, __) {
+                  print('appState.selectedAgenda.value: ${appState.selectedAgenda.value}');
+                  print('authService.uid: ${authService.uid}');
+                  if (appState.selectedAgenda.value != authService.uid) {
+                    return Card(
+                      color: groupColors[0],
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ValueListenableBuilder(
+                            valueListenable: appState.nickname,
+                            builder: (context, nicknameValue, child) {
+                              return Text(
+                                nicknameValue ?? '',
+                                style: taskCardSubtitleTextStyle.copyWith(color: kThemeColor11),
+                              );
+                            }),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                })
+          ],
         ),
         floatingActionButtonLocation: (UniversalPlatform.isAndroid || UniversalPlatform.isIOS)
             ? FloatingActionButtonLocation.centerDocked
