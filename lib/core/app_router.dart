@@ -11,9 +11,9 @@ class AppRouter {
           path: '/',
           builder: (context, state) {
             // RELEASE-MODE:
-            // return const TasksScreen();
+            return const TasksScreen();
             // DEV-MODE:
-            return RegisterEmployeeScreen(tmpEmployeeId: 'Do7LXkZcHiXNPFqu7SR1');
+            // return RegisterEmployeeScreen(tmpEmployeeId: 'Do7LXkZcHiXNPFqu7SR1');
           },
         ),
         GoRoute(
