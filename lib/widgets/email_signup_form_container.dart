@@ -98,6 +98,8 @@ class _EmailFormContainerState extends State<EmailFormContainer> {
                               ? 'You signed up successfully with ${_emailController.text}'
                               : 'You logged in successfully with ${_emailController.text}',
                         );
+                        Navigator.of(context).pop();
+                        appState.updateNavBarSelection(NavBarSelection.unselected);
                       } catch (e) {
                         ScreenUtils.showMySnackBar(
                           scaffoldMessengerState: scaffoldMessengerState,
