@@ -38,41 +38,42 @@ class AccountNavContainer extends StatelessWidget {
                     style: navBarAccountEmailInputTextStyle,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () => showModalBottomSheet(
-                        isScrollControlled: true,
-                        useSafeArea: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(42),
-                            topRight: Radius.circular(42),
+                if (!isSignedIn)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => showModalBottomSheet(
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(42),
+                              topRight: Radius.circular(42),
+                            ),
                           ),
+                          context: context,
+                          builder: (BuildContext context) => const EmailFormContainer.signup(),
                         ),
-                        context: context,
-                        builder: (BuildContext context) => const EmailFormContainer.signup(),
+                        child: Text('Sign Up', style: navBarAccountButtonTitleTextStyle),
                       ),
-                      child: Text('Sign Up', style: navBarAccountButtonTitleTextStyle),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => showModalBottomSheet(
-                        isScrollControlled: true,
-                        useSafeArea: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(42),
-                            topRight: Radius.circular(42),
+                      ElevatedButton(
+                        onPressed: () => showModalBottomSheet(
+                          isScrollControlled: true,
+                          useSafeArea: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(42),
+                              topRight: Radius.circular(42),
+                            ),
                           ),
+                          context: context,
+                          builder: (BuildContext context) => const EmailFormContainer.login(),
                         ),
-                        context: context,
-                        builder: (BuildContext context) => const EmailFormContainer.login(),
+                        child: Text('Log In', style: navBarAccountButtonTitleTextStyle),
                       ),
-                      child: Text('Log In', style: navBarAccountButtonTitleTextStyle),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 Visibility(
                   visible: isSignedIn,
                   child: GestureDetector(
