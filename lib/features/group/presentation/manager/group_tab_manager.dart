@@ -124,7 +124,8 @@ class GroupTabManager {
     final appState = locate<AppState>();
 
     // step B: add employee to employees collection
-    final updatedEmployee = await addTmpEmployeeInfo(employee);
+
+    final updatedEmployee = await addTmpEmployeeInfo(employee.copyWith(groupId: group.id));
 
     // step C: add employee to group collection
     await addEmployeeToGroupsCollection(group, updatedEmployee);
