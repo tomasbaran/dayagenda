@@ -95,6 +95,8 @@ class FirestoreRepository {
       'uid': employee.uid,
       'email': employee.email,
       'first_name': employee.firstName,
+      'second_name': employee.secondName,
+      'third_name': employee.thirdName,
     };
 
     print('tmpEmployeeId: ${employee.tmpId}');

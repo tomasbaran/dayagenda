@@ -10,12 +10,16 @@ class EmployeeManager {
     String employeeUid,
     String email,
     String firstName,
+    String secondName,
+    String? thirdName,
   ) async {
     final Employee employee = Employee(
       tmpId: tmpEmployeeId,
       uid: employeeUid,
       email: email,
       firstName: firstName,
+      secondName: secondName,
+      thirdName: thirdName,
     );
 
     await _firestoreRepository.migrateTmpEmployeeToEmployee(employee);

@@ -21,6 +21,8 @@ class RegisterEmployeeScreen extends StatefulWidget {
 
 class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
   final _firstNameTextController = TextEditingController();
+  final _secondNameTextController = TextEditingController();
+  final _thirdNameTextController = TextEditingController();
 
   final _emailController = TextEditingController();
 
@@ -46,6 +48,7 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextFormField(
+                  autofocus: true,
                   controller: _firstNameTextController,
                   validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese un nombre' : null,
                   style: navBarAccountEmailInputTextStyle,
@@ -57,7 +60,27 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                   ),
                 ),
                 TextFormField(
-                  autofocus: true,
+                  controller: _secondNameTextController,
+                  validator: (value) => (value == null || value.isEmpty) ? 'Por favor, ingrese su primer apellido' : null,
+                  style: navBarAccountEmailInputTextStyle,
+                  decoration: InputDecoration(
+                    hintText: 'Primer Apellido',
+                    hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
+                    prefixIcon: const Icon(Icons.person, color: kBlueAccentColor),
+                    // Update border styles as needed
+                  ),
+                ),
+                TextFormField(
+                  controller: _thirdNameTextController,
+                  style: navBarAccountEmailInputTextStyle,
+                  decoration: InputDecoration(
+                    hintText: 'Segundo Apellido',
+                    hintStyle: navBarAccountEmailInputTextStyle.copyWith(color: kBlueAccentColor),
+                    prefixIcon: const Icon(Icons.person, color: kBlueAccentColor),
+                    // Update border styles as needed
+                  ),
+                ),
+                TextFormField(
                   style: navBarAccountEmailInputTextStyle,
                   controller: _emailController,
                   decoration: InputDecoration(
@@ -66,12 +89,6 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                     labelText: 'Email',
                     labelStyle: navBarAccountEmailInputLabelTextStyle,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
                 ),
                 TextFormField(
                   style: navBarAccountEmailInputTextStyle,
@@ -95,17 +112,21 @@ class _RegisterEmployeeScreenState extends State<RegisterEmployeeScreen> {
                       final scaffoldMessengerState = ScaffoldMessenger.of(context);
                       try {
                         final userCredential = await authState.signupWithEmailAndPassword(_emailController.text, _passwordController.text);
+                        print('signup success!');
                         await _manager.addEmployeeInfo(
                           widget.tmpEmployeeId,
                           userCredential?.user?.uid ?? 'errorUid',
                           _emailController.text,
                           _firstNameTextController.text,
+                          _secondNameTextController.text,
+                          _thirdNameTextController.text == '' ? null : _thirdNameTextController.text,
                         );
 
                         // Check if the widget is still mounted before trying to use the context
                         if (!mounted) return;
                         context.go('/dev');
                       } catch (e) {
+                        print('register error: $e');
                         ScreenUtils.showMySnackBar(
                           scaffoldMessengerState: scaffoldMessengerState,
                           snackBarType: SnackBarType.error,
