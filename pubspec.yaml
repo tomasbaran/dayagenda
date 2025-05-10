@@ -4,7 +4,7 @@ publish_to: none
 version: 1.4.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   calendar_date_picker2: ^0.5.2
@@ -13,7 +13,7 @@ dependencies:
   device_info_plus: ^9.1.0
   equatable: ^2.0.5
   extended_nested_scroll_view: ^6.0.0
-  extension_google_sign_in_as_googleapis_auth: ^2.0.9
+  # extension_google_sign_in_as_googleapis_auth: ^2.0.9
   firebase_analytics: ^10.7.0
   firebase_auth: ^4.7.3
   firebase_core: ^2.15.1
