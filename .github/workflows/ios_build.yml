@@ -53,15 +53,9 @@ jobs:
             --release \
             --export-options-plist=ios/ExportOptions.plist
 
-      - name: Upload IPA manually
+      - name: Check if IPA exists
         run: |
-              echo "Uploading IPA manually"
-              mkdir -p artifacts
-              cp build/ios/ipa/*.ipa artifacts/
-              ls -lh artifacts/
-      
-      - name: Upload IPA Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: DayAgenda.ipa
+          echo "Looking for .ipa file in artifacts/"
+          ls -lh artifacts || echo "No artifacts folder"
+          ls -lh build/ios/ipa || echo "No IPA built"
           path: artifacts/*.ipa
