@@ -53,8 +53,15 @@ jobs:
             --release \
             --export-options-plist=ios/ExportOptions.plist
 
+      - name: Upload IPA manually
+        run: |
+              echo "Uploading IPA manually"
+              mkdir -p artifacts
+              cp build/ios/ipa/*.ipa artifacts/
+              ls -lh artifacts/
+      
       - name: Upload IPA Artifact
         uses: actions/upload-artifact@v2
         with:
           name: DayAgenda.ipa
-          path: build/ios/ipa/*.ipa
+          path: artifacts/*.ipa
