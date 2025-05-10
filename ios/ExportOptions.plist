@@ -4,8 +4,15 @@
 <dict>
   <key>method</key>
   <string>app-store</string>
-  <key>uploadSymbols</key>
-  <true/>
+  <key>signingStyle</key>
+  <string>manual</string>
+  <key>provisioningProfiles</key>
+  <dict>
+    <key>com.ambee.dayagenda</key>
+    <string>Your Provisioning Profile Name</string>
+  </dict>
+  <key>destination</key>
+  <string>export</string>
   <key>compileBitcode</key>
   <false/>
 </dict>
