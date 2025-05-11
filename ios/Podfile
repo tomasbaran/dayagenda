@@ -49,16 +49,16 @@ post_install do |installer|
     flutter_additional_ios_build_settings(t) 
   end
 
-  # now open the Runner project and patch its “Embed Pods Frameworks” phase:
+  # now open the Runner project and patch its "Embed Pods Frameworks" phase:
   runner_proj_path = File.expand_path('Runner.xcodeproj', __dir__)
   runner_proj      = Xcodeproj::Project.open(runner_proj_path)
   app_target       = runner_proj.targets.find { |t| t.name == 'Runner' }
 
   app_target.build_phases.each do |phase|
-    # this is the “Embed Pods Frameworks” file‐list phase
+    # this is the "Embed Pods Frameworks" file‐list phase
     next unless phase.respond_to?(:input_file_list_paths)
 
-    # rewrite any absolute “/Target Support Files/…” to use ${PODS_ROOT}
+    # rewrite any absolute "/Target Support Files/…" to use ${PODS_ROOT}
     phase.input_file_list_paths.map! do |p|
       p.start_with?('/Target Support Files') ? "${PODS_ROOT}#{p}" : p
     end
