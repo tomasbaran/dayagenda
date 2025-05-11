@@ -48,10 +48,13 @@ jobs:
 
       - name: Build IPA 
         run: |
-          flutter build ipa \
-            --flavor live \
-            --release \
-            --export-options-plist=ios/ExportOptions.plist
+         flutter build ipa \
+          --flavor live \
+          --release \
+          --export-options-plist=ios/ExportOptions.plist \
+          --build-name=1.4.0 \
+          --build-number=1 \
+          --xcconfig=ios/Flutter/Release-live.xcconfig
 
       - name: Check if IPA exists
         run: |
