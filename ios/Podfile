@@ -45,6 +45,18 @@ end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
+    if target.name == 'Pods-Runner'
+      target.build_configurations.each do |config|
+        # for every flavor/configuration, point the file‐list under PODS_ROOT
+        name = config.name
+        config.build_settings['FRAMEWORKS_INPUT_FILE_LIST_PATH']  =
+          "${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-#{name}-input-files.xcfilelist"
+        config.build_settings['FRAMEWORKS_OUTPUT_FILE_LIST_PATH'] =
+          "${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-#{name}-output-files.xcfilelist"
+      end
+    end
+
+    # keep Flutter’s own post_install tweaks
     flutter_additional_ios_build_settings(target)
   end
 end
