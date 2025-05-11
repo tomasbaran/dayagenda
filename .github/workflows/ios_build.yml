@@ -46,7 +46,7 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-      - name: Build IPA
+      - name: Build IPA 
         run: |
           flutter build ipa \
             --flavor live \
