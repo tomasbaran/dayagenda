@@ -9,7 +9,7 @@
   <key>provisioningProfiles</key>
   <dict>
     <key>com.ambee.dayagenda</key>
-    <string>Your Provisioning Profile Name</string>
+    <string>DayAgenda_AppStore_Profile</string>
   </dict>
   <key>destination</key>
   <string>export</string>
