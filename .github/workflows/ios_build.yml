@@ -48,17 +48,7 @@ jobs:
 
       - name: Build IPA 
         run: |
-         flutter build ipa \
-          --flavor live \
-          --release \
-          --export-options-plist=ios/ExportOptions.plist \
-          --build-name=1.4.0 \
-          --build-number=1 \
-          --xcconfig=ios/Flutter/Release-live.xcconfig
-
-      - name: Check if IPA exists
-        run: |
-          echo "Looking for .ipa file in artifacts/"
-          ls -lh artifacts || echo "No artifacts folder"
-          ls -lh build/ios/ipa || echo "No IPA built"
-          path: artifacts/*.ipa
+          flutter build ipa \
+            --flavor live \
+            --release \
+            --export-options-plist=ios/ExportOptions.plist
