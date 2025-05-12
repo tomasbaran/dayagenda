@@ -1,44 +1,43 @@
 require 'xcodeproj'
 
-# 1) Target platform
 platform :ios, '13.0'
-
-# 2) Turn off .xcfilelist generation (avoids the missing-file error)
 install! 'cocoapods', :disable_input_output_paths => true
-
-# 3) Speed up CI by skipping analytics
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
-# 4) Map your flavor configurations to CocoaPods
 project 'Runner', {
   'Debug-dev'   => :debug,
   'Debug-live'  => :debug,
   'Profile-dev' => :release,
   'Profile-live'=> :release,
   'Release-dev' => :release,
-  'Release-live'=> :release
+  'Release-live'=> :release,
 }
 
-# 5) Only pin truly conflicting pods
 pod 'AppAuth',         '~> 1.7.6'
 pod 'GoogleUtilities', '~> 7.13.3'
 
-# 6) FlutterFire integration
 def flutter_root
-  gen = File.expand_path(File.join('..','Flutter','Generated.xcconfig'), __FILE__)
-  raise "#{gen} missing—run flutter pub get" unless File.exist?(gen)
-  File.foreach(gen) { |l| return l.match(/FLUTTER_ROOT\=(.*)/)[1].strip if l.include?('FLUTTER_ROOT=') }
-  raise "FLUTTER_ROOT not found in Generated.xcconfig"
+  gen = File.expand_path('Flutter/Generated.xcconfig', __dir__)
+  raise "#{gen} missing—run `flutter pub get` first." unless File.exist?(gen)
+  File.foreach(gen) do |line|
+    if (m = line.match(/FLUTTER_ROOT\=(.*)/))
+      return m[1].strip
+    end
+  end
+  raise "FLUTTER_ROOT not found in Generated.xcconfig."
 end
 
-require File.expand_path(File.join('packages','flutter_tools','bin','podhelper'), flutter_root)
+require File.expand_path('packages/flutter_tools/bin/podhelper', flutter_root)
 flutter_ios_podfile_setup
 
-# 7) Install all your Flutter plugins
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
-  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  flutter_install_all_ios_pods(File.dirname(File.realpath(__FILE__)))
 end
 
-# 8) No post_install hacks needed anymore!
+post_install do |installer|
+  installer.pods_project.targets.each do |t|
+    flutter_additional_ios_build_settings(t)
+  end
+end
