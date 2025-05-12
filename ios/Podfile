@@ -3,10 +3,13 @@ require 'xcodeproj'
 # 1) Target platform
 platform :ios, '13.0'
 
-# 2) Disable CocoaPods analytics (speeds up CI)
+# 2) Turn off .xcfilelist generation (avoids the missing-file error)
+install! 'cocoapods', :disable_input_output_paths => true
+
+# 3) Speed up CI by skipping analytics
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
-# 3) Map Runner’s Xcode configurations to CocoaPods modes
+# 4) Map your flavor configurations to CocoaPods
 project 'Runner', {
   'Debug-dev'   => :debug,
   'Debug-live'  => :debug,
@@ -16,53 +19,26 @@ project 'Runner', {
   'Release-live'=> :release
 }
 
-# 4) Only override the pods that truly conflict
-pod 'AppAuth',           '~> 1.7.6'  # for google_sign_in_ios
-pod 'GoogleUtilities',   '~> 7.13.3' # for FirebaseCore
+# 5) Only pin truly conflicting pods
+pod 'AppAuth',         '~> 1.7.6'
+pod 'GoogleUtilities', '~> 7.13.3'
 
-# 5) FlutterFire / Flutter tooling support
+# 6) FlutterFire integration
 def flutter_root
-  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
-  unless File.exist?(generated_xcode_build_settings_path)
-    raise "#{generated_xcode_build_settings_path} must exist. Run `flutter pub get` first."
-  end
-  File.foreach(generated_xcode_build_settings_path) do |line|
-    match = line.match(/FLUTTER_ROOT\=(.*)/)
-    return match[1].strip if match
-  end
-  raise "FLUTTER_ROOT not found in Generated.xcconfig."
+  gen = File.expand_path(File.join('..','Flutter','Generated.xcconfig'), __FILE__)
+  raise "#{gen} missing—run flutter pub get" unless File.exist?(gen)
+  File.foreach(gen) { |l| return l.match(/FLUTTER_ROOT\=(.*)/)[1].strip if l.include?('FLUTTER_ROOT=') }
+  raise "FLUTTER_ROOT not found in Generated.xcconfig"
 end
 
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+require File.expand_path(File.join('packages','flutter_tools','bin','podhelper'), flutter_root)
 flutter_ios_podfile_setup
 
-# 6) Install all the Flutter plugins (and transitively Firestore, Auth, etc.)
+# 7) Install all your Flutter plugins
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 
-# 7) Post‐install: apply Flutter settings & patch Embed Pods Frameworks
-post_install do |installer|
-  # 1) Let Flutter add its own build settings
-  installer.pods_project.targets.each do |t|
-    flutter_additional_ios_build_settings(t)
-  end
-
-  # 2) Open Runner.xcodeproj and scrub any file-list entries
-  require 'xcodeproj'
-  proj       = Xcodeproj::Project.open(File.join(__dir__, 'Runner.xcodeproj'))
-  app_target = proj.targets.find { |t| t.name == 'Runner' }
-
-  app_target.build_phases.each do |phase|
-    # only the Embed Pods Frameworks phase needs clearing
-    next unless phase.name == 'Embed Pods Frameworks'
-
-    # reset both lists—Xcode will fall back to input_paths instead
-    phase.input_file_list_paths  = []
-    phase.output_file_list_paths = []
-  end
-
-  proj.save
-end
+# 8) No post_install hacks needed anymore!
