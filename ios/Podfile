@@ -50,17 +50,16 @@ post_install do |installer|
     flutter_additional_ios_build_settings(t)
   end
 
-  # 2) Open the Xcode project and clear the file‐list entries
+  # 2) Open Runner.xcodeproj and scrub any file-list entries
   require 'xcodeproj'
   proj       = Xcodeproj::Project.open(File.join(__dir__, 'Runner.xcodeproj'))
   app_target = proj.targets.find { |t| t.name == 'Runner' }
 
   app_target.build_phases.each do |phase|
-    # Only touch the Embed Pods Frameworks run‐script
-    next unless phase.is_a?(Xcodeproj::Project::Object::PBXShellScriptBuildPhase)
+    # only the Embed Pods Frameworks phase needs clearing
     next unless phase.name == 'Embed Pods Frameworks'
 
-    # Clear out any file‐list paths so Xcode uses input_paths instead
+    # reset both lists—Xcode will fall back to input_paths instead
     phase.input_file_list_paths  = []
     phase.output_file_list_paths = []
   end
